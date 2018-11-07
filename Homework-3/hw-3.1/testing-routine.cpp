@@ -4,7 +4,7 @@ bool checkIfArraySortedCorrectly(int *arrayOfInts, int arraySize)
 {
 	for (int i = 0; i < arraySize - 1; ++i)
 	{
-		if (arrayOfInts[i + 1] > arrayOfInts[i])
+		if (arrayOfInts[i + 1] < arrayOfInts[i])
 		{
 			return false;
 		}

@@ -17,6 +17,12 @@ bool checkIfArraySortedCorrectly(int *arrayOfInts, int arraySize)
 	return true;
 }
 
+//Prints a string dividing line that imoroves readablilty
+void printLine()
+{
+	printf("____________________________________________\n");
+}
+
 //Pre-run test function that checks for any errors in our program's algorithm
 void testingRoutine()
 {
@@ -24,6 +30,8 @@ void testingRoutine()
 	const int numberOfTests = 100;
 	int testErrors = 0;
 	printf("TESTING PROTOCOL INITIATED\n");
+	printLine();
+	printf("STAGE 1: RANDOM ARRAY TEST\n");
 	for (int i = 0; i < numberOfTests; ++i)
 	{
 		int testSize = rand() % 20 + 1;
@@ -51,5 +59,17 @@ void testingRoutine()
 			printf("75%% complete...\n");
 		}
 	}
-	printf("PRE-RUN TESTING COMPLETE. TOTAL ERRORS: %d\n", testErrors);
+	printf("STAGE 1 TESTING COMPLETE. TOTAL ERRORS: %d\n", testErrors);
+	printLine();
+	//I hope this is enough for testing on arrays consisting of equal elements
+	printf("STAGE 2: ALGORITHM SPECIFIC TESTING\n");
+	const int specificArraySize = 10;
+	int testSpecificArray[specificArraySize] = { 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1 };
+	quickSort(testSpecificArray, 0, specificArraySize - 1);
+	if (!checkIfArraySortedCorrectly(testSpecificArray, specificArraySize))
+	{
+		++testErrors;
+	}
+	printf("STAGE 2 TESTING COMPLETED SUCCESSFULLY. TOTAL ERRORS: %d\n", testErrors);
+	printLine();
 }

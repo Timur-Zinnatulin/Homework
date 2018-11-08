@@ -1,5 +1,6 @@
 #include "sort.h"
 
+//Simple swap function
 void swap(int &a, int &b)
 {
 	const int c = a;
@@ -7,6 +8,7 @@ void swap(int &a, int &b)
 	b = c;
 }
 
+//Function that performs insertion sort in an array in given borders
 void insertionSort(int *arrayOfInts, int leftBorder, int rightBorder)
 {
 	for (int i = leftBorder; i <= rightBorder; ++i)
@@ -21,6 +23,7 @@ void insertionSort(int *arrayOfInts, int leftBorder, int rightBorder)
 	}
 }
 
+//Function that divides an array into two for further sorting
 int arrayPartition(int *arrayOfInts, int leftBorder, int rightBorder)
 {
 	const int pivot = arrayOfInts[leftBorder];
@@ -37,6 +40,7 @@ int arrayPartition(int *arrayOfInts, int leftBorder, int rightBorder)
 	return index - 1;
 }
 
+//Quicksort function that makes everything work
 void quickSort(int *arrayOfInts, int leftBorder, int rightBorder)
 {
 	if ((rightBorder - leftBorder + 1) < 10)

@@ -1,5 +1,10 @@
 #include "sort.h"
+#include "testing-routine.h"
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
+//Checks if the array if sorted correctly after using our sort function
 bool checkIfArraySortedCorrectly(int *arrayOfInts, int arraySize)
 {
 	for (int i = 0; i < arraySize - 1; ++i)
@@ -12,6 +17,7 @@ bool checkIfArraySortedCorrectly(int *arrayOfInts, int arraySize)
 	return true;
 }
 
+//Pre-run test function that checks for any errors in our program's algorithm
 void testingRoutine()
 {
 	srand(time(nullptr));

@@ -11,6 +11,7 @@ void testingRoutine()
 	int testArray[testSize] = { 8, 1000, 125, 16384, 12, 666, 1337, 5052000 };
 	const int testElementSize = 3;
 	//In order to have clever program structure, we put elements that are present in an array in even array positions
+	//This way we can check the correctness of our test by checking it with divisibility by 2
 	const int testElement[testElementSize] = { 125, 5, 5052000 };
 	quickSort(testArray, 0, testSize - 1);
 	bool ifFailed = false;
@@ -25,6 +26,8 @@ void testingRoutine()
 	if (!ifFailed)
 	{
 		printf("TESTING COMPLETE\n");
+		printf("READY TO RUN\n");
+		printf("__________________\n");
 	}
 	else
 	{

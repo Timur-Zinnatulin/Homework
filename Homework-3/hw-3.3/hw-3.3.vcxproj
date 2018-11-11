@@ -152,6 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="hw-3.3.cpp" />
+    <ClCompile Include="maxfinder.cpp" />
+    <ClCompile Include="sort.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="maxfinder.h" />
+    <ClInclude Include="sort.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

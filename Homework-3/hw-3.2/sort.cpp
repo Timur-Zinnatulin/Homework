@@ -28,7 +28,10 @@ int arrayPartition(int *arrayOfInts, int leftBorder, int rightBorder)
 //Array sort function
 void quickSort(int *arrayOfInts, int leftBorder, int rightBorder)
 {
-	int dividingElement = arrayPartition(arrayOfInts, leftBorder, rightBorder);
-	quickSort(arrayOfInts, leftBorder, dividingElement - 1);
-	quickSort(arrayOfInts, dividingElement + 1, rightBorder);
+	if (rightBorder >= leftBorder)
+	{
+		int dividingElement = arrayPartition(arrayOfInts, leftBorder, rightBorder);
+		quickSort(arrayOfInts, leftBorder, dividingElement - 1);
+		quickSort(arrayOfInts, dividingElement + 1, rightBorder);
+	}
 }

@@ -151,7 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="binsearch.cpp" />
     <ClCompile Include="hw-3.2.cpp" />
+    <ClCompile Include="sort.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="binsearch.h" />
+    <ClInclude Include="sort.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

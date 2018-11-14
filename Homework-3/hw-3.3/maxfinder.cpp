@@ -8,7 +8,7 @@ int findMaxElement(int *arrayOfInts, int arraySize)
 	int currentAmount = 1;
 	for (int i = 1; i < arraySize; ++i)
 	{
-		if (arrayOfInts[i] == arrayOfInts[i + 1])
+		if (arrayOfInts[i] == arrayOfInts[i - 1])
 		{
 			++currentAmount;
 		}
@@ -21,6 +21,12 @@ int findMaxElement(int *arrayOfInts, int arraySize)
 			}
 			currentAmount = 1;
 		}
+	}
+	//We have to check if the last element was the most frequent one as well
+	if (currentAmount >= maxAmount)
+	{
+		currentMax = arrayOfInts[arraySize - 1];
+		maxAmount = currentAmount;
 	}
 	return currentMax;
 }

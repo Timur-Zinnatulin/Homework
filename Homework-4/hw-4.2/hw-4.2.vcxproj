@@ -151,12 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="file-reading.cpp" />
     <ClCompile Include="hw-4.2.cpp" />
     <ClCompile Include="maxfinder-file.cpp" />
     <ClCompile Include="sort.cpp" />
     <ClCompile Include="testing-routine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="file-reading.h" />
     <ClInclude Include="maxfinder-file.h" />
     <ClInclude Include="sort.h" />
     <ClInclude Include="testing-routine.h" />

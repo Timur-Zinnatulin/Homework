@@ -153,9 +153,11 @@
   <ItemGroup>
     <ClCompile Include="binary-operations.cpp" />
     <ClCompile Include="hw-4.1.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binary-operations.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

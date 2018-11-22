@@ -67,10 +67,10 @@ int transformToDecimal(bool *binaryNumber)
 {
 	int decimalNumber = 0;
 	int exponentOfTwo = 1;
-	for (int i = bitSize - 1; i >= 0; --i)
+	for (int i = bitSize - 1; i > 1; --i)
 	{
 		//For positive numbers we count bits with 1, for negative - with 0, because we inverted them in the process of transformation
-		if (!(binaryNumber[i] & binaryNumber[0]))
+		if (binaryNumber[i] != binaryNumber[0])
 		{
 			decimalNumber += exponentOfTwo;
 		}

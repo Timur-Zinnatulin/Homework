@@ -3,14 +3,19 @@
 #include <string.h>
 #include "phonebook.h"
 #include "file.h"
+#include "testing-routine.h"
 
+//Prints a line in order to separate outputs
 void printLine()
 {
 	printf("__________________________\n");
 }
 
+//Btw, numbers are represented by integers, so its limitations apply
 int main()
 {
+	testingRoutine();
+	printLine();
 	Record phonebook[100];
 	int phonebookSize = 0;
 	openFile(phonebook, phonebookSize, "phonebook.txt");

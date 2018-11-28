@@ -152,6 +152,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="hw-5.1.cpp" />
+    <ClCompile Include="sorted-list.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sorted-list.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

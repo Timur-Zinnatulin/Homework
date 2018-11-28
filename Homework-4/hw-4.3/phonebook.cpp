@@ -1,4 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "phonebook.h"
+#include <string.h>
+#include <stdio.h>
 
 //Creates a new record in our phonebook
 void addRecord(Record *phonebook, int &phonebookSize, char *name, int number)

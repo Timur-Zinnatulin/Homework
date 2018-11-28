@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "file.h"
 #include "phonebook.h"
+#include <stdio.h>
 
 //Reads records from an existing file or creates a new one with given name if it doesn't exist
 void openFile(Record *phonebook, int &phonebookSize, const char *fileName)

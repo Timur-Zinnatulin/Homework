@@ -74,7 +74,12 @@ bool deleteNode(SortedList *list, int value)
 {
 	Node *leftNode = nullptr;
 	auto rightNode = list->start;
-	while ((rightNode != nullptr) && (rightNode->value < value))
+	if (rightNode == nullptr)
+	{
+		return false;
+	}
+
+	while ((rightNode->next != nullptr) && (rightNode->value < value))
 	{
 		leftNode = rightNode;
 		rightNode = rightNode->next;
@@ -85,11 +90,19 @@ bool deleteNode(SortedList *list, int value)
 	}
 	else
 	{
-		while ((rightNode->value == value) && rightNode != nullptr)
+		while ((rightNode->value == value) && (rightNode->next != nullptr))
 		{
 			const Node *tempNode = rightNode;
 			rightNode = rightNode->next;
 			delete tempNode;
+			--list->size;
+		}
+		if (rightNode->value == value)
+		{
+			const Node *tempNode = rightNode;
+			rightNode = nullptr;
+			delete tempNode;
+			--list->size;
 		}
 		if (leftNode != nullptr)
 		{
@@ -99,7 +112,6 @@ bool deleteNode(SortedList *list, int value)
 		{
 			list->start = rightNode;
 		}
-		--list->size;
 		return true;
 	}
 }

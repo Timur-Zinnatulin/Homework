@@ -1,18 +1,6 @@
 #include "sorted-list.h"
 #include <stdio.h>
 
-struct Node
-{
-	int value = 0;
-	Node *next = nullptr;
-};
-
-struct SortedList
-{
-	Node *start = nullptr;
-	int size = 0;
-};
-
 //Creates a new empty list
 SortedList *createSortedList()
 {

@@ -1,4 +1,3 @@
-#include "stack.h"
 #include "bracket-control.h"
 #include "testing-routine.h"
 

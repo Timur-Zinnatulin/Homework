@@ -1,15 +1,8 @@
 #pragma once
 
-struct Node
-{
-	int value;
-	Node *next;
-};
+struct Node;
 
-struct CyclicList
-{
-	Node *start;
-};
+struct CyclicList;
 
 //Checks if the list is empty
 bool isEmpty(CyclicList *list);
@@ -28,3 +21,6 @@ void generateCycle(CyclicList *list, int size);
 
 //Deletes a node unless it's the last node in the cycle
 bool deleteNode(CyclicList *list, Node *theOneToKillTheNeighbor);
+
+//Performs the sicarii cycle elimination
+int sicariiCycle(CyclicList *list, int modulo);

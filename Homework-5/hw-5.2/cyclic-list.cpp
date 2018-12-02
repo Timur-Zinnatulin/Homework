@@ -3,12 +3,13 @@
 struct Node 
 {
 	int value;
-	Node *next;
+	Node *next = nullptr;
 };
 
 struct CyclicList
 {
-	Node *start;
+	Node *start = nullptr;
+	Node *lastAdded = nullptr;
 };
 
 //Checks if the list is empty
@@ -26,12 +27,7 @@ CyclicList *createNewList()
 //Deletes the entire list
 void deleteList(CyclicList *list)
 {
-	while (!isEmpty(list))
-	{
-		auto tempNode = list->start;
-		list->start = list->start->next;
-		delete tempNode;
-	}
+	delete list->start;
 	delete list;
 }
 
@@ -41,17 +37,14 @@ void insert(CyclicList *list, int newValue)
 	const auto newNode = new Node{ newValue, list->start };
 	if (isEmpty(list))
 	{
+		newNode->next = newNode;
 		list->start = newNode;
-		newNode->next = list->start;
-		return;
 	}
-	auto rightNode = list->start;
-	while (rightNode->next != list->start)
+	else
 	{
-		rightNode = rightNode->next;
+		list->lastAdded->next = newNode;
 	}
-	rightNode->next = newNode;
-	newNode->next = list->start;
+	list->lastAdded = newNode;
 }
 
 //Creates a cycle of size "size" in the list
@@ -71,8 +64,30 @@ bool deleteNode(CyclicList *list, Node *theOneToKillTheNeighbor)
 		return false;
 	}
 
-	auto killedNode = theOneToKillTheNeighbor->next;
+	const auto killedNode = theOneToKillTheNeighbor->next;
 	theOneToKillTheNeighbor->next = killedNode->next;
 	delete killedNode;
 	return true;
+}
+
+//Performs the sicarii cycle elimination
+int sicariiCycle(CyclicList *list, int modulo)
+{
+	auto currentNode = list->lastAdded;
+	int counter = 1;
+	bool flagHavePeopleToKill = true;
+	while (flagHavePeopleToKill)
+	{
+		if (counter % modulo == 0)
+		{
+			flagHavePeopleToKill = deleteNode(list, currentNode);
+		}
+		else
+		{
+			currentNode = currentNode->next;
+		}
+		++counter;
+	}
+	list->start = currentNode;
+	return currentNode->value;
 }

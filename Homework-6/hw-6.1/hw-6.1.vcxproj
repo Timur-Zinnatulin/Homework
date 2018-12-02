@@ -151,7 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="expression-calculator.cpp" />
     <ClCompile Include="hw-6.1.cpp" />
+    <ClCompile Include="stack.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="expression-calculator.h" />
+    <ClInclude Include="stack.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

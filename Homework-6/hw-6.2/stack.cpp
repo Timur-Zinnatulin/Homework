@@ -35,6 +35,16 @@ void deleteStack(Stack *stack)
 	delete stack;
 }
 
+//Returns the value of head
+char top(Stack *stack)
+{
+	if (isEmpty(stack))
+	{
+		return '\0';
+	}
+	return (stack->head->value);
+}
+
 //Pushes a value into the stack
 void push(Stack *stack, char newValue)
 {

@@ -13,6 +13,9 @@ Stack *createNewStack();
 //Deletes the stack
 void deleteStack(Stack *stack);
 
+//Returns the value of head
+char top(Stack *stack);
+
 //Pushes a value into the stack
 void push(Stack *stack, char newValue);
 

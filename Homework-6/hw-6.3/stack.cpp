@@ -36,14 +36,13 @@ void deleteStack(Stack *stack)
 }
 
 //Returns the value of head
-bool top(Stack *stack, char &value)
+char top(Stack *stack)
 {
 	if (isEmpty(stack))
 	{
-		return false;
+		return '\0';
 	}
-	value = stack->head->value;
-	return true;
+	return stack->head->value;
 }
 
 //Pushes a value into the stack

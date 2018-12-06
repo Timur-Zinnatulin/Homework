@@ -9,10 +9,11 @@ int main()
 {
 	if (testingRoutine())
 	{
-		cout << "This is a shunting yard problem. THAT WORKS!!!\n";
+		cout << "This is a shunting yard problem. THAT WORKS!!!\n\n";
 	}
-	string s;
-	getline(cin, s);
-	cout << shuntingYard(s) << "\n";
+	cout << "Enter an expression in infix form: ";
+	string input;
+	getline(cin, input);
+	cout << "In Reverse Polish Notation this expression looks like this:\n" << shuntingYard(input) << "\n";
 	return 0;
 }

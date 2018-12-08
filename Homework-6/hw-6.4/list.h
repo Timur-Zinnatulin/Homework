@@ -4,6 +4,9 @@ struct Node;
 
 struct List;
 
+//Returns size of list
+int listSize(List *list);
+
 //Creates a new list
 List *createNewList();
 

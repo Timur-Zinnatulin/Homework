@@ -18,6 +18,12 @@ struct List
 	int size = 0;
 };
 
+//Returns size of list
+int listSize(List *list)
+{
+	return list->size;
+}
+
 //Creates a new list
 List *createNewList()
 {

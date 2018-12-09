@@ -4,7 +4,7 @@
 //MergeSort function
 void mergeSort(List *list, const bool cmpByName)
 {
-	if (listSize(list) == 1);
+	if (listSize(list) == 1)
 	{
 		return;
 	}

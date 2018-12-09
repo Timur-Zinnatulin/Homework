@@ -50,7 +50,7 @@ void deleteList(List *list)
 	delete list;
 }
 
-//Creates a nww node at the end of the list
+//Creates a new node at the end of the list
 void push(List *list, const string name, const string number)
 {
 	list->end = new Node{ name, number, list->end, nullptr };

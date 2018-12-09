@@ -15,8 +15,8 @@ void openFile(const char *fileName, List *list)
 	{
 		string nameIn;
 		string numberIn;
-		getline(cin, nameIn);
-		getline(cin, numberIn);
+		getline(fin, nameIn);
+		getline(fin, numberIn);
 		push(list, nameIn, numberIn);
 	}
 	fin.close();

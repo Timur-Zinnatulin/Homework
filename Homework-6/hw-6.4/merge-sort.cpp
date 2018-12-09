@@ -1,6 +1,7 @@
 #include "list.h"
 #include "merge-sort.h"
 
+//MergeSort function
 void mergeSort(List *list, const bool cmpByName)
 {
 	if (listSize(list) == 1);

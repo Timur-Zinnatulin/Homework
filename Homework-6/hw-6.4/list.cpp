@@ -1,4 +1,5 @@
 #include "list.h"
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -8,7 +9,7 @@ struct Node
 	string name{};
 	string number{};
 	Node *previous = nullptr;
-	Node *next;
+	Node *next = nullptr;
 };
 
 struct List
@@ -73,7 +74,7 @@ void merge(List *list, List *left, List *right, const bool cmpByName)
 
 	while (leftNode != nullptr || rightNode != nullptr)
 	{
-		if (leftNode == nullptr || (rightNode != nullptr && cmpByName ? leftNode->name.compare(rightNode->name) : leftNode->number.compare(rightNode->number)))
+		if (leftNode == nullptr || (rightNode != nullptr && (cmpByName ? leftNode->name.compare(rightNode->name) : leftNode->number.compare(rightNode->number)) > 0))
 		{
 			mergeNode->name = rightNode->name;
 			mergeNode->number = rightNode->number;
@@ -105,4 +106,34 @@ void split(List *list, List *left, List *right)
 		}
 		temp = temp->next;
 	}
+}
+
+//Prints the list in console
+void printList(List *list)
+{
+	auto temp = list->start;
+	while (temp != nullptr)
+	{
+		cout << temp->name << " " << temp->number << endl;
+		temp = temp->next;
+	}
+}
+
+//Checks if the list is correctly sorted
+bool checkIfSorted(List *list, const bool cmpByName)
+{
+	if (isEmpty(list))
+	{
+		return true;
+	}
+	auto temp = list->start->next;
+	while (temp != nullptr)
+	{
+		if ((cmpByName ? temp->name.compare(temp->previous->name) : temp->number.compare(temp->previous->number)) < 0)
+		{
+			return false;
+		}
+		temp = temp->next;
+	}
+	return true;
 }

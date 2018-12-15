@@ -1,8 +1,12 @@
 ﻿#include <iostream>
-
+#include "tree.h"
+#include "testing-routine.h"
 using namespace std;
 
 int main()
 {
-	cout << "Hello World!\n"; 
+	if (testingRoutine())
+	{
+		cout << "Hello World!\n";
+	}
 }

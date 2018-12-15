@@ -83,7 +83,7 @@ int nodeEvaluation(TreeNode *node)
 	{
 		return (nodeEvaluation(node->leftChild) / nodeEvaluation(node->rightChild));
 	}
-	else if (node->value == '*')
+	else if (node->value == '+')
 	{
 		return (nodeEvaluation(node->leftChild) + nodeEvaluation(node->rightChild));
 	}

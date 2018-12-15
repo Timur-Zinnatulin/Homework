@@ -27,14 +27,14 @@ bool testingRoutine()
 		}
 	}
 	fin.close();
-	const auto ascending = ascendingOrder(testSet);
-	const auto descending = descendingOrder(testSet);
+	std::vector<int> ascending = ascendingOrder(testSet);
+	std::vector<int> descending = descendingOrder(testSet);
 	if (ascending.size() != descending.size())
 	{
 		deleteSet(testSet);
 		return false;
 	}
-	for (int i = 0; i < ascending.size(); ++i)
+	for (int i = 0; i < ascending.size() - 1; ++i)
 	{
 		if (ascending[i] >= ascending[i + 1])
 		{
@@ -42,7 +42,7 @@ bool testingRoutine()
 			return false;
 		}
 	}
-	for (int i = 0; i < descending.size(); ++i)
+	for (int i = 0; i < descending.size() - 1; ++i)
 	{
 		if (descending[i] <= descending[i + 1])
 		{

@@ -87,14 +87,19 @@ bool add(Set *set, const int value)
 
 int minimum(SetElement *current)
 {
-	if (current->leftChild == nullptr)
+	if (current->leftChild != nullptr)
+	{
+		return minimum(current->leftChild);
+	}
+	else
 	{
 		return current->value;
 	}
-	return minimum(current->leftChild);
 }
 
-void deleteNoChldren(SetElement *target)
+void deleteNode(SetElement *&current, const int value);
+
+void deleteNoChldren(SetElement *&target)
 {
 	SetElement *temp = target;
 	target = nullptr;
@@ -103,21 +108,21 @@ void deleteNoChldren(SetElement *target)
 
 void deleteOneChild(SetElement *target)
 {
-	SetElement *newTarget = (target->leftChild == nullptr ? target->rightChild : target->leftChild);
+	SetElement *newTarget = (target->leftChild != nullptr ? target->leftChild : target->rightChild);
 	target->value = newTarget->value;
 	target->leftChild = newTarget->leftChild;
 	target->rightChild = newTarget->rightChild;
 	delete newTarget;
 }
 
-void deleteTwoChildren(SetElement *target)
+void deleteTwoChildren(SetElement *&target)
 {
 	const int nextValue = minimum(target->rightChild);
 	deleteNode(target, nextValue);
 	target->value = nextValue;
 }
 
-void deleteNode(SetElement *current, const int value)
+void deleteNode(SetElement *&current, const int value)
 {
 	if (current->value < value)
 	{
@@ -147,7 +152,7 @@ void deleteNode(SetElement *current, const int value)
 //Removes a value from the set
 bool remove(Set *set, const int value)
 {
-	if (!exists(set, value));
+	if (!exists(set, value))
 	{
 		return false;
 	}

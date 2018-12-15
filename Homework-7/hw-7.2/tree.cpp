@@ -143,4 +143,5 @@ void printTree(Tree *tree)
 		return;
 	}
 	printSubtree(tree->root);
+	std::cout << "\n";
 }

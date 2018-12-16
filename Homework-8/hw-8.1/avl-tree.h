@@ -5,7 +5,7 @@ struct Node;
 struct Tree;
 
 //Creates a new tree
-Tree *newTree();
+Tree *createNewTree();
 
 //Checks if the tree is empty
 bool isEmpty(Tree *tree);
@@ -20,7 +20,7 @@ std::string value(Tree *tree, const std::string key);
 void add(Tree *tree, const std::string key, const std::string newValue);
 
 //Removes a value from the set
-bool remove(Tree *tree, const std::string value);
+bool remove(Tree *tree, const std::string key);
 
 //Deletes the tree
 void deleteTree(Tree *tree);

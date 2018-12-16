@@ -153,9 +153,11 @@
   <ItemGroup>
     <ClCompile Include="avl-tree.cpp" />
     <ClCompile Include="hw-8.1.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="avl-tree.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

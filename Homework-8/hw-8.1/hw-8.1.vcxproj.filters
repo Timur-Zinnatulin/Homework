@@ -21,9 +21,15 @@
     <ClCompile Include="avl-tree.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="testing-routine.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="avl-tree.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="testing-routine.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

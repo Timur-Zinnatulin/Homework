@@ -16,7 +16,7 @@ struct Tree
 };
 
 //Creates a new tree
-Tree *newTree()
+Tree *createNewTree()
 {
 	return new Tree{};
 }
@@ -34,7 +34,7 @@ int height(Node *node)
 
 void updateHeight(Node *node)
 {
-	node->height = ((height(node->rightChild) > height(node->leftChild) ? height(node->rightChild) : height(node->leftChild) + 1));
+	node->height = ((height(node->rightChild) > height(node->leftChild)) ? height(node->rightChild) : height(node->leftChild) + 1);
 }
 
 int balance(Node *node)
@@ -66,7 +66,7 @@ void leftRotation(Node *&node)
 	node = temp;
 }
 
-void rightRotation(Node *node)
+void rightRotation(Node *&node)
 {
 	Node *temp = node->leftChild;
 	node->leftChild = temp->rightChild;
@@ -75,9 +75,9 @@ void rightRotation(Node *node)
 	node = temp;
 }
 
-void balanceSubtree(Node *node)
+void balanceSubtree(Node *&node)
 {
-	if (balance(node) < -1)
+	if (balance(node) == -2)
 	{
 		//Double right rotation
 		if (balance(node->leftChild) > 0)
@@ -86,7 +86,7 @@ void balanceSubtree(Node *node)
 		}
 		rightRotation(node);
 	}
-	else if (balance(node) > 1)
+	else
 	{
 		//Double left rotation
 		if (balance(node->rightChild) < 0)
@@ -112,7 +112,7 @@ std::string value(Tree *tree, const std::string key)
 	return ((temp != nullptr) ? temp->value : "");
 }
 
-void addToSubtree(Node *node, Node *previous, const std::string key, const std::string newValue)
+void addToSubtree(Node *&node, Node *previous, const std::string key, const std::string newValue)
 {
 	if (node == nullptr)
 	{
@@ -161,7 +161,7 @@ void add(Tree *tree, const std::string key, const std::string newValue)
 
 //Copying node removal from my previous tree set solution because they're practically the same
 
-std::string minimum(Node *current)
+std::pair<std::string, std::string> minimum(Node *current)
 {
 	if (current->leftChild != nullptr)
 	{
@@ -169,11 +169,11 @@ std::string minimum(Node *current)
 	}
 	else
 	{
-		return current->key;
+		return { current->key, current->value };
 	}
 }
 
-void deleteNode(Node *&current, const std::string value);
+void deleteNode(Node *&current, const std::string key);
 
 void deleteNoChldren(Node *&target)
 {
@@ -195,20 +195,21 @@ void deleteOneChild(Node *target)
 
 void deleteTwoChildren(Node *&target)
 {
-	const std::string nextValue = minimum(target->rightChild);
-	deleteNode(target, nextValue);
-	target->value = nextValue;
+	const std::pair<std::string, std::string> nextPair = minimum(target->rightChild);
+	deleteNode(target, nextPair.first);
+	target->key = nextPair.first;
+	target->value = nextPair.second;
 }
 
-void deleteNode(Node *&current, const std::string value)
+void deleteNode(Node *&current, const std::string key)
 {
-	if (current->value < value)
+	if (current->key < key)
 	{
-		deleteNode(current->rightChild, value);
+		deleteNode(current->rightChild, key);
 	}
-	else if (current->value > value)
+	else if (current->key > key)
 	{
-		deleteNode(current->leftChild, value);
+		deleteNode(current->leftChild, key);
 	}
 	else
 	{
@@ -224,6 +225,7 @@ void deleteNode(Node *&current, const std::string value)
 		{
 			deleteOneChild(current);
 		}
+		return;
 	}
 	if ((balance(current) > 1) || (balance(current) < -1))
 	{
@@ -233,13 +235,13 @@ void deleteNode(Node *&current, const std::string value)
 }
 
 //Removes a value from the set
-bool remove(Tree *tree, const std::string value)
+bool remove(Tree *tree, const std::string key)
 {
-	if (!exists(tree, value))
+	if (!exists(tree, key))
 	{
 		return false;
 	}
-	deleteNode(tree->root, value);
+	deleteNode(tree->root, key);
 	return true;
 }
 

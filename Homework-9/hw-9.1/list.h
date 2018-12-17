@@ -5,7 +5,7 @@ struct Node;
 struct List;
 
 //Changes the rehash flag
-void rehash(Node *target, bool rehash);
+void changeHashFlag(Node *target, bool rehash);
 
 //Returns the "rehashed" condition
 bool isRehashed(const Node *target);

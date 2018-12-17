@@ -11,7 +11,7 @@ struct HashTable
 };
 
 //Creates new hash table
-HashTable *newTable()
+HashTable *createNewTable()
 {
 	const int amountOfBuckets = 100;
 	HashTable *newTable = new HashTable;

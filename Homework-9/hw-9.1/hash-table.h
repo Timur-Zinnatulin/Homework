@@ -6,7 +6,7 @@
 struct HashTable;
 
 //Creates new hash table
-HashTable *newTable();
+HashTable *createNewTable();
 
 //Returns load factor of hash table
 float hashLoad(HashTable *table);

@@ -51,9 +51,9 @@ unsigned long long hashFunction(const std::string word)
 {
 	unsigned long long primeNumber = 73;
 	unsigned long long sum = 0;
-	for (int i = 0; i < word.size; ++i)
+	for (int i = 0; i < word.size(); ++i)
 	{
-		sum += primeNumber * word[i];
+		sum += primeNumber * (int)word[i];
 		primeNumber *= 73;
 	}
 	return sum;
@@ -104,7 +104,7 @@ void expandTable(HashTable *table)
 	for (int i = 0; i < oldSize; ++i)
 	{
 		Node *tempNode = start(table->buckets[i]);
-		while (start != nullptr)
+		while (tempNode != nullptr)
 		{
 			if (!isRehashed(tempNode))
 			{

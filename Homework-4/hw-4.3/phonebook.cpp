@@ -50,7 +50,7 @@ char* findName(Record *phonebook, int phonebookSize, int number)
 			return phonebook[i].name;
 		}
 	}
-	char failure[2] = "\0";
+	char failure[1] = "";
 	return failure;
 }
 

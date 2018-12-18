@@ -46,7 +46,7 @@ int main()
 			}
 			printf("Enter a new phone number:\n");
 			scanf("%d", &number);
-			while (strcmp(findName(phonebook, phonebookSize, number), "\0") != 0)
+			while (strcmp(findName(phonebook, phonebookSize, number), "") != 0)
 			{
 				printf("Number already exists, cannot create a record. Try again.\n");
 				printf("Enter another number:\n");
@@ -62,7 +62,7 @@ int main()
 		case 3:
 			printf("Enter a phone number:\n");
 			scanf("%d", &number);
-			if (strcmp(findName(phonebook, phonebookSize, number), "\0") != 0)
+			if (strcmp(findName(phonebook, phonebookSize, number), "") != 0)
 			{
 				printf("%s is the person with this phone number.\n", findName(phonebook, phonebookSize, number));
 			}

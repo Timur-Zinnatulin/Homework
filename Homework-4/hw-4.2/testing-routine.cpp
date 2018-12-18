@@ -10,8 +10,8 @@ void testingRoutine(bool &ifTestIsSuccessful)
 	ifTestIsSuccessful = true;
 	printf("TESTING PROTOCOL INITIATED\n");
 	FILE *inputFile = fopen("test.txt", "r");
-	int sizeOfArray1 = 0,
-		sizeOfArray2 = 0;
+	int sizeOfArray1 = 0;
+	int sizeOfArray2 = 0;
 	if (!scanSize(inputFile, sizeOfArray1))
 	{
 		fclose(inputFile);

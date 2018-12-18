@@ -67,20 +67,20 @@ int transformToDecimal(bool *binaryNumber)
 {
 	int decimalNumber = 0;
 	int exponentOfTwo = 1;
-	for (int i = bitSize - 1; i > 1; --i)
+	for (int i = bitSize - 1; i > -1; --i)
 	{
 		//For positive numbers we count bits with 1, for negative - with 0, because we inverted them in the process of transformation
-		if (binaryNumber[i] != binaryNumber[0])
+		if (binaryNumber[i])
 		{
 			decimalNumber += exponentOfTwo;
 		}
 		exponentOfTwo *= 2;
 	}
 	//The algorithm of transformation of negative numbers between binary and decimal forms 
-	if (binaryNumber[0])
+	/*if (binaryNumber[0])
 	{
 		decimalNumber += 1;
 		decimalNumber *= -1;
-	}
+	}*/
 	return decimalNumber;
 }

@@ -28,7 +28,6 @@ bool isEmpty(List *list)
 	return (list->start == nullptr);
 }
 
-//Deletes the entire list
 void deleteList(List *list)
 {
 	while (!isEmpty(list))
@@ -40,26 +39,20 @@ void deleteList(List *list)
 	delete list;
 }
 
-int condition(int number, int a, int b)
+//Clears the entire list
+void clearList(List *&list)
 {
-	if (number < a)
+	while (!isEmpty(list))
 	{
-		return 0;
+		const Node *tempNode = list->start;
+		list->start = list->start->next;
+		delete tempNode;
 	}
-	if (number >= a)
-	{
-		if (number <= b)
-		{
-			return 1;
-		}
-		else
-		{
-			return 2;
-		}
-	}
+	list->size = 0;
+	list->start = nullptr;
 }
 
-void insert(List *list, int number, int a, int b)
+void insert(List *&list, int number)
 {
 	const auto newNode = new Node{ number, nullptr };
 	if (isEmpty(list))
@@ -70,7 +63,7 @@ void insert(List *list, int number, int a, int b)
 	}
 	Node *leftNode = nullptr;
 	auto rightNode = list->start;
-	while ((rightNode != nullptr) && (condition(number, a, b) >= condition(rightNode->value, a, b)))
+	while (rightNode != nullptr)
 	{
 		leftNode = rightNode;
 		rightNode = rightNode->next;
@@ -88,39 +81,62 @@ void insert(List *list, int number, int a, int b)
 	++list->size;
 }
 
-bool test()
+List *subsequence(List *list)
 {
-	bool ifCorrect = true;
-	int testValues[7] = { 1, 2, 3, 6, 7, 15, 20 };
-	const int testA = 5;
-	const int testB = 10;
-	List *testList = createNewList();
-	ifstream testIn;
-	testIn.open("test.txt");
-	int testInt = 0;
-	while (testIn >> testInt)
+	int previous = list->start->value;
+	List *subList = createNewList();
+	List *maxList = createNewList();
+	insert(subList, previous);
+	insert(maxList, previous);
+	auto tempNode = list->start->next;
+	for (int i = 1; i < list->size; ++i)
 	{
-		insert(testList, testInt, testA, testB);
-	}
-	testIn.close();
-	int iterator = 0;
-	auto tempNode = testList->start;
-	while (tempNode != nullptr)
-	{
-		if (testValues[iterator] != tempNode->value)
+		if (tempNode->value < previous)
 		{
-			ifCorrect = false;
+			if (maxList->size < subList->size)
+			{
+				maxList->start = subList->start;
+				maxList->size = subList->size;
+			}
+			clearList(subList);
 		}
-		++iterator;
+		insert(subList, tempNode->value);
+		previous = tempNode->value;
 		tempNode = tempNode->next;
 	}
+	deleteList(subList);
+	return maxList;
+}
+
+void printList(List *list)
+{
+	auto tempNode = list->start;
+	for (int i = 0; i < list->size; ++i)
+	{
+		cout << tempNode->value << " ";
+		tempNode = tempNode->next;
+	}
+	cout << endl;
+}
+
+bool test()
+{
+	int testValues[7] = { 1, 2, 3, 6, 7, 15, 8 };
+	List *testList = createNewList();
+	for (int i : testValues)
+	{
+		insert(testList, i);
+	}
+	List *testAnswerList = subsequence(testList);
+	int testAnswer = testAnswerList->size;
 	deleteList(testList);
-	return ifCorrect;
+	deleteList(testAnswerList);
+	return (testAnswer == 6);
 }
 
 int main()
 {
-	if (test)
+	if (test())
 	{
 		cout << "SUCCESSFUL TEST!!!\n";
 	}
@@ -128,29 +144,18 @@ int main()
 	{
 		return 0;
 	}
-	int a, b;
-	cout << "Enter the left border: ";
-	cin >> a;
-	cout << "Enter the right border: ";
-	cin >> b;
-	ifstream fin;
-	fin.open("f.txt");
-	int fileInt = 0;
-	List *list = createNewList();
-	while(fin >> fileInt)
+	List *fileList = createNewList();
+	ifstream fin("f.txt");
+	int input = 0;
+	while (!fin.eof())
 	{
-		insert(list, fileInt, a, b);
+		fin >> input;
+		insert(fileList, input);
 	}
 	fin.close();
-	ofstream fout;
-	fout.open("g.txt");
-	auto tempNode = list->start;
-	while (tempNode != nullptr)
-	{
-		fout << tempNode->value << " ";
-		tempNode = tempNode->next;
-	}
-	fout.close();
-	deleteList(list);
+	List *subsequentList = subsequence(fileList);
+	printList(subsequentList);
+	deleteList(subsequentList);
+	deleteList(fileList);
 	return 0;
 }

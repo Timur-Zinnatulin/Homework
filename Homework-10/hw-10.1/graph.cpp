@@ -2,6 +2,11 @@
 #include <fstream>
 #include <vector>
 
+struct Edge
+{
+
+};
+
 struct Graph
 {
 	std::vector<std::vector<int> > edges;

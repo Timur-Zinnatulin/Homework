@@ -14,7 +14,7 @@ std::vector<int> prefixFunction(std::string source)
 		{
 			longestPrefix = prefix[longestPrefix - 1];
 		}
-		prefix.push_back((source[longestPrefix] == source[prefix]) ? longestPrefix + 1 : 0);
+		prefix.push_back((source[longestPrefix] == source[i]) ? longestPrefix + 1 : 0);
 	}
 	return prefix;
 }

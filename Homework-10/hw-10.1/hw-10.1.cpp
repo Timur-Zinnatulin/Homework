@@ -1,11 +1,18 @@
 ﻿#include <iostream>
 #include "graph.h"
+#include "testing-routine.h"
 
 using namespace std;
 
 int main()
 {
-	Graph graph({});
-
-	cout << "Hello World!\n"; 
+	if (testingRoutine())
+	{
+		cout << "Testing successful!\n";
+	}
+	else
+	{
+		cout << "Testing failed.\n";
+		return 1;
+	}
 }

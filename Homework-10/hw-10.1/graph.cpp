@@ -4,10 +4,11 @@
 #include <map>
 
 #define BIG INT_MAX
-#define neighborCity graph->vertices[i].neighbors[j]
+#define neighborCity graph->vertices[i - 1].neighbors[j]
+
 struct Vertex
 {
-	int state = 0;
+	int state = -1;
 	std::vector<std::pair<int, int>> neighbors;
 };
 
@@ -24,11 +25,22 @@ Graph *createNewGraph(const int citiesAmount)
 	return graph;
 }
 
+//Delets the graph
+void deleteGraph(Graph *graph)
+{
+	for (int i = 0; i < graph->vertices.size(); ++i)
+	{
+		graph->vertices[i].neighbors.clear();
+	}
+	graph->vertices.clear();
+	delete graph;
+}
+
 //Adds an edge between cities in a graph
 void addEdge(Graph *graph, const int city1, const int city2, const int length)
 {
-	graph->vertices[city1 - 1].neighbors.push_back({ city2, length });
-	graph->vertices[city2 - 1].neighbors.push_back({ city1, length });
+	graph->vertices[city1 - 1].neighbors.push_back({ city2 - 1, length });
+	graph->vertices[city2 - 1].neighbors.push_back({ city1 - 1, length });
 }
 
 //Returns the state of city
@@ -48,13 +60,13 @@ bool captureCity(Graph *graph, const int state)
 {
 	int minLength = BIG;
 	int minCity = 0;
-	for (int i = 0; i < graph->vertices.size(); ++i)
+	for (int i = 1; i <= graph->vertices.size(); ++i)
 	{
 		if (stateOfCity(graph, i) == state)
 		{
-			for (int j = 0; j < graph->vertices[i].neighbors.size(); ++j)
+			for (int j = 0; j < graph->vertices[i - 1].neighbors.size(); ++j)
 			{
-				if ((stateOfCity(graph, neighborCity.first) == 0) && (neighborCity.second < minLength))
+				if ((stateOfCity(graph, neighborCity.first + 1) == -1) && (neighborCity.second < minLength))
 				{
 					minLength = neighborCity.second;
 					minCity = neighborCity.first;
@@ -66,7 +78,7 @@ bool captureCity(Graph *graph, const int state)
 	{
 		return false;
 	}
-	assignState(graph, minCity, state);
+	assignState(graph, minCity + 1, state);
 	return true;
 }
 

@@ -1,12 +1,14 @@
 #pragma once
 
 #include <vector>
-#include <fstream>
 
 struct Graph;
 
 //Creates a new graph with assigned amount of cities
 Graph *createNewGraph(const int citiesAmount);
+
+//Delets the graph
+void deleteGraph(Graph *graph);
 
 //Adds an edge between cities in a graph
 void addEdge(Graph *graph, const int city1, const int city2, const int length);

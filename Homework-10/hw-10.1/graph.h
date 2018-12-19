@@ -5,14 +5,17 @@
 
 struct Graph;
 
-//Fills graph with information
-void fillGraph(std::ifstream &fin, Graph &graph);
+//Creates a new graph with assigned amount of cities
+Graph *createNewGraph(const int citiesAmount);
 
-//Checks if there are cities to consume
-bool areCitiesLeft(Graph graph);
+//Adds an edge between cities in a graph
+void addEdge(Graph *graph, const int city1, const int city2, const int length);
 
-//Finds the next city for a state to consume
-int findNextVertex(Graph graph, int state);
+//Returns the state of city
+int stateOfCity(Graph *graph, const int city);
 
-//Performs one consumption cycle loop
-void consumptionCycle(Graph graph, int capitalsAmount);
+//Changes the state of city
+void assignState(Graph *graph, const int city, const int newState);
+
+//Captures a city into a state
+bool captureCity(Graph *graph, const int state);

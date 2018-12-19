@@ -1,92 +1,72 @@
 #include "graph.h"
 #include <fstream>
 #include <vector>
+#include <map>
 
-struct Edge
+#define BIG INT_MAX
+#define neighborCity graph->vertices[i].neighbors[j]
+struct Vertex
 {
-
+	int state = 0;
+	std::vector<std::pair<int, int>> neighbors;
 };
 
 struct Graph
 {
-	std::vector<std::vector<int> > edges;
-	std::vector<int> vertices;
+	std::vector<Vertex> vertices;
 };
 
-//Fills graph with information
-void fillGraph(std::ifstream &fin, Graph &graph)
+//Creates a new graph with assigned amount of cities
+Graph *createNewGraph(const int citiesAmount)
 {
-	int citiesAmount = 0;
-	fin >> citiesAmount;
-	graph.vertices.resize(citiesAmount);
-	int edgesAmount = 0;
-	fin >> edgesAmount;
-	graph.edges.resize(citiesAmount);
-	for (int i = 0; i < citiesAmount; ++i)
-	{
-		graph.edges[i].resize(citiesAmount);
-	}
-	for (int i = 0; i < edgesAmount; ++i)
-	{
-		int from = 0;
-		int to = 0;
-		int len = 0;
-		fin >> from >> to >> len;
-		graph.edges[from][to] = len;
-		graph.edges[to][from] = len;
-	}
-	int capitalsAmount = 0;
-	fin >> capitalsAmount;
-	for (int i = 0; i < capitalsAmount; ++i)
-	{
-		int capital = 0;
-		fin >> capital;
-		graph.vertices[--capital] = i;
-	}
+	auto graph = new Graph;
+	graph->vertices.resize(citiesAmount);
+	return graph;
 }
 
-//Checks if there are cities to consume
-bool areCitiesLeft(Graph graph)
+//Adds an edge between cities in a graph
+void addEdge(Graph *graph, const int city1, const int city2, const int length)
 {
-	for (int i = 0; i < graph.vertices.size(); ++i)
-	{
-		if (graph.vertices[i] == 0)
-		{
-			return false;
-		}
-	}
-	return true;
+	graph->vertices[city1 - 1].neighbors.push_back({ city2, length });
+	graph->vertices[city2 - 1].neighbors.push_back({ city1, length });
 }
 
-//Finds the next city for a state to consume
-int findNextVertex(Graph graph, int state)
+//Returns the state of city
+int stateOfCity(Graph *graph, const int city)
 {
-	std::pair<int, int> nextCity = { 0, 0 };
-	for (int i = 0; i < graph.vertices.size(); ++i)
+	return (graph->vertices[city - 1].state);
+}
+
+//Changes the state of city
+void assignState(Graph *graph, const int city, const int newState)
+{
+	graph->vertices[city - 1].state = newState;
+}
+
+//Captures a city into a state
+bool captureCity(Graph *graph, const int state)
+{
+	int minLength = BIG;
+	int minCity = 0;
+	for (int i = 0; i < graph->vertices.size(); ++i)
 	{
-		if (graph.vertices[i] == state)
+		if (stateOfCity(graph, i) == state)
 		{
-			for (int j = 0; j < graph.edges[i].size(); ++j)
+			for (int j = 0; j < graph->vertices[i].neighbors.size(); ++j)
 			{
-				if ((graph.edges[i][j] > 0) && ((graph.edges[i][j] < nextCity.second) || (nextCity.second == 0)))
+				if ((stateOfCity(graph, neighborCity.first) == 0) && (neighborCity.second < minLength))
 				{
-					if (graph.vertices[j] == 0)
-					{
-						nextCity = { j, graph.edges[i][j] };
-					}
+					minLength = neighborCity.second;
+					minCity = neighborCity.first;
 				}
 			}
 		}
 	}
-	return nextCity.first;
+	if (minLength == BIG)
+	{
+		return false;
+	}
+	assignState(graph, minCity, state);
+	return true;
 }
 
-//Performs one consumption cycle loop
-void consumptionCycle(Graph graph, int capitalsAmount)
-{
-	for (int i = 0; i < capitalsAmount; ++i)
-	{
-		int newCity = findNextVertex(graph, i);
-		graph.vertices[newCity] = i;
-	}
-}

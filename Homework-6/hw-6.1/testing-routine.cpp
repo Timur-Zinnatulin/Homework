@@ -14,7 +14,7 @@ bool checkTest(char *input, const int answer)
 			ifCorrect = true;
 		}
 	}
-	delete testStack;
+	deleteStack(testStack);
 	return ifCorrect;
 }
 
@@ -22,9 +22,9 @@ bool checkTest(char *input, const int answer)
 bool testingRoutine()
 {
 	bool ifCorrect = true;
-	char input1[15] = "9 6 - 1 2 + * ";
-	char input2[15] = "8 4 + 2 3 * / ";
-	char input3[23] = "2 1 + 3 / 9 * 3 3 - / ";
+	char input1[15] = "9 6 - 1 2 + *";
+	char input2[15] = "8 4 + 2 3 * /";
+	char input3[23] = "2 1 + 3 / 9 * 3 3 - /";
 	const int answer1 = 9;
 	const int answer2 = 2;
 	if ((!checkTest(input1, answer1)) || (!checkTest(input2, answer2)))

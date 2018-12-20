@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 
-std::vector<int> prefixFunction(std::string source)
+std::vector<int> prefixFunction(const std::string &source)
 {
 	std::vector<int> prefix;
 	prefix.push_back(0);
@@ -20,7 +20,7 @@ std::vector<int> prefixFunction(std::string source)
 }
 
 //Knuth-Morris-Pratt algorithm that returns the first position where substring is met
-int substringPosition(std::ifstream &fin, const std::string substring)
+int substringPosition(std::ifstream &fin, const std::string &substring)
 {
 	std::vector<int> substringPrefix = prefixFunction(substring);
 	char input = fin.get();

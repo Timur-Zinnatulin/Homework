@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <map>
 
@@ -31,6 +32,41 @@ void deleteGraph(Graph *graph)
 	}
 	graph->vertices.clear();
 	delete graph;
+}
+
+//Returns the amount of vertices
+int verticesAmount(Graph *graph)
+{
+	return graph->vertices.size();
+}
+
+//Returns the amount of edges
+int edgesAmount(Graph *graph)
+{
+	int answer = 0;
+	for (int i = 0; i < graph->vertices.size(); ++i)
+	{
+		answer += graph->vertices[i].neighbors.size();
+	}
+	return answer / 2;
+}
+
+//Reads the input from the file and automatically creates a graph out of it
+void inputGraph(std::ifstream &fin, Graph *graph, const int amountOfVertices)
+{
+	for (int i = 0; i < amountOfVertices; ++i)
+	{
+		std::vector<int> inputLine(amountOfVertices);
+		for (int j = 0; j < amountOfVertices; ++j)
+		{
+			int input = 0;
+			fin >> input;
+			if ((input != 0) && (i < j))
+			{
+				addEdge(graph, i, j, input);
+			}
+		}
+	}
 }
 
 //Adds an edge between cities in a graph

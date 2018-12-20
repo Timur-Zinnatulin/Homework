@@ -19,7 +19,7 @@ bool testingRoutine()
 		int to = 0;
 		int length = 0;
 		fin >> from >> to >> length;
-		addEdge(graph, from, to, length);
+		addEdge(graph, from - 1, to - 1, length);
 	}
 	int amountOfStates = 0;
 	fin >> amountOfStates;
@@ -27,7 +27,7 @@ bool testingRoutine()
 	{
 		int newCapital = 0;
 		fin >> newCapital;
-		assignState(graph, newCapital, i);
+		assignState(graph, newCapital - 1, i);
 	}
 	fin.close();
 	std::vector<int> states = {};
@@ -40,9 +40,9 @@ bool testingRoutine()
 			ifCitiesToCapture = captureCity(graph, i) || ifCitiesToCapture;
 		}
 	}
-	for (int i = 1; i <= amountOfCities; ++i)
+	for (int i = 0; i < amountOfCities; ++i)
 	{
-		if (stateOfCity(graph, i) != (i >= 5))
+		if (stateOfCity(graph, i) != (i >= 4))
 		{
 			deleteGraph(graph);
 			return false;

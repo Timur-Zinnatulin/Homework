@@ -28,7 +28,7 @@ int main()
 		int to = 0;
 		int length = 0;
 		fin >> from >> to >> length;
-		addEdge(graph, from, to, length);
+		addEdge(graph, from - 1, to - 1, length);
 	}
 	int amountOfStates = 0;
 	fin >> amountOfStates;
@@ -36,7 +36,7 @@ int main()
 	{
 		int newCapital = 0;
 		fin >> newCapital;
-		assignState(graph, newCapital, i);
+		assignState(graph, newCapital - 1, i);
 	}
 	fin.close();
 	cout << "Graph successfully read.\n";
@@ -51,9 +51,9 @@ int main()
 		}
 	}
 	cout << "All cities are assigned to states. Printing results...\n\n";
-	for (int i = 1; i <= amountOfCities; ++i)
+	for (int i = 0; i < amountOfCities; ++i)
 	{
-		cout << "City #" << i << " belongs to state #" << stateOfCity(graph, i) + 1 << "\n";
+		cout << "City #" << i + 1 << " belongs to state #" << stateOfCity(graph, i) + 1 << "\n";
 	}
 	cout << "\nProgram complete. Exiting...";
 	deleteGraph(graph);

@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <vector>
 #include "graph.h"
 
 using namespace std;
@@ -9,17 +10,22 @@ int main()
 	ifstream fin("input.txt");
 	cout << "Reading graph from input.txt...\n";
 	int amountOfCities = 0;
-	int amountOfRoads = 0;
-	fin >> amountOfCities >> amountOfRoads;
+	fin >> amountOfCities;
 	auto graph = createNewGraph(amountOfCities);
-	for (int i = 0; i < amountOfRoads; ++i)
+	for (int i = 0; i < amountOfCities; ++i)
 	{
-		int from = 0;
-		int to = 0;
-		int length = 0;
-		fin >> from >> to >> length;
-		addEdge(graph, from - 1, to - 1, length);
+		vector<int> inputLine(amountOfCities);
+		for (int j = 0; j < amountOfCities; ++j)
+		{
+			int input = 0;
+			fin >> input;
+			if ((input != 0) && (i < j))
+			{
+				addEdge(graph, i, j, input);
+			}
+		}
 	}
+	fin.close();
 	auto minGraph = minimumSpanningTree(graph);
 	for (int i = 0; i < amountOfCities; ++i)
 	{

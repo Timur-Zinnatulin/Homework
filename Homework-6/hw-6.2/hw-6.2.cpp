@@ -16,7 +16,7 @@ int main()
 	}
 	printf("Welcome to Bracket Sequence Correctness Checikng program ver.1!\n");
 	printf("Please enter the bracket sequence: ");
-	char *input = new char[100]{};
+	char input[100];
 	scanf("%[^\n]s", input);
 	if (correctSequence(input))
 	{

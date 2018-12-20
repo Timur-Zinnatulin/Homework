@@ -43,6 +43,10 @@ bool correctSequence(char *input)
 			}
 		}
 	}
+	if (!isEmpty(stack))
+	{
+		ifCorrect = false;
+	}
 	deleteStack(stack);
 	return ifCorrect;
 }

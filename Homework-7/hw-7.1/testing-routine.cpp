@@ -6,7 +6,7 @@
 //Pre-run testing program
 bool testingRoutine()
 {
-	std::ifstream fin("test.txt", std::ios::in);
+	std::ifstream fin("test.txt");
 	auto testSet = createNewSet();
 	while (!fin.eof())
 	{
@@ -15,7 +15,7 @@ bool testingRoutine()
 		add(testSet, newValue);
 	}
 	fin.close();
-	fin.open("test.txt", std::ios::in);
+	fin.open("test.txt");
 	while (!fin.eof())
 	{
 		int existingValue = 0;
@@ -50,7 +50,7 @@ bool testingRoutine()
 			return false;
 		}
 	}
-	fin.open("test.txt", std::ios::in);
+	fin.open("test.txt");
 	while (!fin.eof())
 	{
 		int deletedNumber = 0;

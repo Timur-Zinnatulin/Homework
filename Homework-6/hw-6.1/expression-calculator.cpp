@@ -39,6 +39,8 @@ int result(int digit1, int digit2, char sign)
 			{
 				return digit1 / digit2;
 			}
+		default:
+			return 0;
 	}
 }
 

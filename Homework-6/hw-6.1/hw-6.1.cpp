@@ -31,6 +31,7 @@ int main()
 	{
 		printf("The result of calculation is %d\n", pop(stack));
 	}
+	delete[] input;
 	deleteStack(stack);
 	return 0;
 }

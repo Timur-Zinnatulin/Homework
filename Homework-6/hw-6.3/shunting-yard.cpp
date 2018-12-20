@@ -18,7 +18,7 @@ bool hasPriority(char value)
 }
 
 //Transforms the infix expression into postfix form
-std::string shuntingYard(std::string input)
+std::string shuntingYard(const std::string &input)
 {
 	std::string output{};
 	Stack *stack = createNewStack();
@@ -33,8 +33,12 @@ std::string shuntingYard(std::string input)
 		{
 			if (!isEmpty(stack) && hasPriority(top(stack)))
 			{
-				output.push_back(top(stack));
-				output.push_back(' ');
+				while (!isEmpty(stack) && hasPriority(top(stack)))
+				{
+					output.push_back(top(stack));
+					output.push_back(' ');
+					pop(stack);
+				}
 			}
 			push(stack, input[i]);
 		}

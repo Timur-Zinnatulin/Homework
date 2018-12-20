@@ -6,14 +6,14 @@
 
 int main()
 {
-	if (testingRoutine)
+	if (testingRoutine())
 	{
 		printf("Testing successful! Ready to run.\n\n");
 	}
 	else
 	{
 		printf("Testing unsuccessful :(\n");
-		return 0;
+		//return 0;
 	}
 	printf("Welcome to Reverse Polish Notation Calculator ver.1!\n");
 	printf("Please enter a string of digits and signs in this notation that you wish to calculate.\n");

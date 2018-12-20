@@ -50,7 +50,7 @@ bool calculateInput(Stack *stack, char *input)
 		{
 			int number2 = pop(stack);
 			int number1 = pop(stack);
-			if (result(number1, number2, input[i]) == -1 && input[i] == '/')
+			if ((result(number1, number2, input[i]) == -1) && (input[i] == '/'))
 			{
 				ifNoDivisionsByZero = false;
 				break;

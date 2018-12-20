@@ -1,161 +1,87 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <vector>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
-struct Node
+bool testingRoutine()
 {
-	int value = 0;
-	Node *next = nullptr;
-};
-
-struct List
-{
-	Node *start = nullptr;
-	int size = 0;
-};
-
-//Creates a new empty list
-List *createNewList()
-{
-	return new List;
-}
-
-//Checks if the list is empty
-bool isEmpty(List *list)
-{
-	return (list->start == nullptr);
-}
-
-void deleteList(List *list)
-{
-	while (!isEmpty(list))
+	ifstream testFin("test.txt");
+	int rows = 0;
+	int columns = 0;
+	testFin >> rows >> columns;
+	vector<vector<int>> matrix(rows, vector<int>(columns));
+	for (int i = 0; i < rows; ++i)
 	{
-		const Node *tempNode = list->start;
-		list->start = list->start->next;
-		delete tempNode;
-	}
-	delete list;
-}
-
-//Clears the entire list
-void clearList(List *&list)
-{
-	while (!isEmpty(list))
-	{
-		const Node *tempNode = list->start;
-		list->start = list->start->next;
-		delete tempNode;
-	}
-	list->size = 0;
-	list->start = nullptr;
-}
-
-void insert(List *&list, int number)
-{
-	const auto newNode = new Node{ number, nullptr };
-	if (isEmpty(list))
-	{
-		list->start = newNode;
-		++list->size;
-		return;
-	}
-	Node *leftNode = nullptr;
-	auto rightNode = list->start;
-	while (rightNode != nullptr)
-	{
-		leftNode = rightNode;
-		rightNode = rightNode->next;
-	}
-	if (leftNode != nullptr)
-	{
-		newNode->next = rightNode;
-		leftNode->next = newNode;
-	}
-	else
-	{
-		newNode->next = list->start;
-		list->start = newNode;
-	}
-	++list->size;
-}
-
-List *subsequence(List *list)
-{
-	int previous = list->start->value;
-	List *subList = createNewList();
-	List *maxList = createNewList();
-	insert(subList, previous);
-	insert(maxList, previous);
-	auto tempNode = list->start->next;
-	for (int i = 1; i < list->size; ++i)
-	{
-		if (tempNode->value < previous)
+		for (int j = 0; j < columns; ++j)
 		{
-			if (maxList->size < subList->size)
-			{
-				maxList->start = subList->start;
-				maxList->size = subList->size;
-			}
-			clearList(subList);
+			testFin >> matrix[i][j];
 		}
-		insert(subList, tempNode->value);
-		previous = tempNode->value;
-		tempNode = tempNode->next;
 	}
-	deleteList(subList);
-	return maxList;
-}
-
-void printList(List *list)
-{
-	auto tempNode = list->start;
-	for (int i = 0; i < list->size; ++i)
+	testFin.close();
+	vector<pair<int, int>> testFirstRow;
+	for (int j = 0; j < columns; ++j)
 	{
-		cout << tempNode->value << " ";
-		tempNode = tempNode->next;
+		testFirstRow.push_back({ matrix[0][j], j });
 	}
-	cout << endl;
-}
-
-bool test()
-{
-	int testValues[7] = { 1, 2, 3, 6, 7, 15, 8 };
-	List *testList = createNewList();
-	for (int i : testValues)
+	sort(testFirstRow.begin(), testFirstRow.end());
+	for (int i = 0; i < columns - 1; ++i)
 	{
-		insert(testList, i);
+		if (testFirstRow[i].first > testFirstRow[i + 1].first)
+		{
+			return false;
+		}
 	}
-	List *testAnswerList = subsequence(testList);
-	int testAnswer = testAnswerList->size;
-	deleteList(testList);
-	deleteList(testAnswerList);
-	return (testAnswer == 6);
+	return true;
 }
 
 int main()
 {
-	if (test())
+	if (testingRoutine())
 	{
-		cout << "SUCCESSFUL TEST!!!\n";
+		cout << "Testing complete!\n\n";
 	}
 	else
 	{
-		return 0;
+		cout << "Testing failed. :(";
+		return 1;
 	}
-	List *fileList = createNewList();
 	ifstream fin("f.txt");
-	int input = 0;
-	while (!fin.eof())
+	int rows = 0;
+	int columns = 0;
+	fin >> rows >> columns;
+	vector<vector<int>> matrix(rows, vector<int>(columns));
+	for (int i = 0; i < rows; ++i)
 	{
-		fin >> input;
-		insert(fileList, input);
+		for (int j = 0; j < columns; ++j)
+		{
+			fin >> matrix[i][j];
+		}
 	}
 	fin.close();
-	List *subsequentList = subsequence(fileList);
-	printList(subsequentList);
-	deleteList(subsequentList);
-	deleteList(fileList);
+	vector<pair<int, int>> firstRow;
+	for (int j = 0; j < columns; ++j)
+	{
+		firstRow.push_back({ matrix[0][j], j });
+	}
+	sort(firstRow.begin(), firstRow.end());
+	vector<vector<int>> sortedMatrix(rows, vector<int>(columns));
+	for (int j = 0; j < columns; ++j)
+	{
+		for (int i = 0; i < rows; ++i)
+		{
+			sortedMatrix[i][j] = matrix[i][firstRow[j].second];
+		}
+	}
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < columns; ++j)
+		{
+			cout << sortedMatrix[i][j] << " ";
+		}
+		cout << endl;
+	}
 	return 0;
 }

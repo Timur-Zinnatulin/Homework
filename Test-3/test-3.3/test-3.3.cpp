@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void reverseDFS(vector<vector<int>> graph, const int vertice, vector<bool> &used)
+void reverseDFS(vector<vector<int>> &graph, const int vertice, vector<bool> &used)
 {
 	for (int j = 0; j < (int)graph[vertice].size(); ++j)
 	{
@@ -40,9 +40,10 @@ int main()
 		}
 	}
 	fin.close();
+	vector<bool> used(vertices, false);
 	for (int i = 0; i < vertices; ++i)
 	{
-		vector<bool> used(vertices, false);
+		used.resize(vertices, false);
 		reverseDFS(graph, i, used);
 		bool ifCanReachAll = true;
 		for (int j = 0; j < vertices; ++j)

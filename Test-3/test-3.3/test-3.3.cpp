@@ -4,9 +4,25 @@
 
 using namespace std;
 
-bool isAccessible(const int vertice)
+void reverseDFS(vector<vector<int>> graph, const int vertice, vector<bool> &used)
 {
-	return false;
+	for (int j = 0; j < (int)graph[vertice].size(); ++j)
+	{
+		if (graph[vertice][j] == -1)
+		{
+			int fromVertice = 0;
+			while (graph[fromVertice][j] != 1)
+			{
+				++fromVertice;
+			}
+			if (!used[fromVertice])
+			{
+				used[vertice] = true;
+				reverseDFS(graph, fromVertice, used);
+			}
+		}
+	}
+	used[vertice] = true;
 }
 
 int main()
@@ -23,11 +39,23 @@ int main()
 			fin >> graph[i][j];
 		}
 	}
+	fin.close();
 	for (int i = 0; i < vertices; ++i)
 	{
-		if (isAccessible(i))
+		vector<bool> used(vertices, false);
+		reverseDFS(graph, i, used);
+		bool ifCanReachAll = true;
+		for (int j = 0; j < vertices; ++j)
 		{
-			cout << "Vertice " << i + 1 << " is accessible.\n";
+			if (!used[j])
+			{
+				ifCanReachAll = false;
+				break;
+			}
+		}
+		if (ifCanReachAll)
+		{
+			cout << "Vertice " << i + 1 << " is accessible from all edges.\n";
 		}
 	}
 	return 0;

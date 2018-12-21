@@ -26,7 +26,7 @@ Graph *createNewGraph(const int verticesAmount)
 //Delets the graph
 void deleteGraph(Graph *graph)
 {
-	for (int i = 0; i < graph->vertices.size(); ++i)
+	for (int i = 0; i < (int)graph->vertices.size(); ++i)
 	{
 		graph->vertices[i].neighbors.clear();
 	}
@@ -37,16 +37,16 @@ void deleteGraph(Graph *graph)
 //Returns the amount of vertices
 int verticesAmount(Graph *graph)
 {
-	return graph->vertices.size();
+	return (int)graph->vertices.size();
 }
 
 //Returns the amount of edges
 int edgesAmount(Graph *graph)
 {
 	int answer = 0;
-	for (int i = 0; i < graph->vertices.size(); ++i)
+	for (int i = 0; i < (int)graph->vertices.size(); ++i)
 	{
-		answer += graph->vertices[i].neighbors.size();
+		answer += (int)graph->vertices[i].neighbors.size();
 	}
 	return answer / 2;
 }
@@ -91,7 +91,7 @@ int edgeLength(Graph *graph, const int vertex1, const int vertex2)
 
 void printEdges(Graph *graph, const int vertex)
 {
-	for (int j = 0; j < graph->vertices[vertex].neighbors.size(); ++j)
+	for (int j = 0; j < (int)graph->vertices[vertex].neighbors.size(); ++j)
 	{
 		if (!graph->vertices[graph->vertices[vertex].neighbors[j].first].isInMST)
 		{
@@ -104,11 +104,11 @@ void printEdges(Graph *graph, const int vertex)
 //Prim algorithm for creating a MST from given graph
 Graph *minimumSpanningTree(Graph *graph)
 {
-	Graph *newGraph = createNewGraph(graph->vertices.size());
+	Graph *newGraph = createNewGraph((int)graph->vertices.size());
 	std::vector<int> minLength(graph->vertices.size(), INT_MAX);
 	std::vector<int> edgeDestination(graph->vertices.size(), -1);
 	minLength[0] = 0;
-	for (int i = 0; i < graph->vertices.size(); ++i)
+	for (int i = 0; i < (int)graph->vertices.size(); ++i)
 	{
 		int newVertice = -1;
 		for (int j = 0; j < graph->vertices.size(); ++j)

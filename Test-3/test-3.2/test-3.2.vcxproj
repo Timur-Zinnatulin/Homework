@@ -151,7 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="priority-queue.cpp" />
     <ClCompile Include="test-3.2.cpp" />
+    <ClCompile Include="testing-routine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="priority-queue.h" />
+    <ClInclude Include="testing-routine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

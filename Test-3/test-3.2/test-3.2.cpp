@@ -1,74 +1,50 @@
 ﻿#include <iostream>
-#include <vector>
+#include "testing-routine.h"
+#include "priority-queue.h"
 
 using namespace std;
 
 int main()
 {
-	int rowSize = 0;
-	int columnSize = 0;
-	cout << "Enter the number of rows and number of columns.\n";
-	cin >> rowSize >> columnSize;
-	vector<vector<int>> matrix(rowSize, vector<int>(columnSize));
-
-	vector<int> minInRow(rowSize);
-	int previous = 0;
-	bool ifAllEqual = true;
-	for (int i = 0; i < rowSize; ++i)
+	if (testingRoutine())
 	{
-		int min = 0;
-		int minColumn = 0;
-		cin >> min;
-		if (i == 0)
-		{
-			previous = min;
-		}
-		matrix[i][0] = min;
-		for (int j = 1; j < columnSize; ++j)
-		{
-			cin >> matrix[i][j];
-			if (previous != matrix[i][j])
-			{
-				ifAllEqual = false;
-			}
-			if (matrix[i][j] < min)
-			{
-				min = matrix[i][j];
-				minColumn = j;
-			}
-			previous = matrix[i][j];
-		}
-		minInRow[i] = minColumn;
+		cout << "TESTING SUCCESSFUL!!!\n\n";
 	}
-
-	vector<int> maxInColumn(columnSize);
-	for (int j = 0; j < columnSize; ++j)
+	auto queue = createQueue();
+	cout << "Commands:\n";
+	cout << "1 - insert value into priority queue.\n";
+	cout << "2 - dequeue and print the top element.\n";
+	cout << "0 - exit.\n";
+	int input = -1;
+	while (input != 0)
 	{
-		int max = matrix[0][j];
-		int maxRow = 0;
-		for (int i = 0; i < rowSize; ++i)
+		cin >> input;
+		switch (input)
 		{
-			if (matrix[i][j] > max)
-			{
-				max = matrix[i][j];
-				maxRow = i;
-			}
+		case 1:
+		{
+			cout << "Give me priority and value.\n";
+			int priority = 0;
+			int value = 0;
+			cin >> priority >> value;
+			enqueue(queue, priority, value);
+			cout << "Value inserted.\n";
+			break;
 		}
-		maxInColumn[j] = maxRow;
-	}
-
-	if (ifAllEqual)
-	{
-		cout << "All points are saddle points!\n";
-		return 0;
-	}
-
-	for (int i = 0; i < rowSize; ++i)
-	{
-		if (maxInColumn[minInRow[i]] == i)
+		case 2:
 		{
-			cout << i << " " << minInRow[i] << "is a saddle point.\n";
+			int top = dequeue(queue);
+			cout << "The top element is: " << top << "\n";
+			break;
+		}
+		default:
+		{
+			input = 0;
+			break;
+		}
 		}
 	}
+	deleteQueue(queue);
+	cout << "Exiting...\n\n";
 	return 0;
 }

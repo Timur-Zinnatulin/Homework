@@ -1,0 +1,18 @@
+all: shunting_yard
+
+shunting_yard: test.obj stack.obj algorithm.obj main.obj
+
+test.obj: testing-routine.cpp testing-routine.h shunting-yard.h
+	cl /c /EHsc testing-routine.cpp
+
+stack.obj: stack.cpp stack.h
+	cl /c /EHsc stack.cpp
+
+algorithm.obj: shunting-yard.cpp shunting-yard.h stack.h
+	cl /c /EHsc shunting-yard.cpp
+
+main.obj: hw-6.3.cpp shunting-yard.h testing-routine.h 
+	cl /c /EHsc hw-6.3.cpp
+
+clean:
+	rm -rf *.o shunting_yard

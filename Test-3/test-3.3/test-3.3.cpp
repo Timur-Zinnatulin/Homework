@@ -40,10 +40,9 @@ int main()
 		}
 	}
 	fin.close();
-	vector<bool> used(vertices, false);
 	for (int i = 0; i < vertices; ++i)
 	{
-		used.resize(vertices, false);
+		vector<bool> used(vertices, false);
 		reverseDFS(graph, i, used);
 		bool ifCanReachAll = true;
 		for (int j = 0; j < vertices; ++j)
@@ -56,7 +55,7 @@ int main()
 		}
 		if (ifCanReachAll)
 		{
-			cout << "Vertice " << i + 1 << " is accessible from all edges.\n";
+			cout << "Vertice " << i << " is accessible from all edges.\n";
 		}
 	}
 	return 0;

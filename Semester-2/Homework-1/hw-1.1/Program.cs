@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace hw_1._1
+namespace Hw_1._1
 {
     class Program
     {
@@ -13,6 +13,7 @@ namespace hw_1._1
 
             return n * Factorial(n - 1);
         }
+
         static void Main(string[] args)
         {
             Console.WriteLine($"Factorial of 4 is {Factorial(4)}.");

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace hw_1._3
+namespace Hw_1._3
 {
     class Program
     {
@@ -20,6 +20,7 @@ namespace hw_1._3
             }
             return array;
         }
+
         static void Main(string[] args)
         {
             int[] array = { 18, 124, 13, 2, -15, 88, 69, 332, 84 };

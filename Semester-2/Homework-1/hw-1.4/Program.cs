@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace hw_1._4
+namespace Hw_1._4
 {
     class Program
     {

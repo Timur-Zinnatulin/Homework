@@ -6,12 +6,22 @@ namespace Hw_1._2
     {
         private static int Fibonacci(int n)
         {
-            if ((n == 1) || (n == 2))
+            if (n < 1)
             {
-                return 1;
+                return -1;
             }
 
-            return Fibonacci(n - 1) + Fibonacci(n - 2);
+            int previous = 0;
+            int current = 1;
+
+            for (int i = 0; i < n - 1; ++i)
+            {
+                var difference = previous;
+                previous = current;
+                current += difference;
+            }
+
+            return current;
         }
 
         static void Main(string[] args)

@@ -14,21 +14,8 @@ namespace Hw_1._5
             }
         }
 
-        static void Main(string[] args)
+        static void SortMatrixByColumns(int[,] matrix)
         {
-            Console.WriteLine("Enter the dimensions of a matrix: ");
-            var dimensions = (Console.ReadLine().Split(' '));
-            var matrix = new int[Convert.ToInt32(dimensions[0]), Convert.ToInt32(dimensions[1])];
-            Console.WriteLine("Enter the contents of a matrix.");
-            for (int i = 0; i < matrix.GetLength(0); ++i)
-            {
-                var values = (Console.ReadLine().Split(' '));
-                for (int j = 0; j < matrix.GetLength(1); ++j)
-                {
-                    matrix[i, j] = int.Parse(values[j]);
-                }
-            }
-            Console.WriteLine("__________________");
             for (int j = 0; j < matrix.GetLength(1); ++j)
             {
                 int minColumn = j;
@@ -46,6 +33,11 @@ namespace Hw_1._5
                     SwapColumns(matrix, j, minColumn);
                 }
             }
+        }
+
+        static void PrintMatrix(int[,] matrix)
+        {
+            Console.WriteLine("__________________");
             for (int i = 0; i < matrix.GetLength(0); ++i)
             {
                 for (int j = 0; j < matrix.GetLength(1); ++j)
@@ -54,6 +46,24 @@ namespace Hw_1._5
                 }
                 Console.WriteLine();
             }
+        }
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter the dimensions of a matrix: ");
+            var dimensions = Console.ReadLine().Split(' ');
+            var matrix = new int[Convert.ToInt32(dimensions[0]), Convert.ToInt32(dimensions[1])];
+            Console.WriteLine("Enter the contents of a matrix.");
+            for (int i = 0; i < matrix.GetLength(0); ++i)
+            {
+                var values = (Console.ReadLine().Split(' '));
+                for (int j = 0; j < matrix.GetLength(1); ++j)
+                {
+                    matrix[i, j] = int.Parse(values[j]);
+                }
+            }
+            SortMatrixByColumns(matrix);
+            PrintMatrix(matrix);
         }
     }
 }

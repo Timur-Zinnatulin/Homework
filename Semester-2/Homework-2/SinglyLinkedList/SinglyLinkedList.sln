@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SinglyLinkedList", "SinglyLinkedList\SinglyLinkedList.csproj", "{86DFB3D4-E403-4319-84BA-394FDC6D7FB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SinglyLinkedList.Test", "SinglyLinkedList.Test\SinglyLinkedList.Test.csproj", "{13CC3E0C-1C9B-4ABE-BCC8-7AF782492F49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{86DFB3D4-E403-4319-84BA-394FDC6D7FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86DFB3D4-E403-4319-84BA-394FDC6D7FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86DFB3D4-E403-4319-84BA-394FDC6D7FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13CC3E0C-1C9B-4ABE-BCC8-7AF782492F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13CC3E0C-1C9B-4ABE-BCC8-7AF782492F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13CC3E0C-1C9B-4ABE-BCC8-7AF782492F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13CC3E0C-1C9B-4ABE-BCC8-7AF782492F49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

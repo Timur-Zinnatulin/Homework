@@ -8,4 +8,4 @@ build:
 
 test_script:
   - nunit3-console Semester-2/Homework-2/SinglyLinkedList/SinglyLinkedList.sln \
-	--result=myresults.xml;format=AppVeyor
+    --result=myresults.xml;format=AppVeyor

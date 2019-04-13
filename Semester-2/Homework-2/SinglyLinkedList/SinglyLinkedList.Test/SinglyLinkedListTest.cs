@@ -5,7 +5,7 @@
     using SinglyLinkedList;
 
     [TestFixture]
-    public class UnitTest1
+    public class LinkedListTests
     {
         LinkedList list;
 

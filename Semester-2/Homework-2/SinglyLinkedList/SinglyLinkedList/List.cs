@@ -5,7 +5,7 @@
     /// <summary>
     /// Singly linked list with required functionality
     /// </summary>
-    public class List : IList
+    public class LinkedList : IList
     {
         /// <summary>
         /// Node of a singly linked list
@@ -74,12 +74,12 @@
         /// </param>
         public void Insert(int value, int position)
         {
-            try
-            {
+            //try
+            //{
                 // It's probably better to create an exception class
                 if (!FlagCanInsertIntoPosition(position))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Error! Insert position is invalid!");
                 }
 
                 if (position == 0)
@@ -92,13 +92,13 @@
                 var newNode = new ListNode(value, precedingNode.Next);
                 precedingNode.Next = newNode;
                 ++Length;
-            }
+            //}
 
             //Invalid position exception
-            catch (ArgumentException)
+            /*catch (ArgumentException)
             {
                 Console.WriteLine("Error! Insert position is invalid!");
-            }
+            }*/
         }
 
         private void RemoveFromHead()

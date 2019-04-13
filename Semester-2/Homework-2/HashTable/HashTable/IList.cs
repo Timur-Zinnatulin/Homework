@@ -6,9 +6,10 @@
     {
         int Length { get; }
         bool IsEmpty();
-        void Insert(int value, int position);
+        void Insert(string value, int position);
         void Remove(int position);
-        int GetValueByPosition(int position);
-        void ChangeValueByPosition(int value, int position);
+        string GetValueByPosition(int position);
+        void ChangeValueByPosition(string value, int position);
+        int GetPositionByValue(string value);
     }
 }

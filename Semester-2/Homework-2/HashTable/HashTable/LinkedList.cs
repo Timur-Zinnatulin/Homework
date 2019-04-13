@@ -12,9 +12,9 @@
         /// </summary>
         private class ListNode
         {
-            public int Value { get; set; }
+            public string Value { get; set; }
             public ListNode Next { get; set; }
-            public ListNode(int value, ListNode next)
+            public ListNode(string value, ListNode next)
             {
                 Value = value;
                 Next = next;
@@ -57,7 +57,7 @@
             return temp;
         }
 
-        private void InsertIntoHead(int value)
+        private void InsertIntoHead(string value)
         {
             Head = new ListNode(value, Head);
             ++Length;
@@ -72,7 +72,7 @@
         /// <param name="position">
         /// Position of the new node
         /// </param>
-        public void Insert(int value, int position)
+        public void Insert(string value, int position)
         {
             if (!FlagCanInsertIntoPosition(position))
             {
@@ -130,7 +130,7 @@
         /// <returns>
         /// Desired value
         /// </returns>
-        public int GetValueByPosition(int position)
+        public string GetValueByPosition(int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -150,7 +150,7 @@
         /// <param name="position">
         /// Position of desired node
         /// </param>
-        public void ChangeValueByPosition(int value, int position)
+        public void ChangeValueByPosition(string value, int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -159,6 +159,26 @@
 
             var node = GetParticularNode(position);
             node.Value = value;
+        }
+        
+        /// <summary>
+        /// Finds the position of given string
+        /// </summary>
+        /// <param name="value">String that we know</param>
+        /// <returns>Position of given string. If it doesn't exist in the list, returns -1.</returns>
+        public int GetPositionByValue(string value)
+        {
+            var temp = Head;
+            for (int i = 0; i < Length; ++i)
+            {
+                if (value == temp.Value)
+                {
+                    return i;
+                }
+                temp = temp.Next;
+            }
+
+            return -1;
         }
     }
 }

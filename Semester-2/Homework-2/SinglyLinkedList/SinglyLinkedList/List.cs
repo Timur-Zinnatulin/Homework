@@ -74,32 +74,22 @@
         /// </param>
         public void Insert(int value, int position)
         {
-            //try
-            //{
-                // It's probably better to create an exception class
-                if (!FlagCanInsertIntoPosition(position))
-                {
-                    throw new ArgumentException("Error! Insert position is invalid!");
-                }
-
-                if (position == 0)
-                {
-                    InsertIntoHead(value);
-                    return;
-                }
-
-                var precedingNode = GetParticularNode(position - 1);
-                var newNode = new ListNode(value, precedingNode.Next);
-                precedingNode.Next = newNode;
-                ++Length;
-            //}
-
-            //Invalid position exception
-            /*catch (ArgumentException)
+            if (!FlagCanInsertIntoPosition(position))
             {
-                Console.WriteLine("Error! Insert position is invalid!");
-            }*/
-        }
+                throw new InvalidListPositionException("Error! Insert position is invalid!");
+            }
+
+            if (position == 0)
+            {
+                InsertIntoHead(value);
+                return;
+            }
+
+            var precedingNode = GetParticularNode(position - 1);
+            var newNode = new ListNode(value, precedingNode.Next);
+            precedingNode.Next = newNode;
+            ++Length;
+         }
 
         private void RemoveFromHead()
         {
@@ -115,29 +105,20 @@
         /// </param>
         public void Remove(int position)
         {
-            try
+            if (!FlagNodeIsInList(position))
             {
-                if (!FlagNodeIsInList(position))
-                {
-                    throw new ArgumentException();
-                }
-
-                if (position == 0)
-                {
-                    RemoveFromHead();
-                    return;
-                }
-
-                var precedingNode = GetParticularNode(position - 1);
-                precedingNode.Next = precedingNode.Next.Next;
-                --Length;
+                throw new InvalidListPositionException("Error! Remove position is invalid!");
             }
 
-            //Invalid position exception
-            catch (ArgumentException)
+            if (position == 0)
             {
-                Console.WriteLine("Error! Remove position is invalid!");
+                RemoveFromHead();
+                return;
             }
+
+            var precedingNode = GetParticularNode(position - 1);
+            precedingNode.Next = precedingNode.Next.Next;
+            --Length;
         }
 
         /// <summary>
@@ -151,23 +132,13 @@
         /// </returns>
         public int GetValueByPosition(int position)
         {
-            try
+            if (!FlagNodeIsInList(position))
             {
-                if (!FlagNodeIsInList(position))
-                {
-                    throw new ArgumentException();
-                }
-
-                var node = GetParticularNode(position);
-                return node.Value;
+                throw new InvalidListPositionException("Error! Node get position is invalid!");
             }
 
-            //Invalid position exception
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Error! Node position is invalid!");
-                return -1;
-            }
+            var node = GetParticularNode(position);
+            return node.Value;
         }
 
         /// <summary>
@@ -181,22 +152,13 @@
         /// </param>
         public void ChangeValueByPosition(int value, int position)
         {
-            try
+            if (!FlagNodeIsInList(position))
             {
-                if (!FlagNodeIsInList(position))
-                {
-                    throw new ArgumentException();
-                }
-
-                var node = GetParticularNode(position);
-                node.Value = value;
+                throw new InvalidListPositionException("Error! Node change position is invalid!");
             }
 
-            //Invalid position exception
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Error! Node position is invalid!");
-            }
+            var node = GetParticularNode(position);
+            node.Value = value;
         }
     }
 }

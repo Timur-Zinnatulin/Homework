@@ -11,15 +11,11 @@
 
         [SetUp]
         public void SetUp()
-        {
-            list = new LinkedList();
-        }
+            => list = new LinkedList();
 
         [Test]
         public void ListIsEmptyAtStartTest()
-        {
-            Assert.AreEqual(0, list.Length);
-        }
+            => Assert.AreEqual(0, list.Length);
 
         [Test]
         public void CorrectlyTracksLengthWhenAddOneTest()
@@ -116,14 +112,47 @@
 
         
         [Test]
-        public void ThrowsExceptionWhenWrongPositionTest()
-        {
-            Assert.Throws<ArgumentException>(_WrongInsert, "Error! Insert position is invalid!");
-        }
+        public void ThrowsExceptionWhenWrongInsertPositionTest()
+            => Assert.Throws<InvalidListPositionException>(_WrongInsert, "Error! Insert position is invalid!");
 
         private void _WrongInsert()
+            => list.Insert(1, 1);
+
+        [Test]
+        public void ThrowsExceptionWhenRemovesFromEmptyListTest()
+            => Assert.Throws<InvalidListPositionException>(_EmptyRemove, "Error! Remove position is invalid!");
+
+        private void _EmptyRemove()
+            => list.Remove(0);
+
+        [Test]
+        public void ThrowsExceptionWhenWrongRemoveTest()
+            => Assert.Throws<InvalidListPositionException>(_WrongRemove, "Error! Remove position is invalid!");
+
+        private void _WrongRemove()
         {
-            list.Insert(1, 1);
+            list.Insert(1, 0);
+            list.Remove(1);
+        }
+
+        [Test]
+        public void ThrowsExceptionWhenWrongGetValueTest()
+            => Assert.Throws<InvalidListPositionException>(_WrongGet, "Error! Node get position is invalid!");
+
+        private void _WrongGet()
+        {
+            list.Insert(1, 0);
+            list.GetValueByPosition(1);
+        }
+
+        [Test]
+        public void ThrowsExceptionWhenWrongChangeValueTest()
+            => Assert.Throws<InvalidListPositionException>(_WrongChange, "Error! Node change position is invalid!");
+
+        private void _WrongChange()
+        {
+            list.Insert(1, 0);
+            list.ChangeValueByPosition(2, 1);
         }
     }
 }

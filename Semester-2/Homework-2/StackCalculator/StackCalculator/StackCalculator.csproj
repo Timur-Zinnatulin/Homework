@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayStack.cs" />
+    <Compile Include="Calculator.cs" />
     <Compile Include="IStack.cs" />
     <Compile Include="ListStack.cs" />
     <Compile Include="Program.cs" />

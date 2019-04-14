@@ -5,7 +5,7 @@
     /// <summary>
     /// Stack based on list
     /// </summary>
-    public class ListStack
+    public class ListStack : IStack
     {
         /// <summary>
         /// Node of list

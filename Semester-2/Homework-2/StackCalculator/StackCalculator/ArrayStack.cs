@@ -5,7 +5,7 @@
     /// <summary>
     /// Stack based on array
     /// </summary>
-    public class ArrayStack
+    public class ArrayStack : IStack
     {
         private int[] elements;
         

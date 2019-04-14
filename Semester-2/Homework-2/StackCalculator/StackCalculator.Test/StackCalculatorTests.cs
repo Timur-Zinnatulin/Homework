@@ -1,4 +1,4 @@
-﻿namespace StackCalculator.Test
+﻿namespace StackCalculatorNamespace.Test
 {
     using System;
     using StackCalculatorNamespace;

@@ -3,23 +3,28 @@
     using System;
 
     /// <summary>
-    /// Stack based on array
+    /// Stack based on list
     /// </summary>
-    public class ArrayStack
+    public class ListStack
     {
-        private int[] elements;
-        
-        public int Size { get; private set; }
-
         /// <summary>
-        /// Array stack constructor
+        /// Node of list
         /// </summary>
-        /// <param name="size">Initial size of new stack</param>
-        public ArrayStack(int size)
+        private class ListNode
         {
-            this.Size = 0;
-            elements = new int[size];
+            public int Value { get; set; }
+            public ListNode Next { get; set; }
+
+            public ListNode(int value)
+            {
+                Value = value;
+                Next = null;
+            }
         }
+
+        private ListNode head;
+
+        public int Size { get; private set; }
 
         /// <summary>
         /// Check if the stack is empty
@@ -39,7 +44,7 @@
                 throw new InvalidOperationException("Stack is empty!");
             }
 
-            return elements[Size - 1];
+            return head.Value;
         }
 
         /// <summary>
@@ -48,13 +53,16 @@
         /// <returns>Top element of stack</returns>
         public int Pop()
         {
-            if (Size == 0)
+            if (IsEmpty())
             {
                 throw new InvalidOperationException("Stack is empty!");
             }
 
+            int answer = head.Value;
+            head = head.Next;
             --Size;
-            return elements[Size];
+
+            return answer;
         }
 
         /// <summary>
@@ -63,25 +71,12 @@
         /// <param name="value">Value pushed into stack</param>
         public void Push(int value)
         {
-            if (Size >= elements.Length)
+            var newHead = new ListNode(value)
             {
-                Resize();
-            }
-
-            elements[Size] = value;
+                Next = head
+            };
+            head = newHead;
             ++Size;
-        }
-
-        private void Resize()
-        {
-            var newStack = new int[elements.Length * 2 + 1];
-
-            for (int i = 0; i < elements.Length; ++i)
-            {
-                newStack[i] = elements[i];
-            }
-
-            elements = newStack;
         }
     }
 }

@@ -10,6 +10,13 @@
         private IStack stack;
 
         /// <summary>
+        /// Interfaced stack constructor
+        /// </summary>
+        /// <param name="stackOfParticularType">Stack based on any of the types</param>
+        public Calculator(IStack stackOfParticularType)
+            => this.stack = stackOfParticularType;
+
+        /// <summary>
         /// Calculates the result of an expression
         /// </summary>
         /// <param name="input">The expression which is being calculated</param>
@@ -25,14 +32,14 @@
 
             foreach (var item in items)
             {
-                if (int.TryParse(input, out int result))
+                if (int.TryParse(item, out int result))
                 {
                     stack.Push(result);
                 }
 
                 else
                 {
-                    Operate(input);
+                    Operate(item);
                 }
             }
 

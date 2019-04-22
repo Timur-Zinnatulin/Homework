@@ -5,14 +5,14 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ArrayStackTests
+    public class ListStackTests
     {
-        ArrayStack stack;
+        ListStack stack;
 
         [SetUp]
         public void SetUp()
         {
-            stack = new ArrayStack(100);
+            stack = new ListStack();
         }
 
         [Test]

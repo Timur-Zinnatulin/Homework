@@ -1,11 +1,11 @@
 image: Visual Studio 2017
 
 before_build:
-  - nuget restore Semester-2/Test-1/Test-1.sln
+  - nuget restore Semester-2/Test-1-Button/Test-1-Button.sln
 
 build:
-   project: Semester-2/Test-1/Test-1.sln
+   project: Semester-2/Test-1-Button/Test-1-Button.sln
 
 test_script:
-  - nunit3-console Semester-2/Test-1/Test-1.sln \
+  - nunit3-console Semester-2/Test-1-Button/Test-1-Button.sln \
     --result=myresults.xml;format=AppVeyor

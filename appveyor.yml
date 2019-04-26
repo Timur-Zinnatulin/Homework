@@ -5,7 +5,3 @@ before_build:
 
 build:
    project: Semester-2/Test-1-Button/Test-1-Button.sln
-
-test_script:
-  - nunit3-console Semester-2/Test-1-Button/Test-1-Button.sln \
-    --result=myresults.xml;format=AppVeyor

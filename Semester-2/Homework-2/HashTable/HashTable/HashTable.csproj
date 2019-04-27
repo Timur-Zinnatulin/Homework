@@ -47,9 +47,12 @@
     <Compile Include="IHashTable.cs" />
     <Compile Include="IList.cs" />
     <Compile Include="InvalidListPositionException.cs" />
+    <Compile Include="JenkinsHashFunction.cs" />
     <Compile Include="LinkedList.cs" />
+    <Compile Include="FNVHashFunction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursiveHashFunction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

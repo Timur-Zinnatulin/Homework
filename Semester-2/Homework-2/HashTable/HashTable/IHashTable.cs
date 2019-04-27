@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Hash table interface
+    /// </summary>
     interface IHashTable
     {
         int Size { get; }

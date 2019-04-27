@@ -1,4 +1,4 @@
-﻿namespace HashTable.Test
+﻿namespace HashTableNamespace.Test
 {
     using System;
     using HashTableNamespace;

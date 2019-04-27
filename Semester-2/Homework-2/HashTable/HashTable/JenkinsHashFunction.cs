@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace HashTable
+namespace HashTableNamespace
 {
     /// <summary>
     /// Jenkins Hash Function class
     /// </summary>
-    public class JenkinsHashFunction
+    public class JenkinsHashFunction : IHashFunction
     {
         /// <summary>
         /// Jenkins hash function calculator

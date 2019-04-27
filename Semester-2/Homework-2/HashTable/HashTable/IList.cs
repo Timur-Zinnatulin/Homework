@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// List interface
+    /// </summary>
     interface IList
     {
         int Length { get; }

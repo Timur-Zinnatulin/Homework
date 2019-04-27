@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace HashTable
+namespace HashTableNamespace
 {
     /// <summary>
     /// FNV hash function class
     /// </summary>
-    public class FNVHashFunction
+    public class FNVHashFunction : IHashFunction
     {
         private const ulong HashBigPrime = 32416188809;
         private const ulong FNV_OffsetBasis = 14695981039346656037;

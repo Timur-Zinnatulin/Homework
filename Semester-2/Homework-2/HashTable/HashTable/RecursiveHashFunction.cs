@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace HashTable
+namespace HashTableNamespace
 {
     /// <summary>
     /// Recursive hash function class
     /// </summary>
-    public class RecursiveHashFunction
+    public class RecursiveHashFunction : IHashFunction
     {
         /// <summary>
         /// Recursive hash function calculator

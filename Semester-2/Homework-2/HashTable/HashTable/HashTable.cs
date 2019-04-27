@@ -9,13 +9,14 @@
     {
         private int length;
         private LinkedList[] buckets;
+        private IHashFunction hashFunction;
         public int Size { get; private set; }
 
         /// <summary>
         /// Hash Table constructor
         /// </summary>
         /// <param name="length">Amount of buckets in Hash Table</param>
-        public HashTable(int length)
+        public HashTable(int length, IHashFunction hashFunction)
         {
             this.length = length;
             buckets = new LinkedList[length];
@@ -23,15 +24,8 @@
             {
                 buckets[i] = new LinkedList();
             }
+            this.hashFunction = hashFunction;
         }
-
-        /// <summary>
-        /// Calculates hash function of given string
-        /// </summary>
-        /// <param name="value">Given string</param>
-        /// <returns>Calculated hash function</returns>
-        private ulong Key(string value)
-            => Math.Abs(value.GetHashCode() % length);
 
         /// <summary>
         /// Checks if the string exists in hash table
@@ -40,9 +34,9 @@
         /// <returns>Flag if the string exists in hash table</returns>
         public bool Exists(string value)
         {
-            for (int i = 0; i < buckets[Key(value)].Length; ++i)
+            for (int i = 0; i < buckets[hashFunction.Key(value)].Length; ++i)
             {
-                if (buckets[Key(value)].GetValueByPosition(i) == value)
+                if (buckets[hashFunction.Key(value)].GetValueByPosition(i) == value)
                 {
                     return true;
                 }
@@ -75,7 +69,7 @@
                     for (int i = 0; i < bucket.Length; ++i)
                     {
                         var current = bucket.GetValueByPosition(i);
-                        newBuckets[Key(current)].Insert(current, newBuckets[Key(current)].Length);
+                        newBuckets[hashFunction.Key(current)].Insert(current, newBuckets[hashFunction.Key(current)].Length);
                     }
                 }
             }
@@ -90,7 +84,7 @@
         {
             if (!Exists(value))
             {
-                buckets[Key(value)].Insert(value, buckets[Key(value)].Length);
+                buckets[hashFunction.Key(value)].Insert(value, buckets[hashFunction.Key(value)].Length);
                 ++Size;
             }
             Resize();
@@ -104,7 +98,7 @@
         {
             if (Exists(value))
             {
-                buckets[Key(value)].Remove(buckets[Key(value)].GetPositionByValue(value));
+                buckets[hashFunction.Key(value)].Remove(buckets[hashFunction.Key(value)].GetPositionByValue(value));
                 --Size;
             }
         }

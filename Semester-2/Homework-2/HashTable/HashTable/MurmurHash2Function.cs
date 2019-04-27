@@ -3,28 +3,27 @@
 namespace HashTable
 {
     /// <summary>
-    /// Jenkins Hash Function class
+    /// FNV hash function class
     /// </summary>
-    public class JenkinsHashFunction
+    public class FNVHashFunction
     {
+        private const ulong HashBigPrime = 32416188809;
+        private const ulong FNV_OffsetBasis = 14695981039346656037;
+
         /// <summary>
-        /// Jenkins hash function calculator
+        /// FNV hash function calculator
         /// </summary>
         /// <param name="word">Encoded word</param>
         /// <returns>Hash function of the word</returns>
         public ulong Key(string word)
         {
-            ulong hash = 0;
+            ulong hash = FNV_OffsetBasis;
+
             foreach (ulong character in word)
             {
-                hash += character;
-                hash += hash << 10;
-                hash ^= hash >> 6;
+                hash *= HashBigPrime;
+                hash ^= character; 
             }
-
-            hash += hash << 3;
-            hash ^= hash >> 11;
-            hash += hash << 15;
 
             return hash;
         }

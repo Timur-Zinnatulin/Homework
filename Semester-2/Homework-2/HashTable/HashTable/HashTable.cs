@@ -30,7 +30,7 @@
         /// </summary>
         /// <param name="value">Given string</param>
         /// <returns>Calculated hash function</returns>
-        private int Key(string value)
+        private ulong Key(string value)
             => Math.Abs(value.GetHashCode() % length);
 
         /// <summary>

@@ -7,12 +7,12 @@
     /// </summary>
     interface IList
     {
-        int Length { get; }
+        ulong Length { get; }
         bool IsEmpty();
-        void Insert(string value, int position);
-        void Remove(int position);
-        string GetValueByPosition(int position);
-        void ChangeValueByPosition(string value, int position);
-        int GetPositionByValue(string value);
+        void Insert(string value, ulong position);
+        void Remove(ulong position);
+        string GetValueByPosition(ulong position);
+        void ChangeValueByPosition(string value, ulong position);
+        ulong GetPositionByValue(string value);
     }
 }

@@ -34,9 +34,9 @@
         /// <returns>Flag if the string exists in hash table</returns>
         public bool Exists(string value)
         {
-            for (int i = 0; i < buckets[hashFunction.Key(value)].Length; ++i)
+            for (ulong i = 0; i < buckets[hashFunction.Key(value) % (ulong)length].Length; ++i)
             {
-                if (buckets[hashFunction.Key(value)].GetValueByPosition(i) == value)
+                if (buckets[hashFunction.Key(value) % (ulong)length].GetValueByPosition(i) == value)
                 {
                     return true;
                 }
@@ -66,10 +66,10 @@
             {
                 if (!bucket.IsEmpty())
                 {
-                    for (int i = 0; i < bucket.Length; ++i)
+                    for (ulong i = 0; i < bucket.Length; ++i)
                     {
                         var current = bucket.GetValueByPosition(i);
-                        newBuckets[hashFunction.Key(current)].Insert(current, newBuckets[hashFunction.Key(current)].Length);
+                        newBuckets[hashFunction.Key(current) % (ulong)length].Insert(current, newBuckets[hashFunction.Key(current) % (ulong)length].Length);
                     }
                 }
             }
@@ -84,7 +84,7 @@
         {
             if (!Exists(value))
             {
-                buckets[hashFunction.Key(value)].Insert(value, buckets[hashFunction.Key(value)].Length);
+                buckets[hashFunction.Key(value) % (ulong)length].Insert(value, buckets[hashFunction.Key(value) % (ulong)length].Length);
                 ++Size;
             }
             Resize();
@@ -98,7 +98,7 @@
         {
             if (Exists(value))
             {
-                buckets[hashFunction.Key(value)].Remove(buckets[hashFunction.Key(value)].GetPositionByValue(value));
+                buckets[hashFunction.Key(value) % (ulong)length].Remove(buckets[hashFunction.Key(value) % (ulong)length].GetPositionByValue(value));
                 --Size;
             }
         }

@@ -5,7 +5,7 @@
     /// <summary>
     /// Hash table interface
     /// </summary>
-    interface IHashTable
+    public interface IHashTable
     {
         int Size { get; }
         bool Exists(string value);

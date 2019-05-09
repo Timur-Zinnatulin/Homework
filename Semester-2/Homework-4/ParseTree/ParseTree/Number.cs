@@ -10,7 +10,7 @@ namespace ParseTree
         /// <summary>
         /// Value of a node
         /// </summary>
-        public int Value;
+        public int Value { get; set; }
 
         /// <summary>
         /// Node constructor

@@ -29,9 +29,9 @@ namespace ParseTree
             => Value;
 
         /// <summary>
-        /// Prints node's value
+        /// Prints node parsing
         /// </summary>
-        public override void Print()
-            => Console.Write($"{Value} ");
+        public override string Print()
+            => $"{Value} ";
     }
 }

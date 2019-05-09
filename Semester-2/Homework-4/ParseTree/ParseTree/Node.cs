@@ -14,8 +14,8 @@ namespace ParseTree
         public abstract int Calculate();
 
         /// <summary>
-        /// Prints node's value
+        /// Prints node parsing
         /// </summary>
-        public abstract void Print();
+        public abstract string Print();
     }
 }

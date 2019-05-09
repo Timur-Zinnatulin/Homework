@@ -15,14 +15,9 @@ namespace ParseTree
             => LeftChild.Calculate() + RightChild.Calculate();
 
         /// <summary>
-        /// Prints node's value
+        /// Prints node parsing
         /// </summary>
-        public override void Print()
-        {
-            Console.Write("( + ");
-            LeftChild.Print();
-            RightChild.Print();
-            Console.Write(") ");
-        }
+        public override string Print()
+            => "( + " + LeftChild.Print() + RightChild.Print() + ") ";
     }
 }

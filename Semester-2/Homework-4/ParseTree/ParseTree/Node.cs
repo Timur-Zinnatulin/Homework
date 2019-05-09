@@ -8,19 +8,10 @@ namespace ParseTree
     public abstract class Node
     {
         /// <summary>
-        /// Left child of a node
+        /// Calculates the node value
         /// </summary>
-        public Node LeftChild { get; set; }
-
-        /// <summary>
-        /// Right child of a node
-        /// </summary>
-        public Node RightChild { get; set; }
-
-        /// <summary>
-        /// Value of node after calculation
-        /// </summary>
-        public abstract int Calculate { get; }
+        /// <returns>Value of node after calculation</returns>
+        public abstract int Calculate();
 
         /// <summary>
         /// Prints node's value

@@ -7,7 +7,7 @@ namespace ParseTree
     /// <summary>
     /// Expression tree creation class
     /// </summary>
-    public static class ExpressionCalculator
+    public static class TreeConstructor
     {
         /// <summary>
         /// Creates a new node for expression tree

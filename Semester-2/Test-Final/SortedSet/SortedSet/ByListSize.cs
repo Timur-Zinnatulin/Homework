@@ -8,7 +8,17 @@ namespace SortedSet
     {
         int IComparer<List<string>>.Compare(List<string> x, List<string> y)
         {
-            return (new Comparer<int>()).Compare(x.Count, y.Count);
+            if (x.Count >= y.Count)
+            {
+                if (List<string>.Equals(x, y))
+                {
+                    return 0;
+                }
+
+                return 1;
+            }
+
+            return -1;
         }
     }
 }

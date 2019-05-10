@@ -28,7 +28,7 @@ namespace SortedSet
                 }
             }
 
-            Console.WriteLine();
+            Console.WriteLine(setOfLists.Count);
 
             foreach (var list in setOfLists)
             {

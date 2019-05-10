@@ -53,6 +53,7 @@ namespace ParseTree
                 inputs.Dequeue();
                 newNode.LeftChild = CreateNode(inputs);
                 newNode.RightChild = CreateNode(inputs);
+                inputs.Dequeue();
                 return newNode;
             }
             else
@@ -71,7 +72,7 @@ namespace ParseTree
         public static Tree CreateTree(string input)
         {
             Tree newTree;
-            const string options = @"-*\d+|[+-*/(]";
+            const string options = @"-*\d+|[()*/+-]";
             var matches = Regex.Matches(input, options);
             var queue = new Queue<string>();
 

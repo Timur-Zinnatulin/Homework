@@ -21,33 +21,26 @@
             }
         }
 
-        private ListNode Head;
+        private ListNode head;
 
         public int Length { get; private set; }
 
+        /// <summary>
+        /// Empty list flag
+        /// </summary>
+        /// <returns>Flag if the list is empty</returns>
         public bool IsEmpty()
             => Length == 0;
 
-        //Pretty self-explainatory tbh
         private bool FlagCanInsertIntoPosition(int position)
             => position >= 0 && position <= Length;
 
-        //Pretty self-explainatory tbh
         private bool FlagNodeIsInList(int position)
             => position >= 0 && position < Length;
 
-        /// <summary>
-        /// Finds the node by given position
-        /// </summary>
-        /// <param name="position">
-        /// Position of the desired node
-        /// </param>
-        /// <returns>
-        /// The desired node
-        /// </returns>
         private ListNode GetParticularNode(int position)
         {
-            var temp = Head;
+            var temp = head;
 
             for (int i = 0; i < position; ++i)
             {
@@ -59,7 +52,7 @@
 
         private void InsertIntoHead(int value)
         {
-            Head = new ListNode(value, Head);
+            head = new ListNode(value, head);
             ++Length;
         }
 
@@ -93,7 +86,7 @@
 
         private void RemoveFromHead()
         {
-            Head = Head.Next;
+            head = head.Next;
             --Length;
         }
 
@@ -157,7 +150,7 @@
         /// <param name="position">
         /// Position of desired node
         /// </param>
-        public void ChangeValueByPosition(int value, int position)
+        public virtual void ChangeValueByPosition(int value, int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -169,13 +162,18 @@
         }
 
         /// <summary>
-        /// Finds the position of given string
+        /// Finds the position of given element
         /// </summary>
-        /// <param name="value">String that we know</param>
-        /// <returns>Position of given string. If it doesn't exist in the list, returns -1.</returns>
+        /// <param name="value">Element that we know</param>
+        /// <returns>Position of given element. If it doesn't exist in the list, returns -1.</returns>
         public int GetPositionByValue(int value)
         {
-            var temp = Head;
+            if (IsEmpty())
+            {
+                return -2;
+            }
+
+            var temp = head;
             for (int i = 0; i < Length; ++i)
             {
                 if (value == temp.Value)
@@ -185,7 +183,7 @@
                 temp = temp.Next;
             }
 
-            return -1;
+            return -2;
         }
     }
 }

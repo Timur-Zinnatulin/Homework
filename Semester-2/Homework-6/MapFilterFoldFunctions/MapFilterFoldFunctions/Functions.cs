@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace MapFilterFoldFunctions
 {
-    public class Functions
+    /// <summary>
+    /// List functions class
+    /// </summary>
+    public static class ListFunctions
     {
         /// <summary>
         /// Map function from problem conditions
@@ -11,7 +14,7 @@ namespace MapFilterFoldFunctions
         /// <param name="list">Given list</param>
         /// <param name="function">Given function</param>
         /// <returns>Transformed list</returns>
-        public List<int> Map(List<int> list, Func<int, int> function)
+        public static List<int> Map(List<int> list, Func<int, int> function)
         {
             var newList = new List<int>();
 
@@ -29,7 +32,7 @@ namespace MapFilterFoldFunctions
         /// <param name="list">Given list</param>
         /// <param name="function">Given function</param>
         /// <returns>List of elements that pass the condition of function</returns>
-        public List<int> Filter(List<int> list, Func<int, bool> function)
+        public static List<int> Filter(List<int> list, Func<int, bool> function)
         {
             var answer = new List<int>();
 
@@ -51,7 +54,7 @@ namespace MapFilterFoldFunctions
         /// <param name="setupValue">Given initial number</param>
         /// <param name="function">Given function</param>
         /// <returns>List folded into one number by given function</returns>
-        public int Fold(List<int> list, int setupValue, Func<int, int, int> function)
+        public static int Fold(List<int> list, int setupValue, Func<int, int, int> function)
         {
             foreach (var elem in list)
             {

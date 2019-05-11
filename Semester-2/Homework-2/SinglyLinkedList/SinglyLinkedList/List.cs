@@ -72,7 +72,7 @@
         /// <param name="position">
         /// Position of the new node
         /// </param>
-        public void Insert(int value, int position)
+        public virtual void Insert(int value, int position)
         {
             if (!FlagCanInsertIntoPosition(position))
             {
@@ -98,12 +98,12 @@
         }
 
         /// <summary>
-        /// Removes a node from the list
+        /// Removes a node from the list by given position
         /// </summary>
         /// <param name="position">
         /// Position of node that shall be removed
         /// </param>
-        public void Remove(int position)
+        public void RemoveByPosition(int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -120,6 +120,13 @@
             precedingNode.Next = precedingNode.Next.Next;
             --Length;
         }
+
+        /// <summary>
+        /// Removes the node by given value
+        /// </summary>
+        /// <param name="value">Value of node</param>
+        public void RemoveByValue(int value)
+             => RemoveByPosition(GetPositionByValue(value));
 
         /// <summary>
         /// Get the value of node by given position
@@ -159,6 +166,26 @@
 
             var node = GetParticularNode(position);
             node.Value = value;
+        }
+
+        /// <summary>
+        /// Finds the position of given string
+        /// </summary>
+        /// <param name="value">String that we know</param>
+        /// <returns>Position of given string. If it doesn't exist in the list, returns -1.</returns>
+        public int GetPositionByValue(int value)
+        {
+            var temp = Head;
+            for (int i = 0; i < Length; ++i)
+            {
+                if (value == temp.Value)
+                {
+                    return i;
+                }
+                temp = temp.Next;
+            }
+
+            return -1;
         }
     }
 }

@@ -69,7 +69,7 @@
         public void CanRemoveSingleItemTest()
         {
             list.Insert(1, 0);
-            list.Remove(0);
+            list.RemoveByPosition(0);
             Assert.IsTrue(list.IsEmpty());
         }
 
@@ -78,7 +78,7 @@
         {
             list.Insert(1, 0);
             list.Insert(2, 1);
-            list.Remove(0);
+            list.RemoveByPosition(0);
             Assert.AreEqual(2, list.GetValueByPosition(0));
         }
 
@@ -88,7 +88,7 @@
             list.Insert(1, 0);
             list.Insert(2, 1);
             list.Insert(3, 2);
-            list.Remove(1);
+            list.RemoveByPosition(1);
             Assert.AreEqual(3, list.GetValueByPosition(1));
         }
 
@@ -123,7 +123,7 @@
             => Assert.Throws<InvalidListPositionException>(_EmptyRemove, "Error! Remove position is invalid!");
 
         private void _EmptyRemove()
-            => list.Remove(0);
+            => list.RemoveByPosition(0);
 
         [Test]
         public void ThrowsExceptionWhenWrongRemoveTest()
@@ -132,7 +132,7 @@
         private void _WrongRemove()
         {
             list.Insert(1, 0);
-            list.Remove(1);
+            list.RemoveByPosition(1);
         }
 
         [Test]

@@ -20,8 +20,16 @@ namespace WalkingGame
             Down
         }
 
-        private readonly bool flagTesting;
+        private bool flagTesting;
 
+        /// <summary>
+        /// Flag that showws if the game is ready to be played
+        /// </summary>
+        public bool FlagReadyToPlay { get; private set; }
+
+        /// <summary>
+        /// List of lines of the map
+        /// </summary>
         public List<string> Map { get; private set; }
 
         /// <summary>
@@ -39,6 +47,9 @@ namespace WalkingGame
             }
         }
 
+        /// <summary>
+        /// Coordinates of the player
+        /// </summary>
         public Coords Player { get; private set; }
 
         /// <summary>
@@ -66,6 +77,8 @@ namespace WalkingGame
             {
                 throw new FormatException("Map does not have a start position!");
             }
+
+            FlagReadyToPlay = true;
         }
 
         /// <summary>
@@ -119,9 +132,9 @@ namespace WalkingGame
         /// <param name="direction">Chosen movement direction</param>
         private void RenderMovement(Directions direction)
         {
-            Console.SetCursorPosition(Player.y, Player.x);
             if (!flagTesting)
             {
+                Console.SetCursorPosition(Player.y, Player.x);
                 Console.Write(" ");
             }
 
@@ -152,9 +165,10 @@ namespace WalkingGame
                         break;
                     }
             }
-            Console.SetCursorPosition(Player.y, Player.x);
+
             if (!flagTesting)
             {
+                Console.SetCursorPosition(Player.y, Player.x);
                 Console.Write("@");
             }
         }

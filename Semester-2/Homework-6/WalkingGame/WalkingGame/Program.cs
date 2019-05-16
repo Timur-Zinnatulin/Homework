@@ -1,9 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 
 namespace WalkingGame
 {
+    /// <summary>
+    /// Main part of the program where it all happens
+    /// </summary>
     class Program
     {
         /// <summary>
@@ -19,20 +21,19 @@ namespace WalkingGame
             Console.CursorVisible = false;
         }
 
-
         static void Main(string[] args)
         {
             var loop = new EventLoop();
             var game = new Game(@"..\..\map.txt", false);
-            var map = game.Map;
-            DrawMap(map);
+            DrawMap(game.Map);
 
             loop.DownHandler += game.OnDown;
             loop.UpHandler += game.OnUp;
             loop.LeftHandler += game.OnLeft;
             loop.RightHandler += game.OnRight;
-
+            
             loop.Run();
         }
     }
 }
+

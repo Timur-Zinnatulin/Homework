@@ -23,7 +23,23 @@ namespace WalkingGame
         private readonly bool flagTesting;
 
         public List<string> Map { get; private set; }
-        public Tuple<int, int> PlayerCoords { get; set; }
+
+        /// <summary>
+        /// Player coordinates subclass
+        /// </summary>
+        public class Coords
+        {
+            public int x;
+            public int y;
+
+            public Coords(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        public Coords Player { get; private set; }
 
         /// <summary>
         /// Reads the map and puts the player in control of a character
@@ -45,8 +61,8 @@ namespace WalkingGame
                 Map.Add(str);
             }
 
-            PlayerCoords = FindStartPosition(allStrings);
-            if (PlayerCoords.Item1 == -1)
+            Player = FindStartPosition(allStrings);
+            if (Player.x == -1)
             {
                 throw new FormatException("Map does not have a start position!");
             }
@@ -57,7 +73,7 @@ namespace WalkingGame
         /// </summary>
         /// <param name="map">Given map</param>
         /// <returns>Position of a character</returns>
-        private Tuple<int, int> FindStartPosition(string[] map)
+        private Coords FindStartPosition(string[] map)
         {
             for (int i = 0; i < map.GetLength(0); ++i)
             {
@@ -65,11 +81,11 @@ namespace WalkingGame
                 {
                     if (map[i][j] == '@')
                     {
-                        return new Tuple<int, int>(i, j);
+                        return new Coords(i, j);
                     }
                 }
             }
-            return new Tuple<int, int>(-1, -1);
+            return new Coords(-1 ,-1);
         }
 
         /// <summary>
@@ -103,7 +119,7 @@ namespace WalkingGame
         /// <param name="direction">Chosen movement direction</param>
         private void RenderMovement(Directions direction)
         {
-            Console.SetCursorPosition(PlayerCoords.Item2, PlayerCoords.Item1);
+            Console.SetCursorPosition(Player.y, Player.x);
             if (!flagTesting)
             {
                 Console.Write(" ");
@@ -113,22 +129,22 @@ namespace WalkingGame
             {
                 case Directions.Left:
                     {
-                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1, PlayerCoords.Item2 - 1);
+                        --Player.y;
                         break;
                     }
                 case Directions.Right:
                     {
-                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1, PlayerCoords.Item2 + 1);
+                        ++Player.y;
                         break;
                     }
                 case Directions.Up:
                     {
-                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1 - 1, PlayerCoords.Item2);
+                        --Player.x;
                         break;
                     }
                 case Directions.Down:
                     {
-                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1 + 1, PlayerCoords.Item2);
+                        ++Player.x;
                         break;
                     }
                 default:
@@ -136,7 +152,7 @@ namespace WalkingGame
                         break;
                     }
             }
-            Console.SetCursorPosition(PlayerCoords.Item2, PlayerCoords.Item1);
+            Console.SetCursorPosition(Player.y, Player.x);
             if (!flagTesting)
             {
                 Console.Write("@");
@@ -145,7 +161,7 @@ namespace WalkingGame
 
         public void OnLeft(object sender, EventArgs args)
         {
-            if (IsWall(Map[PlayerCoords.Item1][PlayerCoords.Item2 - 1]))
+            if (IsWall(Map[Player.x][Player.y - 1]))
             {
                 return;
             }
@@ -154,7 +170,7 @@ namespace WalkingGame
 
         public void OnRight(object sender, EventArgs args)
         {
-            if (IsWall(Map[PlayerCoords.Item1][PlayerCoords.Item2 + 1]))
+            if (IsWall(Map[Player.x][Player.y + 1]))
             {
                 return;
             }
@@ -163,7 +179,7 @@ namespace WalkingGame
 
         public void OnUp(object sender, EventArgs args)
         {
-            if (IsWall(Map[PlayerCoords.Item1 - 1][PlayerCoords.Item2]))
+            if (IsWall(Map[Player.x - 1][Player.y]))
             {
                 return;
             }
@@ -172,7 +188,7 @@ namespace WalkingGame
 
         public void OnDown(object sender, EventArgs args)
         {
-            if (IsWall(Map[PlayerCoords.Item1 + 1][PlayerCoords.Item2]))
+            if (IsWall(Map[Player.x + 1][Player.y]))
             {
                 return;
             }

@@ -1,0 +1,11 @@
+image: Visual Studio 2017
+
+before_build:
+  - nuget restore Semester-2/Homework-6/WalkingGame/WalkingGame.sln 
+
+build:
+   project: Semester-2/Homework-6/WalkingGame/WalkingGame.sln 
+
+test_script:
+  - nunit3-console Semester-2/Homework-6/WalkingGame/WalkingGame.sln \
+    --result=myresults.xml;format=AppVeyor

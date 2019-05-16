@@ -9,22 +9,39 @@ namespace WalkingGame
     /// </summary>
     public class Game
     {
+        /// <summary>
+        /// Directions in which a character can go
+        /// </summary>
+        private enum Directions
+        {
+            Left,
+            Right,
+            Up,
+            Down
+        }
+
         private List<string> map;
         public Tuple<int, int> PlayerCoords { get; set; }
 
+        /// <summary>
+        /// Draws the map and puts the player in control of a character
+        /// </summary>
+        /// <param name="fileName"></param>
         public Game(string fileName)
         {
             map = new List<string>();
             var allStrings = File.ReadAllLines(fileName, System.Text.Encoding.UTF8);
-            for (int i = 0; i < allStrings.GetLength(0); ++i)
+
+            foreach(var str in allStrings)
             {
-                if (FlagBadSymbolInString(allStrings[i]))
+                if (FlagBadSymbolInString(str))
                 {
                     throw new FormatException("Map has unacceptable symbols!");
                 }
 
-                map.Add(allStrings[i]);
+                map.Add(str);
             }
+
             PlayerCoords = FindStartPosition(allStrings);
             if (PlayerCoords.Item1 == -1)
             {
@@ -34,11 +51,16 @@ namespace WalkingGame
             DrawMap();
         }
 
+        /// <summary>
+        /// Looks for '@' in the map
+        /// </summary>
+        /// <param name="map">Given map</param>
+        /// <returns>Position of a character</returns>
         private Tuple<int, int> FindStartPosition(string[] map)
         {
             for (int i = 0; i < map.GetLength(0); ++i)
             {
-                for (int j = 0; j < map.GetLength(1); ++j)
+                for (int j = 0; j < map[i].Length; ++j)
                 {
                     if (map[i][j] == '@')
                     {
@@ -55,15 +77,18 @@ namespace WalkingGame
             {
                 if ((str[i] != '@') && (str[i] != ' ') && (str[i] != '█'))
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
         private bool IsWall(char symbol)
-            => (symbol != ' ');
+            => (symbol == '█');
 
+        /// <summary>
+        /// Render map function
+        /// </summary>
         private void DrawMap()
         {
             Console.Clear();
@@ -71,49 +96,82 @@ namespace WalkingGame
             {
                 Console.WriteLine(map[i]);
             }
-            Console.CursorTop = PlayerCoords.Item1;
-            Console.CursorLeft = PlayerCoords.Item2;
             Console.CursorVisible = false;
         }
 
+        /// <summary>
+        /// Changes character coordinates according to his inputs
+        /// </summary>
+        /// <param name="direction">Chosen movement direction</param>
+        private void RenderMovement(Directions direction)
+        {
+            Console.SetCursorPosition(PlayerCoords.Item2, PlayerCoords.Item1);
+            Console.Write(" ");
+            switch(direction)
+            {
+                case Directions.Left:
+                    {
+                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1, PlayerCoords.Item2 - 1);
+                        break;
+                    }
+                case Directions.Right:
+                    {
+                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1, PlayerCoords.Item2 + 1);
+                        break;
+                    }
+                case Directions.Up:
+                    {
+                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1 - 1, PlayerCoords.Item2);
+                        break;
+                    }
+                case Directions.Down:
+                    {
+                        PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1 + 1, PlayerCoords.Item2);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+            Console.SetCursorPosition(PlayerCoords.Item2, PlayerCoords.Item1);
+            Console.Write("@");
+        }
+
         public void OnLeft(object sender, EventArgs args)
-        {
-            if (IsWall(map[PlayerCoords.Item1 - 1][PlayerCoords.Item2]))
-            {
-                return;
-            }
-            PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1 - 1, PlayerCoords.Item2);
-            // Redraw
-        }
-
-        public void OnRight(object sender, EventArgs args)
-        {
-            if (IsWall(map[PlayerCoords.Item1 + 1][PlayerCoords.Item2]))
-            {
-                return;
-            }
-            PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1 + 1, PlayerCoords.Item2);
-            // Redraw
-        }
-
-        public void OnUp(object sender, EventArgs args)
         {
             if (IsWall(map[PlayerCoords.Item1][PlayerCoords.Item2 - 1]))
             {
                 return;
             }
-            PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1, PlayerCoords.Item2 - 1);
-            // Redraw
+            RenderMovement(Directions.Left);
         }
 
-        public void OnDown(object sender, EventArgs args)
+        public void OnRight(object sender, EventArgs args)
         {
             if (IsWall(map[PlayerCoords.Item1][PlayerCoords.Item2 + 1]))
             {
                 return;
             }
-            PlayerCoords = new Tuple<int, int>(PlayerCoords.Item1, PlayerCoords.Item2 + 1);
-            // Redraw
+            RenderMovement(Directions.Right);
+        }
+
+        public void OnUp(object sender, EventArgs args)
+        {
+            if (IsWall(map[PlayerCoords.Item1 - 1][PlayerCoords.Item2]))
+            {
+                return;
+            }
+            RenderMovement(Directions.Up);
+        }
+
+        public void OnDown(object sender, EventArgs args)
+        {
+            if (IsWall(map[PlayerCoords.Item1 + 1][PlayerCoords.Item2]))
+            {
+                return;
+            }
+            RenderMovement(Directions.Down);
         }
     }
 }

@@ -20,16 +20,19 @@ namespace WalkingGame
             Down
         }
 
-        private List<string> map;
+        private readonly bool flagTesting;
+
+        public List<string> Map { get; private set; }
         public Tuple<int, int> PlayerCoords { get; set; }
 
         /// <summary>
-        /// Draws the map and puts the player in control of a character
+        /// Reads the map and puts the player in control of a character
         /// </summary>
         /// <param name="fileName"></param>
-        public Game(string fileName)
+        public Game(string fileName, bool FlagTesting)
         {
-            map = new List<string>();
+            flagTesting = FlagTesting;
+            Map = new List<string>();
             var allStrings = File.ReadAllLines(fileName, System.Text.Encoding.UTF8);
 
             foreach(var str in allStrings)
@@ -39,7 +42,7 @@ namespace WalkingGame
                     throw new FormatException("Map has unacceptable symbols!");
                 }
 
-                map.Add(str);
+                Map.Add(str);
             }
 
             PlayerCoords = FindStartPosition(allStrings);
@@ -47,8 +50,6 @@ namespace WalkingGame
             {
                 throw new FormatException("Map does not have a start position!");
             }
-
-            DrawMap();
         }
 
         /// <summary>
@@ -71,6 +72,11 @@ namespace WalkingGame
             return new Tuple<int, int>(-1, -1);
         }
 
+        /// <summary>
+        /// Checks if the string contains unacceptable symbols
+        /// </summary>
+        /// <param name="str">Line of the map</param>
+        /// <returns>Answer to the question</returns>
         private bool FlagBadSymbolInString(string str)
         {
             for (int i = 0; i < str.Length; ++i)
@@ -83,21 +89,13 @@ namespace WalkingGame
             return false;
         }
 
+        /// <summary>
+        /// Checks if the symbol is a wall
+        /// </summary>
+        /// <param name="str">Character of the map</param>
+        /// <returns>Answer to the question</returns>
         private bool IsWall(char symbol)
             => (symbol == '█');
-
-        /// <summary>
-        /// Render map function
-        /// </summary>
-        private void DrawMap()
-        {
-            Console.Clear();
-            for (int i = 0; i < map.Count; ++i)
-            {
-                Console.WriteLine(map[i]);
-            }
-            Console.CursorVisible = false;
-        }
 
         /// <summary>
         /// Changes character coordinates according to his inputs
@@ -106,7 +104,11 @@ namespace WalkingGame
         private void RenderMovement(Directions direction)
         {
             Console.SetCursorPosition(PlayerCoords.Item2, PlayerCoords.Item1);
-            Console.Write(" ");
+            if (!flagTesting)
+            {
+                Console.Write(" ");
+            }
+
             switch(direction)
             {
                 case Directions.Left:
@@ -135,12 +137,15 @@ namespace WalkingGame
                     }
             }
             Console.SetCursorPosition(PlayerCoords.Item2, PlayerCoords.Item1);
-            Console.Write("@");
+            if (!flagTesting)
+            {
+                Console.Write("@");
+            }
         }
 
         public void OnLeft(object sender, EventArgs args)
         {
-            if (IsWall(map[PlayerCoords.Item1][PlayerCoords.Item2 - 1]))
+            if (IsWall(Map[PlayerCoords.Item1][PlayerCoords.Item2 - 1]))
             {
                 return;
             }
@@ -149,7 +154,7 @@ namespace WalkingGame
 
         public void OnRight(object sender, EventArgs args)
         {
-            if (IsWall(map[PlayerCoords.Item1][PlayerCoords.Item2 + 1]))
+            if (IsWall(Map[PlayerCoords.Item1][PlayerCoords.Item2 + 1]))
             {
                 return;
             }
@@ -158,7 +163,7 @@ namespace WalkingGame
 
         public void OnUp(object sender, EventArgs args)
         {
-            if (IsWall(map[PlayerCoords.Item1 - 1][PlayerCoords.Item2]))
+            if (IsWall(Map[PlayerCoords.Item1 - 1][PlayerCoords.Item2]))
             {
                 return;
             }
@@ -167,7 +172,7 @@ namespace WalkingGame
 
         public void OnDown(object sender, EventArgs args)
         {
-            if (IsWall(map[PlayerCoords.Item1 + 1][PlayerCoords.Item2]))
+            if (IsWall(Map[PlayerCoords.Item1 + 1][PlayerCoords.Item2]))
             {
                 return;
             }

@@ -10,6 +10,10 @@
         private int length;
         private LinkedList[] buckets;
         private IHashFunction hashFunction;
+
+        /// <summary>
+        /// Size of the hash table
+        /// </summary>
         public int Size { get; private set; }
 
         /// <summary>

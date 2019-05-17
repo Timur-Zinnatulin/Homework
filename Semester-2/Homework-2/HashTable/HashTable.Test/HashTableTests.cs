@@ -7,9 +7,9 @@
     [TestFixture]
     public class HashTableTests
     {
-        HashTable setJenkins;
-        HashTable setFNV;
-        HashTable setRecursive;
+        private HashTable setJenkins;
+        private HashTable setFNV;
+        private HashTable setRecursive;
 
         [SetUp]
         public void SetUp()

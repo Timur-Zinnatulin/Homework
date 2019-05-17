@@ -23,6 +23,9 @@
 
         private ListNode Head;
 
+        /// <summary>
+        /// Length of the list
+        /// </summary>
         public int Length { get; private set; }
 
         public bool IsEmpty()

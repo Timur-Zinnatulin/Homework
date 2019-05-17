@@ -23,8 +23,15 @@
 
         private ListNode Head;
 
+        /// <summary>
+        /// Amount of elements in the list
+        /// </summary>
         public int Length { get; private set; }
 
+        /// <summary>
+        /// Checks if the list is empty
+        /// </summary>
+        /// <returns>True if the list is empty, false otherwise</returns>
         public bool IsEmpty()
             => Length == 0;
 
@@ -39,12 +46,8 @@
         /// <summary>
         /// Finds the node by given position
         /// </summary>
-        /// <param name="position">
-        /// Position of the desired node
-        /// </param>
-        /// <returns>
-        /// The desired node
-        /// </returns>
+        /// <param name="position">Position of the desired node<param>
+        /// <returns>The desired node</returns>
         private ListNode GetParticularNode(int position)
         {
             var temp = Head;
@@ -66,12 +69,8 @@
         /// <summary>
         /// Inserts a new node into the list
         /// </summary>
-        /// <param name="value">
-        /// Value of the new node
-        /// </param>
-        /// <param name="position">
-        /// Position of the new node
-        /// </param>
+        /// <param name="value">Value of the new node</param>
+        /// <param name="position">Position of the new node</param>
         public void Insert(string value, int position)
         {
             if (!FlagCanInsertIntoPosition(position))
@@ -100,9 +99,7 @@
         /// <summary>
         /// Removes a node from the list
         /// </summary>
-        /// <param name="position">
-        /// Position of node that shall be removed
-        /// </param>
+        /// <param name="position">Position of node that shall be removed</param>
         public void Remove(int position)
         {
             if (!FlagNodeIsInList(position))
@@ -124,12 +121,8 @@
         /// <summary>
         /// Get the value of node by given position
         /// </summary>
-        /// <param name="position">
-        /// Position of desired node
-        /// </param>
-        /// <returns>
-        /// Desired value
-        /// </returns>
+        /// <param name="position">Position of desired node</param>
+        /// <returns>Desired value</returns>
         public string GetValueByPosition(int position)
         {
             if (!FlagNodeIsInList(position))
@@ -144,12 +137,8 @@
         /// <summary>
         /// Changes the value of node by given position
         /// </summary>
-        /// <param name="value">
-        /// New value
-        /// </param>
-        /// <param name="position">
-        /// Position of desired node
-        /// </param>
+        /// <param name="value">New value</param>
+        /// <param name="position">Position of desired node</param>
         public void ChangeValueByPosition(string value, int position)
         {
             if (!FlagNodeIsInList(position))

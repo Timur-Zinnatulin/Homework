@@ -7,7 +7,7 @@
     [TestFixture]
     public class HashTableTests
     {
-        HashTable set;
+        private HashTable set;
 
         [SetUp]
         public void SetUp()

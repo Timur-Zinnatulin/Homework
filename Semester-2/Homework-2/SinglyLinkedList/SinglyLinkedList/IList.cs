@@ -11,11 +11,11 @@
         /// Amount of elements in the list
         /// </summary>
         int Length { get; }
-
+      
         /// <summary>
-        /// Empty list flag
+        /// Checks if the list is empty
         /// </summary>
-        /// <returns>Flag if the list is empty</returns>
+        /// <returns>True if the list is empty, false otherwise</returns>
         bool IsEmpty();
 
         /// <summary>
@@ -36,6 +36,12 @@
         /// </summary>
         /// <param name="value">Value of node</param>
         void RemoveByValue(int value);
+      
+        /// <summary>
+        /// Removes a node from the list
+        /// </summary>
+        /// <param name="position">Position of node that shall be removed</param>
+        void Remove(int position);
 
         /// <summary>
         /// Get the value of node by given position

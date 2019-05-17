@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SinglyLinkedList
 {
     /// <summary>
-    /// Thrown when list insert/remove is impossible
+    /// Exception that is thrown when list position is invalid
     /// </summary>
     public class InvalidListPositionException : Exception
     {

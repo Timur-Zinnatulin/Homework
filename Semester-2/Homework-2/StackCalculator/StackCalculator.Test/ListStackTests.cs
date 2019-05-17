@@ -7,7 +7,7 @@
     [TestFixture]
     public class ListStackTests
     {
-        ListStack stack;
+       private ListStack stack;
 
         [SetUp]
         public void SetUp()

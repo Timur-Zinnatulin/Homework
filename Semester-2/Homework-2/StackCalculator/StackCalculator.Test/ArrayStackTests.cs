@@ -7,7 +7,7 @@
     [TestFixture]
     public class ArrayStackTests
     {
-        ArrayStack stack;
+        private ArrayStack stack;
 
         [SetUp]
         public void SetUp()

@@ -9,6 +9,9 @@
     {
         private int[] elements;
         
+        /// <summary>
+        /// Size of the stack
+        /// </summary>
         public int Size { get; private set; }
 
         /// <summary>

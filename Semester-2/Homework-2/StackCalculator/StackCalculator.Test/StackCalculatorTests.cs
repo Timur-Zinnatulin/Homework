@@ -8,7 +8,7 @@
     [TestFixture]
     public class StackCalculatorTests
     {
-        Calculator calc;
+        private Calculator calc;
 
         [SetUp]
         public void SetUp()

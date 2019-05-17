@@ -36,12 +36,6 @@
         /// </summary>
         /// <param name="value">Value of node</param>
         void RemoveByValue(int value);
-      
-        /// <summary>
-        /// Removes a node from the list
-        /// </summary>
-        /// <param name="position">Position of node that shall be removed</param>
-        void Remove(int position);
 
         /// <summary>
         /// Get the value of node by given position

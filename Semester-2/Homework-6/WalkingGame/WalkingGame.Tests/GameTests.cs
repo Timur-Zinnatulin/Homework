@@ -31,16 +31,88 @@ namespace GameTests
         [Test]
         public void CharacterIsInPlaceTest()
         {
-            Assert.AreEqual(1, game.Player.x);
+            Assert.AreEqual(3, game.Player.x);
+            Assert.AreEqual(7, game.Player.y);
+        }
+
+        [Test]
+        public void CharacterCanMoveDownTest()
+        {
+            loop.EmulatePress(ConsoleKey.DownArrow);
+            Assert.AreEqual(4, game.Player.x);
+            Assert.AreEqual(7, game.Player.y);
+        }
+
+        [Test]
+        public void CharacterCanMoveRightTest()
+        {
+            loop.EmulatePress(ConsoleKey.RightArrow);
+            Assert.AreEqual(3, game.Player.x);
+            Assert.AreEqual(8, game.Player.y);
+        }
+
+        [Test]
+        public void CharacterCanMoveUpTest()
+        {
+            loop.EmulatePress(ConsoleKey.UpArrow);
+            Assert.AreEqual(2, game.Player.x);
+            Assert.AreEqual(7, game.Player.y);
+        }
+
+        [Test]
+        public void CharacterCanMoveLeftTest()
+        {
+            loop.EmulatePress(ConsoleKey.LeftArrow);
+            Assert.AreEqual(3, game.Player.x);
+            Assert.AreEqual(6, game.Player.y);
+        }
+
+        [Test]
+        public void NothingDoneOnEnterTest()
+        {
+            loop.EmulatePress(ConsoleKey.Enter);
+            Assert.AreEqual(3, game.Player.x);
+            Assert.AreEqual(7, game.Player.y);
+        }
+
+        [Test]
+        public void DoesntGoThroughLeftWallTest()
+        {
+            for (int i = 0; i < 100; ++i)
+            {
+                loop.EmulatePress(ConsoleKey.LeftArrow);
+            }
             Assert.AreEqual(1, game.Player.y);
         }
 
         [Test]
-        public void CharacterCanMoveTest()
+        public void DoesntGoThroughRightWallTest()
         {
-            loop.EmulatePress(ConsoleKey.DownArrow);
-            Assert.AreEqual(2, game.Player.x);
-            Assert.AreEqual(1, game.Player.y);
+            for (int i = 0; i < 100; ++i)
+            {
+                loop.EmulatePress(ConsoleKey.RightArrow);
+            }
+            Assert.AreEqual(11, game.Player.y);
+        }
+
+        [Test]
+        public void DoesntGoThroughTopWallTest()
+        {
+            for (int i = 0; i < 100; ++i)
+            {
+                loop.EmulatePress(ConsoleKey.UpArrow);
+            }
+            Assert.AreEqual(1, game.Player.x);
+        }
+
+        [Test]
+        public void DoesntGoThroughBottomWallTest()
+        {
+            for (int i = 0; i < 100; ++i)
+            {
+                loop.EmulatePress(ConsoleKey.DownArrow);
+            }
+            Assert.AreEqual(4, game.Player.x);
         }
 
         [Test]
@@ -50,8 +122,8 @@ namespace GameTests
             loop.EmulatePress(ConsoleKey.RightArrow);
             loop.EmulatePress(ConsoleKey.UpArrow);
             loop.EmulatePress(ConsoleKey.LeftArrow);
-            Assert.AreEqual(1, game.Player.x);
-            Assert.AreEqual(1, game.Player.y);
+            Assert.AreEqual(3, game.Player.x);
+            Assert.AreEqual(7, game.Player.y);
         }
     }
 }

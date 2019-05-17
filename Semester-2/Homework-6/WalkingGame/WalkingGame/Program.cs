@@ -6,7 +6,7 @@ namespace WalkingGame
     /// <summary>
     /// Main part of the program where it all happens
     /// </summary>
-    class Program
+    public class Program
     {
         /// <summary>
         /// Render map function
@@ -21,7 +21,7 @@ namespace WalkingGame
             Console.CursorVisible = false;
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var loop = new EventLoop();
             var game = new Game(@"..\..\map.txt", false);

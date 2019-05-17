@@ -10,12 +10,8 @@ namespace SinglyLinkedList
         /// <summary>
         /// Inserts a new node into the list
         /// </summary>
-        /// <param name="value">
-        /// Value of the new node
-        /// </param>
-        /// <param name="position">
-        /// Position of the new node
-        /// </param>
+        /// <param name="value">Value of the new node</param>
+        /// <param name="position">Position of the new node</param>
         public override void Insert(int value, int position)
         {
             if (GetPositionByValue(value) != -2)
@@ -28,12 +24,8 @@ namespace SinglyLinkedList
         /// <summary>
         /// Changes the value of node by given position
         /// </summary>
-        /// <param name="value">
-        /// New value
-        /// </param>
-        /// <param name="position">
-        /// Position of desired node
-        /// </param>
+        /// <param name="value">New value</param>
+        /// <param name="position">Position of desired node</param>
         public override void ChangeValueByPosition(int value, int position)
         {
             // I've decided to restrict changing elements in the list into ones that already exist in the list

@@ -7,7 +7,7 @@
     [TestFixture]
     public class LinkedListTests
     {
-        LinkedList list;
+        private LinkedList list;
 
         [SetUp]
         public void SetUp()

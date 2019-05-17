@@ -7,7 +7,7 @@ namespace SinglyLinkedList.Test
     [TestFixture]
     public class UniqueListTest
     {
-        UniqueList list;
+        private UniqueList list;
 
         [SetUp]
         public void SetUp()

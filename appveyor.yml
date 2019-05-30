@@ -4,13 +4,10 @@ environment:
   matrix:
   - solution_path: Semester-2\Test-Final\Sem2FinalTest\Sem2FinalTest.sln
   - solution_path: Semester-2/Homework-2/SinglyLinkedList/SinglyLinkedList.sln
-  
+
+
 before_build:
   - nuget restore %solution_path%
 
-build:
-   project: %solution_path%
-
-test_script:
-  - nunit3-console %solution_path% \
-    --result=myresults.xml;format=AppVeyor
+build_script:
+  - msbuild %solution_path%

@@ -4,36 +4,27 @@
     using HashTableNamespace;
     using NUnit.Framework;
 
-    [TestFixture]
-    public class HashTableTests
+    [TestFixture(typeof(JenkinsHashFunction))]
+    [TestFixture(typeof(FNVHashFunction))]
+    [TestFixture(typeof(RecursiveHashFunction))]
+    public class HashTableTests<THash> where THash: IHashFunction, new()
     {
-        private HashTable setJenkins;
-        private HashTable setFNV;
-        private HashTable setRecursive;
+        private HashTable set;
 
         [SetUp]
         public void SetUp()
         {
-            setJenkins = new HashTable(27, new JenkinsHashFunction());
-            setFNV = new HashTable(27, new FNVHashFunction());
-            setRecursive = new HashTable(27, new RecursiveHashFunction());
+            set = new HashTable(27, new THash());
         }
 
-        private void IsEmptyAtStartTest(IHashTable set)
+        [Test]
+        public void IsEmptyAtStartTest()
         {
             Assert.AreEqual(0, set.Size);
         }
 
         [Test]
-        public void IsEmptyAtStartJenkinsTest() => IsEmptyAtStartTest(setJenkins);
-
-        [Test]
-        public void IsEmptyAtStartFNVTest() => IsEmptyAtStartTest(setFNV);
-
-        [Test]
-        public void IsEmptyAtStartRecursiveTest() => IsEmptyAtStartTest(setRecursive);
-
-        private void CanInsertWordsTest(IHashTable set)
+        public void CanInsertWordsTest()
         {
             set.Insert("Dog");
 
@@ -41,15 +32,7 @@
         }
 
         [Test]
-        public void CanInsertWordsJenkinsTest() => CanInsertWordsTest(setJenkins);
-
-        [Test]
-        public void CanInsertWordsFNVTest() => CanInsertWordsTest(setFNV);
-
-        [Test]
-        public void CanInsertWordsRecursiveTest() => CanInsertWordsTest(setRecursive);
-
-        private void CanInsertMultipleWordsTest(IHashTable set)
+        public void CanInsertMultipleWordsTest()
         {
             set.Insert("Dog");
             set.Insert("God");
@@ -59,15 +42,7 @@
         }
 
         [Test]
-        public void CanInsertMultipleWordsJenkinsTest() => CanInsertMultipleWordsTest(setJenkins);
-
-        [Test]
-        public void CanInsertMultipleWordsFNVTest() => CanInsertMultipleWordsTest(setFNV);
-
-        [Test]
-        public void CanInsertMultipleWordsRecursiveTest() => CanInsertMultipleWordsTest(setRecursive);
-
-        private void CanRemoveSingleWordTest(IHashTable set)
+        public void CanRemoveSingleWordTest()
         {
             set.Insert("Domashka");
             set.Delete("Domashka");
@@ -76,15 +51,7 @@
         }
 
         [Test]
-        public void CanRemoveSingleWordJenkinsTest() => CanRemoveSingleWordTest(setJenkins);
-        
-        [Test]
-        public void CanRemoveSingleWordFNVTest() => CanRemoveSingleWordTest(setFNV);
-
-        [Test]
-        public void CanRemoveSingleWordRecursiveTest() => CanRemoveSingleWordTest(setRecursive);
-
-        private void SizeDoesNotLieTest(IHashTable set)
+        public void SizeDoesNotLieTest()
         {
             set.Insert("jkljdsa");
             set.Insert("salkje0q");
@@ -93,15 +60,7 @@
         }
 
         [Test]
-        public void SizeDoesNotLieJenkinsTest() => SizeDoesNotLieTest(setJenkins);
-
-        [Test]
-        public void SizeDoesNotLieFNVTest() => SizeDoesNotLieTest(setFNV);
-
-        [Test]
-        public void SizeDoesNotLieRecursiveTest() => SizeDoesNotLieTest(setRecursive);
-
-        private void RepeatedWordsArentInsertedTest(IHashTable set)
+        public void RepeatedWordsArentInsertedTest()
         {
             set.Insert("M4TM3X");
             set.Insert("M4TM3X");
@@ -110,15 +69,7 @@
         }
 
         [Test]
-        public void RepeatedWordsArentInsertedJenkinsTest() => RepeatedWordsArentInsertedTest(setJenkins);
-
-        [Test]
-        public void RepeatedWordsArentInsertedFNVTest() => RepeatedWordsArentInsertedTest(setFNV);
-
-        [Test]
-        public void RepeatedWordsArentInsertedRecursiveTest() => RepeatedWordsArentInsertedTest(setRecursive);
-
-        private void DoesntRemoveNonExistingWordsTest(IHashTable set)
+        public void DoesntRemoveNonExistingWordsTest()
         {
             set.Insert("30yoBoomer");
             set.Delete("16yoZoomer");
@@ -128,15 +79,7 @@
         }
 
         [Test]
-        public void DoesntRemoveNonExistingWordsJenkinsTest() => DoesntRemoveNonExistingWordsTest(setJenkins);
-
-        [Test]
-        public void DoesntRemoveNonExistingWordsFNVTest() => DoesntRemoveNonExistingWordsTest(setFNV);
-
-        [Test]
-        public void DoesntRemoveNonExistingWordsRecursiveTest() => DoesntRemoveNonExistingWordsTest(setRecursive);
-
-        private void SomewhatNormalWorkSimulationTest(IHashTable set)
+        public void SomewhatNormalWorkSimulationTest()
         {
             set.Insert("Sobaka");
             set.Insert("Kotik");
@@ -152,15 +95,7 @@
         }
 
         [Test]
-        public void SomewhatNormalWorkSimulationJenkinsTest() => SomewhatNormalWorkSimulationTest(setJenkins);
-
-        [Test]
-        public void SomewhatNormalWorkSimulationFNVTest() => SomewhatNormalWorkSimulationTest(setFNV);
-
-        [Test]
-        public void SomewhatNormalWorkSimulationRecursiveTest() => SomewhatNormalWorkSimulationTest(setRecursive);
-
-        private void OverwhelmedHashTableWorksWellTest(IHashTable set)
+        public void OverwhelmedHashTableWorksWellTest()
         {
             for (int i = 1; i <= 30; ++i)
             {
@@ -169,14 +104,5 @@
 
             Assert.AreEqual(30, set.Size);
         }
-
-        [Test]
-        public void OverwhelmedHashTableWorksWellJenkinsTest() => OverwhelmedHashTableWorksWellTest(setJenkins);
-
-        [Test]
-        public void OverwhelmedHashTableWorksWellFNVTest() => OverwhelmedHashTableWorksWellTest(setFNV);
-
-        [Test]
-        public void OverwhelmedHashTableWorksWellRecursiveTest() => OverwhelmedHashTableWorksWellTest(setRecursive);
     }
 }

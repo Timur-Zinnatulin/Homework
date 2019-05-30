@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// List interface
+    /// Linked list interface
     /// </summary>
     public interface IList
     {
@@ -17,11 +17,12 @@
         /// </summary>
         /// <returns>True if the list is empty, false otherwise</returns>
         bool IsEmpty();
-
+        
         /// <summary>
-        /// Checks if the list is empty
+        /// Inserts a new node into the list
         /// </summary>
-        /// <returns>True if the list is empty, false otherwise</returns>
+        /// <param name="value">Value of the new node</param>
+        /// <param name="position">Position of the new node</param>
         void Insert(string value, ulong position);
 
         /// <summary>

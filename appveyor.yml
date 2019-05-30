@@ -1,11 +1,15 @@
 image: Visual Studio 2017
 
+environment:
+  matrix:
+  - solution_path: Semester-2\TestGame\TestGame.sln
+  - solution_path: Semester-2/Homework-2/SinglyLinkedList/SinglyLinkedList.sln
+  - solution_path: Semester-2/Homework-2/HashTable/HashTable.sln
+  - solution_path: Semester-2/Homework-2/StackCalculator/StackCalculator.sln
+
+
 before_build:
-  - nuget restore Semester-2/Homework-2/StackCalculator/StackCalculator.sln
+  - nuget restore %solution_path%
 
-build:
-   project: Semester-2/Homework-2/StackCalculator/StackCalculator.sln
-
-test_script:
-  - nunit3-console Semester-2/Homework-2/StackCalculator/StackCalculator.sln \
-    --result=myresults.xml;format=AppVeyor
+build_script:
+  - msbuild %solution_path%

@@ -2,7 +2,7 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-  - solution_path: Semester-2\Test-Final\Sem2FinalTest\Sem2FinalTest.sln
+  - solution_path: Semester-2\TestGame\TestGame.sln
   - solution_path: Semester-2/Homework-2/SinglyLinkedList/SinglyLinkedList.sln
   - solution_path: Semester-2/Homework-2/HashTable/HashTable.sln
 

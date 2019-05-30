@@ -17,11 +17,10 @@
         /// <summary>
         /// Array stack constructor
         /// </summary>
-        /// <param name="size">Initial size of new stack</param>
-        public ArrayStack(int size)
+        public ArrayStack()
         {
             this.Size = 0;
-            elements = new int[size];
+            elements = new int[100];
         }
 
         /// <summary>

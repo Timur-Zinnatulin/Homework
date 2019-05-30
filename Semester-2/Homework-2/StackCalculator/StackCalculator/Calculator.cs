@@ -54,7 +54,7 @@
 
         private void Operate(string operation)
         {
-            switch(operation)
+            switch (operation)
             {
                 case "+":
                     BinaryOperation((a, b) => a + b);

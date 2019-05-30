@@ -21,7 +21,6 @@
         /// <summary>
         /// Sees the top element of stack without popping it
         /// </summary>
-        /// <returns></returns>
         int Peek();
 
         /// <summary>

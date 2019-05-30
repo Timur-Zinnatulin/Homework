@@ -25,12 +25,7 @@
         [Test]
         public void IfInputIsEmptyTest()
         {
-            Assert.Throws<ArgumentException>(_ThrowsEmptyInput, "Input is null or empty!");
-        }
-
-        private void _ThrowsEmptyInput()
-        {
-            int answer = calc.Calculate("");
+            Assert.Throws<ArgumentException>(() => calc.Calculate(""), "Input is null or empty!");
         }
 
         [Test]
@@ -60,12 +55,7 @@
         [Test]
         public void DivideByZeroExceptionTest()
         {
-            Assert.Throws<DivideByZeroException>(_DivideByZero);
-        }
-
-        private void _DivideByZero()
-        {
-            calc.Calculate("1 0 /");
+            Assert.Throws<DivideByZeroException>(() => calc.Calculate("1 0 /"));
         }
 
         [Test]

@@ -47,8 +47,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayStackTests.cs" />
-    <Compile Include="ListStackTests.cs" />
+    <Compile Include="StackTests.cs" />
     <Compile Include="StackCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,15 +4,16 @@
     using StackCalculatorNamespace;
     using NUnit.Framework;
 
-    [TestFixture]
-    public class ArrayStackTests
+    [TestFixture(typeof(ArrayStack))]
+    [TestFixture(typeof(ListStack))]
+    public class StackTests<TStack> where TStack : IStack, new()
     {
-        private ArrayStack stack;
+        private IStack stack;
 
         [SetUp]
         public void SetUp()
         {
-            stack = new ArrayStack(100);
+            stack = new TStack();
         }
 
         [Test]
@@ -63,12 +64,7 @@
         [Test]
         public void PopExceptionTest()
         {
-            Assert.Throws<InvalidOperationException>(_EmptyStackPop, "Stack is empty!");
-        }
-
-        private void _EmptyStackPop()
-        {
-            stack.Pop();
+            Assert.Throws<InvalidOperationException>(() => stack.Pop(), "Stack is empty!");
         }
     }
 }

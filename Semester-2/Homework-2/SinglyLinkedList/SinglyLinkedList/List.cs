@@ -1,4 +1,4 @@
-﻿namespace HashTableNamespace
+﻿namespace SinglyLinkedList
 {
     using System;
 
@@ -12,9 +12,9 @@
         /// </summary>
         private class ListNode
         {
-            public string Value { get; set; }
+            public int Value { get; set; }
             public ListNode Next { get; set; }
-            public ListNode(string value, ListNode next)
+            public ListNode(int value, ListNode next)
             {
                 Value = value;
                 Next = next;
@@ -24,33 +24,35 @@
         private ListNode Head;
 
         /// <summary>
-        /// Amount of elements in the list
+        /// Length of the list
         /// </summary>
-        public ulong Length { get; private set; }
+        public int Length { get; private set; }
 
-        /// <summary>
-        /// Checks if the list is empty
-        /// </summary>
-        /// <returns>True if the list is empty, false otherwise</returns>
         public bool IsEmpty()
             => Length == 0;
 
-        private bool FlagCanInsertIntoPosition(ulong position)
+        //Pretty self-explainatory tbh
+        private bool FlagCanInsertIntoPosition(int position)
             => position >= 0 && position <= Length;
 
-        private bool FlagNodeIsInList(ulong position)
+        //Pretty self-explainatory tbh
+        private bool FlagNodeIsInList(int position)
             => position >= 0 && position < Length;
 
         /// <summary>
         /// Finds the node by given position
         /// </summary>
-        /// <param name="position">Position of the desired node</param>
-        /// <returns>The desired node</returns>
-        private ListNode GetParticularNode(ulong position)
+        /// <param name="position">
+        /// Position of the desired node
+        /// </param>
+        /// <returns>
+        /// The desired node
+        /// </returns>
+        private ListNode GetParticularNode(int position)
         {
             var temp = Head;
 
-            for (ulong i = 0; i < position; ++i)
+            for (int i = 0; i < position; ++i)
             {
                 temp = temp.Next;
             }
@@ -58,7 +60,7 @@
             return temp;
         }
 
-        private void InsertIntoHead(string value)
+        private void InsertIntoHead(int value)
         {
             Head = new ListNode(value, Head);
             ++Length;
@@ -67,9 +69,13 @@
         /// <summary>
         /// Inserts a new node into the list
         /// </summary>
-        /// <param name="value">Value of the new node</param>
-        /// <param name="position">Position of the new node</param>
-        public void Insert(string value, ulong position)
+        /// <param name="value">
+        /// Value of the new node
+        /// </param>
+        /// <param name="position">
+        /// Position of the new node
+        /// </param>
+        public void Insert(int value, int position)
         {
             if (!FlagCanInsertIntoPosition(position))
             {
@@ -86,7 +92,7 @@
             var newNode = new ListNode(value, precedingNode.Next);
             precedingNode.Next = newNode;
             ++Length;
-        }
+         }
 
         private void RemoveFromHead()
         {
@@ -97,8 +103,10 @@
         /// <summary>
         /// Removes a node from the list
         /// </summary>
-        /// <param name="position">Position of node that shall be removed</param>
-        public void Remove(ulong position)
+        /// <param name="position">
+        /// Position of node that shall be removed
+        /// </param>
+        public void Remove(int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -119,9 +127,13 @@
         /// <summary>
         /// Get the value of node by given position
         /// </summary>
-        /// <param name="position">Position of desired node</param>
-        /// <returns>Desired value</returns>
-        public string GetValueByPosition(ulong position)
+        /// <param name="position">
+        /// Position of desired node
+        /// </param>
+        /// <returns>
+        /// Desired value
+        /// </returns>
+        public int GetValueByPosition(int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -135,9 +147,13 @@
         /// <summary>
         /// Changes the value of node by given position
         /// </summary>
-        /// <param name="value">New value</param>
-        /// <param name="position">Position of desired node</param>
-        public void ChangeValueByPosition(string value, ulong position)
+        /// <param name="value">
+        /// New value
+        /// </param>
+        /// <param name="position">
+        /// Position of desired node
+        /// </param>
+        public void ChangeValueByPosition(int value, int position)
         {
             if (!FlagNodeIsInList(position))
             {
@@ -146,26 +162,6 @@
 
             var node = GetParticularNode(position);
             node.Value = value;
-        }
-        
-        /// <summary>
-        /// Finds the position of given string
-        /// </summary>
-        /// <param name="value">String that we know</param>
-        /// <returns>Position of given string. If it doesn't exist in the list, returns -1.</returns>
-        public ulong GetPositionByValue(string value)
-        {
-            var temp = Head;
-            for (ulong i = 0; i < Length; ++i)
-            {
-                if (value == temp.Value)
-                {
-                    return i;
-                }
-                temp = temp.Next;
-            }
-
-            return Length;
         }
     }
 }

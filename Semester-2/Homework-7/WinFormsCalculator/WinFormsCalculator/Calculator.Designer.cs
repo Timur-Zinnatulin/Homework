@@ -49,6 +49,7 @@
             this.buttonPoint = new System.Windows.Forms.Button();
             this.buttonLeftBracket = new System.Windows.Forms.Button();
             this.buttonRightBracket = new System.Windows.Forms.Button();
+            this.buttonEquals = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ButtonOne
@@ -60,6 +61,7 @@
             this.ButtonOne.TabIndex = 0;
             this.ButtonOne.Text = "1";
             this.ButtonOne.UseVisualStyleBackColor = true;
+            this.ButtonOne.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonTwo
             // 
@@ -70,6 +72,7 @@
             this.ButtonTwo.TabIndex = 1;
             this.ButtonTwo.Text = "2";
             this.ButtonTwo.UseVisualStyleBackColor = true;
+            this.ButtonTwo.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonThree
             // 
@@ -80,6 +83,7 @@
             this.ButtonThree.TabIndex = 2;
             this.ButtonThree.Text = "3";
             this.ButtonThree.UseVisualStyleBackColor = true;
+            this.ButtonThree.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonFour
             // 
@@ -90,6 +94,7 @@
             this.ButtonFour.TabIndex = 3;
             this.ButtonFour.Text = "4";
             this.ButtonFour.UseVisualStyleBackColor = true;
+            this.ButtonFour.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonFive
             // 
@@ -100,6 +105,7 @@
             this.ButtonFive.TabIndex = 4;
             this.ButtonFive.Text = "5";
             this.ButtonFive.UseVisualStyleBackColor = true;
+            this.ButtonFive.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonSix
             // 
@@ -110,6 +116,7 @@
             this.ButtonSix.TabIndex = 5;
             this.ButtonSix.Text = "6";
             this.ButtonSix.UseVisualStyleBackColor = true;
+            this.ButtonSix.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonSeven
             // 
@@ -120,6 +127,7 @@
             this.ButtonSeven.TabIndex = 6;
             this.ButtonSeven.Text = "7";
             this.ButtonSeven.UseVisualStyleBackColor = true;
+            this.ButtonSeven.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonEight
             // 
@@ -130,6 +138,7 @@
             this.ButtonEight.TabIndex = 7;
             this.ButtonEight.Text = "8";
             this.ButtonEight.UseVisualStyleBackColor = true;
+            this.ButtonEight.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonNine
             // 
@@ -140,16 +149,18 @@
             this.ButtonNine.TabIndex = 8;
             this.ButtonNine.Text = "9";
             this.ButtonNine.UseVisualStyleBackColor = true;
+            this.ButtonNine.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonZero
             // 
             this.ButtonZero.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.ButtonZero.Location = new System.Drawing.Point(35, 585);
+            this.ButtonZero.Location = new System.Drawing.Point(130, 585);
             this.ButtonZero.Name = "ButtonZero";
-            this.ButtonZero.Size = new System.Drawing.Size(184, 85);
+            this.ButtonZero.Size = new System.Drawing.Size(89, 85);
             this.ButtonZero.TabIndex = 9;
             this.ButtonZero.Text = "0";
             this.ButtonZero.UseVisualStyleBackColor = true;
+            this.ButtonZero.Click += new System.EventHandler(this.NumberClick);
             // 
             // ButtonDivide
             // 
@@ -161,6 +172,7 @@
             this.ButtonDivide.TabIndex = 10;
             this.ButtonDivide.Text = "/";
             this.ButtonDivide.UseVisualStyleBackColor = false;
+            this.ButtonDivide.Click += new System.EventHandler(this.OperationClick);
             // 
             // ButtonMultiply
             // 
@@ -172,6 +184,7 @@
             this.ButtonMultiply.TabIndex = 11;
             this.ButtonMultiply.Text = "*";
             this.ButtonMultiply.UseVisualStyleBackColor = false;
+            this.ButtonMultiply.Click += new System.EventHandler(this.OperationClick);
             // 
             // ButtonSubtract
             // 
@@ -183,6 +196,7 @@
             this.ButtonSubtract.TabIndex = 12;
             this.ButtonSubtract.Text = "-";
             this.ButtonSubtract.UseVisualStyleBackColor = false;
+            this.ButtonSubtract.Click += new System.EventHandler(this.OperationClick);
             // 
             // ButtonAdd
             // 
@@ -194,6 +208,7 @@
             this.ButtonAdd.TabIndex = 13;
             this.ButtonAdd.Text = "+";
             this.ButtonAdd.UseVisualStyleBackColor = false;
+            this.ButtonAdd.Click += new System.EventHandler(this.OperationClick);
             // 
             // ButtonErase
             // 
@@ -205,6 +220,7 @@
             this.ButtonErase.TabIndex = 14;
             this.ButtonErase.Text = "JX";
             this.ButtonErase.UseVisualStyleBackColor = false;
+            this.ButtonErase.Click += new System.EventHandler(this.EraseClick);
             // 
             // ButtonClear
             // 
@@ -216,6 +232,7 @@
             this.ButtonClear.TabIndex = 15;
             this.ButtonClear.Text = "C";
             this.ButtonClear.UseVisualStyleBackColor = false;
+            this.ButtonClear.Click += new System.EventHandler(this.ClearClick);
             // 
             // InputResultTextBox
             // 
@@ -249,12 +266,13 @@
             // 
             this.buttonPoint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.buttonPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.buttonPoint.Location = new System.Drawing.Point(225, 585);
+            this.buttonPoint.Location = new System.Drawing.Point(35, 585);
             this.buttonPoint.Name = "buttonPoint";
             this.buttonPoint.Size = new System.Drawing.Size(89, 85);
             this.buttonPoint.TabIndex = 18;
             this.buttonPoint.Text = ",";
             this.buttonPoint.UseVisualStyleBackColor = false;
+            this.buttonPoint.Click += new System.EventHandler(this.CommaClick);
             // 
             // buttonLeftBracket
             // 
@@ -266,6 +284,7 @@
             this.buttonLeftBracket.TabIndex = 19;
             this.buttonLeftBracket.Text = "(";
             this.buttonLeftBracket.UseVisualStyleBackColor = false;
+            this.buttonLeftBracket.Click += new System.EventHandler(this.LeftBracketClick);
             // 
             // buttonRightBracket
             // 
@@ -277,12 +296,26 @@
             this.buttonRightBracket.TabIndex = 20;
             this.buttonRightBracket.Text = ")";
             this.buttonRightBracket.UseVisualStyleBackColor = false;
+            this.buttonRightBracket.Click += new System.EventHandler(this.RightBracketClick);
+            // 
+            // buttonEquals
+            // 
+            this.buttonEquals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttonEquals.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.buttonEquals.Location = new System.Drawing.Point(225, 585);
+            this.buttonEquals.Name = "buttonEquals";
+            this.buttonEquals.Size = new System.Drawing.Size(89, 85);
+            this.buttonEquals.TabIndex = 21;
+            this.buttonEquals.Text = "=";
+            this.buttonEquals.UseVisualStyleBackColor = false;
+            this.buttonEquals.Click += new System.EventHandler(this.ResultClick);
             // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(448, 709);
+            this.Controls.Add(this.buttonEquals);
             this.Controls.Add(this.buttonRightBracket);
             this.Controls.Add(this.buttonLeftBracket);
             this.Controls.Add(this.buttonPoint);
@@ -335,6 +368,7 @@
         private System.Windows.Forms.Button buttonPoint;
         private System.Windows.Forms.Button buttonLeftBracket;
         private System.Windows.Forms.Button buttonRightBracket;
+        private System.Windows.Forms.Button buttonEquals;
     }
 }
 

@@ -5,6 +5,7 @@ environment:
   - solution_path: Semester-2\TestGame\TestGame.sln
   - solution_path: Semester-2/Homework-2/SinglyLinkedList/SinglyLinkedList.sln
   - solution_path: Semester-2/Homework-2/HashTable/HashTable.sln
+  - solution_path: Semester-2\Homework-8\GenericList\GenericList.sln
 
 
 before_build:

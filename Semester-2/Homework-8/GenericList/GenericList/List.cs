@@ -113,9 +113,12 @@ namespace GenericList
             return false;
         }
 
+        /// <summary>
+        /// Copies the entire list into an array
+        /// </summary>
         public void CopyTo(T[] array, int index)
         {
-            if (!FlagNodeIsInList(index))
+            if (index < 0 || index >= array.Length)
             {
                 throw new ArgumentOutOfRangeException("Index is out of range.");
             }

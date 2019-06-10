@@ -17,7 +17,7 @@ namespace GenericSet
             public T Value { get; set; }
             public Node(T value)
             {
-                this.Value = value;
+                Value = value;
             }
         }
 
@@ -72,7 +72,16 @@ namespace GenericSet
         /// Puts value into the set
         /// </summary>
         public bool Add(T value)
-            => PutIntoSet(head, value);
+        {
+            if (head == null)
+            {
+                head = new Node(value);
+                ++Count;
+                return true;
+            }
+
+            return PutIntoSet(head, value);
+        }
 
         /// <summary>
         /// Checks if the calue is in set
@@ -87,12 +96,12 @@ namespace GenericSet
                     return false;
                 }
 
-                if (temp.Value.CompareTo(value) == 0)
+                if (value.CompareTo(temp.Value) == 0)
                 {
                     return true;
                 }
 
-                if (temp.Value.CompareTo(value) > 0)
+                if (value.CompareTo(temp.Value) > 0)
                 {
                     temp = temp.Right;
                 }
@@ -148,11 +157,11 @@ namespace GenericSet
         /// </summary>
         private void NodeRemoval(Node node, T value)
         {
-            if (node.Value.CompareTo(value) > 0)
+            if (value.CompareTo(node.Value) > 0)
             {
                 NodeRemoval(node.Right, value);
             }
-            else if (node.Value.CompareTo(value) < 0)
+            else if (value.CompareTo(node.Value) < 0)
             {
                 NodeRemoval(node.Left, value);
             }
@@ -391,10 +400,11 @@ namespace GenericSet
             int count = 0;
             foreach (var item in collection)
             {
-                if (Contains(item))
+                if (!Contains(item))
                 {
-                    ++count;
+                    return false;
                 }
+                ++count;
             }
 
             return Count == count;

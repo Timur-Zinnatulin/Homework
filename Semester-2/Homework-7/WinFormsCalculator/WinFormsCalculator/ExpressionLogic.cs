@@ -10,7 +10,7 @@ namespace WinFormsCalculator
         /// <summary>
         /// Expression input string
         /// </summary>
-        private string input;
+        private string input = string.Empty;
 
         private bool IfOperationIsLastInput() => input[input.Length - 1] == '*' || input[input.Length - 1] == '/'
             || input[input.Length - 1] == '-' || input[input.Length - 1] == '+';
@@ -28,6 +28,11 @@ namespace WinFormsCalculator
         /// </summary>
         public string ClickNumber(string number)
         {
+            if (input != string.Empty && input[input.Length - 1] == ')')
+            {
+                return input;
+            }
+
             input += number;
             return input;
         }
@@ -37,7 +42,7 @@ namespace WinFormsCalculator
         /// </summary>
         public string ClickComma()
         {
-            if (doubleNumber || !IfNumberIsLastInput())
+            if (input == string.Empty || doubleNumber || !IfNumberIsLastInput())
             {
                 return input;
             }
@@ -53,14 +58,23 @@ namespace WinFormsCalculator
         /// </summary>
         public string ClickLeftBracket()
         {
-            if (!IfOperationIsLastInput() && input[input.Length - 1] != '(')
+            if (input == string.Empty)
+            {
+                input = "(";
+            }
+            else
+
+            if (IfOperationIsLastInput() || input[input.Length - 1] == '(')
+            {
+                input += "(";
+            }
+            else
             {
                 return input;
             }
 
             ++bracketBalance;
             atLeastOneOperation = false;
-            input += "(";
             return input;
         }
 
@@ -69,7 +83,7 @@ namespace WinFormsCalculator
         /// </summary>
         public string ClickRightBracket()
         {
-            if (bracketBalance <= 0 || !IfNumberIsLastInput() || !atLeastOneOperation)
+            if (bracketBalance <= 0 || (!IfNumberIsLastInput() && input[input.Length - 1] != ')') || !atLeastOneOperation)
             {
                 return input;
             }
@@ -85,7 +99,7 @@ namespace WinFormsCalculator
         /// </summary>
         public string ClickOperation(string operation)
         {
-            if (input[input.Length - 1] == ',' || input[input.Length - 1] == '(')
+            if (input == string.Empty || input[input.Length - 1] == ',' || input[input.Length - 1] == '(')
             {
                 return input;
             }
@@ -108,8 +122,23 @@ namespace WinFormsCalculator
         /// </summary>
         public string ClickEquals()
         {
+            string answer = string.Empty;
 
-            return input;
+            try
+            {
+                answer = ResultCalculator.Result(input).ToString();
+            }
+
+            catch (DivideByZeroException zeroEx)
+            {
+                answer = zeroEx.Message;
+            }
+            catch (FormatException formatEx)
+            {
+                answer = formatEx.Message;
+            }
+
+            return answer;
         }
 
         /// <summary>

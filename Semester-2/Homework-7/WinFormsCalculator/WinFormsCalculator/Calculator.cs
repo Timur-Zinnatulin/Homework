@@ -71,6 +71,7 @@ namespace WinFormsCalculator
         private void ClearClick(object sender, EventArgs e)
         {
             ExpressionTextBox.Text = "";
+            InputResultTextBox.Text = "";
             logic = new ExpressionLogic();
         }
 
@@ -79,7 +80,7 @@ namespace WinFormsCalculator
         /// </summary>
         private void ResultClick(object sender, EventArgs e)
         {
-
+            InputResultTextBox.Text = logic.ClickEquals();
         }
     }
 }

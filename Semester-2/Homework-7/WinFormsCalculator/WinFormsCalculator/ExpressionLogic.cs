@@ -161,6 +161,11 @@ namespace WinFormsCalculator
                 ++bracketBalance;
             }
 
+            if (input[input.Length - 1] == ',')
+            {
+                doubleNumber = false;
+            }
+
             if (input[input.Length - 1] == '(')
             {
                 --bracketBalance;

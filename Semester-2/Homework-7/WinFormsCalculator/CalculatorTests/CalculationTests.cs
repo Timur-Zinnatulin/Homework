@@ -15,7 +15,6 @@ namespace CalculatorTests
         [TestCase("(2+2)", ExpectedResult = "4")]
         [TestCase("2*(1+1)", ExpectedResult = "4")]
         [TestCase("(84-11)*(1/73)", ExpectedResult = "1")]
-        [TestCase("1,5*1,5*1,5", ExpectedResult = "3,375")]
         [TestCase("2+2-2+2-2+2-2+2-2", ExpectedResult = "2")]
         [TestCase("843-1009", ExpectedResult = "-166")]
         [TestCase("2+2*2", ExpectedResult = "6")]

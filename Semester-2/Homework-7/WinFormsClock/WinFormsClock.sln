@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsClock", "WinFormsClock\WinFormsClock.csproj", "{2B284D0A-CF77-4F16-9C2C-3AC102A68975}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B284D0A-CF77-4F16-9C2C-3AC102A68975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B284D0A-CF77-4F16-9C2C-3AC102A68975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B284D0A-CF77-4F16-9C2C-3AC102A68975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B284D0A-CF77-4F16-9C2C-3AC102A68975}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3E4B105-B1C1-4354-A9E4-15A603C4230B}
+	EndGlobalSection
+EndGlobal

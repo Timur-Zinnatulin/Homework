@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsCalculator", "WinFormsCalculator\WinFormsCalculator.csproj", "{2E76D586-AEFD-4F4D-ADE0-9CB13F21E6DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorTests", "CalculatorTests\CalculatorTests.csproj", "{7AFEE45E-842A-41B0-8BD4-3685A4916A6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2E76D586-AEFD-4F4D-ADE0-9CB13F21E6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E76D586-AEFD-4F4D-ADE0-9CB13F21E6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E76D586-AEFD-4F4D-ADE0-9CB13F21E6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AFEE45E-842A-41B0-8BD4-3685A4916A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFEE45E-842A-41B0-8BD4-3685A4916A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AFEE45E-842A-41B0-8BD4-3685A4916A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AFEE45E-842A-41B0-8BD4-3685A4916A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

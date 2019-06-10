@@ -124,6 +124,11 @@ namespace WinFormsCalculator
         {
             string answer = string.Empty;
 
+            if (input == string.Empty)
+            {
+                return string.Empty;
+            }
+
             try
             {
                 answer = ResultCalculator.Result(input).ToString();

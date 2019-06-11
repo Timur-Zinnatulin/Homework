@@ -25,13 +25,13 @@ namespace ParseTree
         /// Calculates the node value
         /// </summary>
         /// <returns>Value of node after calculation</returns>
-        public override int Calculate()
+        public int Calculate()
             => Value;
 
         /// <summary>
         /// Prints node parsing
         /// </summary>
-        public override string Print()
+        public string Print()
             => $"{Value} ";
     }
 }

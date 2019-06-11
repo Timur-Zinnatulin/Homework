@@ -23,7 +23,7 @@ namespace ParseTree
                 Operation newNode;
                 inputs.Dequeue();
                 nextMatch = inputs.Peek();
-                switch(nextMatch)
+                switch (nextMatch)
                 {
                     case "+":
                         {
@@ -58,7 +58,7 @@ namespace ParseTree
             }
             else
             {
-                Number newNode = new Number(int.Parse(nextMatch));
+                var newNode = new Number(int.Parse(nextMatch));
                 inputs.Dequeue();
                 return newNode;
             }
@@ -71,7 +71,6 @@ namespace ParseTree
         /// <returns>Exprettion tree for given expression</returns>
         public static Tree CreateTree(string input)
         {
-            Tree newTree;
             const string options = @"-*\d+|[()*/+-]";
             var matches = Regex.Matches(input, options);
             var queue = new Queue<string>();
@@ -83,7 +82,7 @@ namespace ParseTree
 
             var head = CreateNode(queue);
 
-            newTree = new Tree(head);
+            var newTree = new Tree(head);
 
             if (queue.Count > 0)
             {

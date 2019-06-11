@@ -5,17 +5,17 @@ namespace ParseTree
     /// <summary>
     /// Parse tree node class
     /// </summary>
-    public abstract class Node
+    public interface Node
     {
         /// <summary>
         /// Calculates the node value
         /// </summary>
         /// <returns>Value of node after calculation</returns>
-        public abstract int Calculate();
+        int Calculate();
 
         /// <summary>
         /// Prints node parsing
         /// </summary>
-        public abstract string Print();
+        string Print();
     }
 }

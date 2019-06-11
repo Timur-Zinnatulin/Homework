@@ -7,6 +7,10 @@ namespace ParseTree
     /// </summary>
     public abstract class Operation : Node
     {
+        public abstract int Calculate();
+
+        public abstract string Print();
+
         /// <summary>
         /// Left child of a node
         /// </summary>

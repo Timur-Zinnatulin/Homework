@@ -24,7 +24,7 @@ namespace GenericList
             }
         }
 
-        private ListNode Head;
+        private ListNode head;
 
         /// <summary>
         /// Length of the list
@@ -35,12 +35,13 @@ namespace GenericList
             => Count == 0;
 
         public bool IsReadOnly => false;
+
         /// <summary>
         /// Deletes all elements from the list
         /// </summary>
         public void Clear()
         {
-            Head = null;
+            head = null;
             Count = 0;
         }
 
@@ -64,7 +65,7 @@ namespace GenericList
         /// <returns>The desired node</returns>
         private ListNode GetParticularNode(int position)
         {
-            var temp = Head;
+            var temp = head;
 
             for (int i = 0; i < position; ++i)
             {
@@ -79,7 +80,7 @@ namespace GenericList
         /// </summary>
         public int IndexOf(T value)
         {
-            var temp = Head;
+            var temp = head;
             int index = 0;
             while (temp != null)
             {
@@ -99,7 +100,7 @@ namespace GenericList
         /// </summary>
         public bool Contains(T value)
         {
-            var temp = Head;
+            var temp = head;
             while (temp != null)
             {
                 if (temp.Value.Equals(value))
@@ -128,7 +129,7 @@ namespace GenericList
                 throw new ArgumentException("Can't fit into array.");
             }
 
-            var temp = Head;
+            var temp = head;
             while (temp != null)
             {
                 array[index] = temp.Value;
@@ -147,13 +148,13 @@ namespace GenericList
                 return false;
             }
 
-            if (value.Equals(Head.Value))
+            if (value.Equals(head.Value))
             {
                 RemoveFromHead();
                 return true;
             }
 
-            var temp = Head;
+            var temp = head;
             while (temp.Next != null)
             {
                 if (temp.Next.Value.Equals(value))
@@ -170,7 +171,7 @@ namespace GenericList
 
         private void InsertIntoHead(T value)
         {
-            Head = new ListNode(value, Head);
+            head = new ListNode(value, head);
             ++Count;
         }
 
@@ -206,7 +207,7 @@ namespace GenericList
 
         private void RemoveFromHead()
         {
-            Head = Head.Next;
+            head = head.Next;
             --Count;
         }
 
@@ -266,7 +267,7 @@ namespace GenericList
 
         public IEnumerator<T> GetEnumerator()
         {
-            var temp = Head;
+            var temp = head;
             while (temp != null)
             {
                 yield return temp.Value;

@@ -217,24 +217,6 @@ namespace GenericSet
                 array[index] = item;
                 ++index;
             }
-            /*var queue = new Queue<Node>();
-            queue.Enqueue(head);
-            while (queue.Count > 0)
-            {
-                var temp = queue.Dequeue();
-                array[index] = temp.Value;
-                ++index;
-
-                if (temp.Left != null)
-                {
-                    queue.Enqueue(temp.Left);
-                }
-
-                if (temp.Right != null)
-                {
-                    queue.Enqueue(temp.Right);
-                }
-            }*/
         }
 
         /// <summary>

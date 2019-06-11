@@ -73,6 +73,10 @@ namespace WinFormsCalculator
                     while (stack.Count != 0 && HasPriority(stack.Peek()))
                     {
                         output.Add(stack.Pop());
+                        if (stack.Count == 0)
+                        {
+                            throw new FormatException("Cannot calculate.");
+                        }
                     }
                     stack.Push(lexeme);
                 }
@@ -81,6 +85,7 @@ namespace WinFormsCalculator
                     while (stack.Count != 0 && stack.Peek() != "(")
                     {
                         output.Add(stack.Pop());
+                        throw new FormatException("Cannot calculate.");
                     }
                     stack.Push(lexeme);
                 }
@@ -132,7 +137,18 @@ namespace WinFormsCalculator
                 }
                 else
                 {
+                    if (stack.Count == 0)
+                    {
+                        throw new FormatException("Cannot calculate.");
+                    }
+
                     var secondOperand = stack.Pop();
+
+                    if (stack.Count == 0)
+                    {
+                        throw new FormatException("Cannot calculate.");
+                    }
+
                     var firstOperand = stack.Pop();
                     stack.Push(Operate(firstOperand, secondOperand, item));
                 }

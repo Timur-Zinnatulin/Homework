@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsCalculator
@@ -15,7 +8,7 @@ namespace WinFormsCalculator
     /// </summary>
     public partial class Calculator : Form
     {
-        public ExpressionLogic logic;
+        private ExpressionLogic logic;
 
         public Calculator()
         {

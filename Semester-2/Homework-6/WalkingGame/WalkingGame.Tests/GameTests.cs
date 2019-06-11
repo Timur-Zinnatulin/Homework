@@ -26,53 +26,53 @@ namespace GameTests
 
         [Test]
         public void GameConstructorSucceedsTest()
-            => Assert.IsTrue(game.FlagReadyToPlay);
+            => Assert.IsTrue(game.IsReadyToPlay);
 
         [Test]
         public void CharacterIsInPlaceTest()
         {
-            Assert.AreEqual(3, game.Player.x);
-            Assert.AreEqual(7, game.Player.y);
+            Assert.AreEqual(3, game.Player.X);
+            Assert.AreEqual(7, game.Player.Y);
         }
 
         [Test]
         public void CharacterCanMoveDownTest()
         {
             loop.EmulatePress(ConsoleKey.DownArrow);
-            Assert.AreEqual(4, game.Player.x);
-            Assert.AreEqual(7, game.Player.y);
+            Assert.AreEqual(4, game.Player.X);
+            Assert.AreEqual(7, game.Player.Y);
         }
 
         [Test]
         public void CharacterCanMoveRightTest()
         {
             loop.EmulatePress(ConsoleKey.RightArrow);
-            Assert.AreEqual(3, game.Player.x);
-            Assert.AreEqual(8, game.Player.y);
+            Assert.AreEqual(3, game.Player.X);
+            Assert.AreEqual(8, game.Player.Y);
         }
 
         [Test]
         public void CharacterCanMoveUpTest()
         {
             loop.EmulatePress(ConsoleKey.UpArrow);
-            Assert.AreEqual(2, game.Player.x);
-            Assert.AreEqual(7, game.Player.y);
+            Assert.AreEqual(2, game.Player.X);
+            Assert.AreEqual(7, game.Player.Y);
         }
 
         [Test]
         public void CharacterCanMoveLeftTest()
         {
             loop.EmulatePress(ConsoleKey.LeftArrow);
-            Assert.AreEqual(3, game.Player.x);
-            Assert.AreEqual(6, game.Player.y);
+            Assert.AreEqual(3, game.Player.X);
+            Assert.AreEqual(6, game.Player.Y);
         }
 
         [Test]
         public void NothingDoneOnEnterTest()
         {
             loop.EmulatePress(ConsoleKey.Enter);
-            Assert.AreEqual(3, game.Player.x);
-            Assert.AreEqual(7, game.Player.y);
+            Assert.AreEqual(3, game.Player.X);
+            Assert.AreEqual(7, game.Player.Y);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace GameTests
             {
                 loop.EmulatePress(ConsoleKey.LeftArrow);
             }
-            Assert.AreEqual(1, game.Player.y);
+            Assert.AreEqual(1, game.Player.Y);
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace GameTests
             {
                 loop.EmulatePress(ConsoleKey.RightArrow);
             }
-            Assert.AreEqual(11, game.Player.y);
+            Assert.AreEqual(11, game.Player.Y);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace GameTests
             {
                 loop.EmulatePress(ConsoleKey.UpArrow);
             }
-            Assert.AreEqual(1, game.Player.x);
+            Assert.AreEqual(1, game.Player.X);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace GameTests
             {
                 loop.EmulatePress(ConsoleKey.DownArrow);
             }
-            Assert.AreEqual(4, game.Player.x);
+            Assert.AreEqual(4, game.Player.X);
         }
 
         [Test]
@@ -122,8 +122,8 @@ namespace GameTests
             loop.EmulatePress(ConsoleKey.RightArrow);
             loop.EmulatePress(ConsoleKey.UpArrow);
             loop.EmulatePress(ConsoleKey.LeftArrow);
-            Assert.AreEqual(3, game.Player.x);
-            Assert.AreEqual(7, game.Player.y);
+            Assert.AreEqual(3, game.Player.X);
+            Assert.AreEqual(7, game.Player.Y);
         }
     }
 }

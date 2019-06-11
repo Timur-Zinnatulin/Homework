@@ -17,7 +17,8 @@ namespace WalkingGame
             Left,
             Right,
             Up,
-            Down
+            Down,
+            Still
         }
 
         private bool flagTesting;
@@ -25,7 +26,7 @@ namespace WalkingGame
         /// <summary>
         /// Flag that showws if the game is ready to be played
         /// </summary>
-        public bool FlagReadyToPlay { get; private set; }
+        public bool IsReadyToPlay { get; private set; }
 
         /// <summary>
         /// List of lines of the map
@@ -35,16 +36,64 @@ namespace WalkingGame
         /// <summary>
         /// Player coordinates subclass
         /// </summary>
-        public class Coords
+        public struct Coords
         {
-            public int x;
-            public int y;
+            public int X { get; private set; }
+            public int Y { get; private set; }
+
+            /*
+            public void GoRight()
+            {
+                ChangeCoords(Directions.Right);
+            }
+
+            public void GoLeft()
+            {
+                ChangeCoords(Directions.Left);
+            }
+
+            public void GoUp()
+            {
+                ChangeCoords(Directions.Up);
+            }
+
+            public void GoDown()
+            {
+                ChangeCoords(Directions.Down);
+            }*/
 
             public Coords(int x, int y)
             {
-                this.x = x;
-                this.y = y;
+                this.X = x;
+                this.Y = y;
             }
+            /*
+            private void ChangeCoords(Directions d)
+            {
+                switch (d)
+                {
+                    case Directions.Left:
+                        {
+                            --Y;
+                            break;
+                        }
+                    case Directions.Right:
+                        {
+                            ++Y;
+                            break;
+                        }
+                    case Directions.Up:
+                        {
+                           --X;
+                            break;
+                        }
+                    case Directions.Down:
+                        {
+                            ++X;
+                            break;
+                        }
+                }
+            }*/
         }
 
         /// <summary>
@@ -73,12 +122,12 @@ namespace WalkingGame
             }
 
             Player = FindStartPosition(allStrings);
-            if (Player.x == -1)
+            if (Player.X == -1)
             {
                 throw new FormatException("Map does not have a start position!");
             }
 
-            FlagReadyToPlay = true;
+            IsReadyToPlay = true;
         }
 
         /// <summary>
@@ -134,7 +183,7 @@ namespace WalkingGame
         {
             if (!flagTesting)
             {
-                Console.SetCursorPosition(Player.y, Player.x);
+                Console.SetCursorPosition(Player.Y, Player.X);
                 Console.Write(" ");
             }
 
@@ -142,22 +191,22 @@ namespace WalkingGame
             {
                 case Directions.Left:
                     {
-                        --Player.y;
+                        Player = new Coords(Player.X, Player.Y - 1);
                         break;
                     }
                 case Directions.Right:
                     {
-                        ++Player.y;
+                        Player = new Coords(Player.X, Player.Y + 1);
                         break;
                     }
                 case Directions.Up:
                     {
-                        --Player.x;
+                        Player = new Coords(Player.X - 1, Player.Y);
                         break;
                     }
                 case Directions.Down:
                     {
-                        ++Player.x;
+                        Player = new Coords(Player.X + 1, Player.Y);
                         break;
                     }
                 default:
@@ -168,14 +217,14 @@ namespace WalkingGame
 
             if (!flagTesting)
             {
-                Console.SetCursorPosition(Player.y, Player.x);
+                Console.SetCursorPosition(Player.Y, Player.X);
                 Console.Write("@");
             }
         }
 
         public void OnLeft(object sender, EventArgs args)
         {
-            if (IsWall(Map[Player.x][Player.y - 1]))
+            if (IsWall(Map[Player.X][Player.Y - 1]))
             {
                 return;
             }
@@ -184,7 +233,7 @@ namespace WalkingGame
 
         public void OnRight(object sender, EventArgs args)
         {
-            if (IsWall(Map[Player.x][Player.y + 1]))
+            if (IsWall(Map[Player.X][Player.Y + 1]))
             {
                 return;
             }
@@ -193,7 +242,7 @@ namespace WalkingGame
 
         public void OnUp(object sender, EventArgs args)
         {
-            if (IsWall(Map[Player.x - 1][Player.y]))
+            if (IsWall(Map[Player.X - 1][Player.Y]))
             {
                 return;
             }
@@ -202,7 +251,7 @@ namespace WalkingGame
 
         public void OnDown(object sender, EventArgs args)
         {
-            if (IsWall(Map[Player.x + 1][Player.y]))
+            if (IsWall(Map[Player.X + 1][Player.Y]))
             {
                 return;
             }

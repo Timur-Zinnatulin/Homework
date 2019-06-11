@@ -14,9 +14,9 @@ namespace MapFilterFoldFunctions
         /// <param name="list">Given list</param>
         /// <param name="function">Given function</param>
         /// <returns>Transformed list</returns>
-        public static List<int> Map(List<int> list, Func<int, int> function)
+        public static List<U> Map<T,U>(List<T> list, Func<T, U> function)
         {
-            var newList = new List<int>();
+            var newList = new List<U>();
 
             foreach (var elem in list)
             {
@@ -54,7 +54,7 @@ namespace MapFilterFoldFunctions
         /// <param name="setupValue">Given initial number</param>
         /// <param name="function">Given function</param>
         /// <returns>List folded into one number by given function</returns>
-        public static int Fold(List<int> list, int setupValue, Func<int, int, int> function)
+        public static U Fold<T, U>(List<T> list, U setupValue, Func<U, T, U> function)
         {
             foreach (var elem in list)
             {

@@ -9,6 +9,7 @@ environment:
   - solution_path: Semester-2/Homework-4/ParseTree/ParseTree.sln
   - solution_path: Semester-2/Homework-6/MapFilterFoldFunctions/MapFilterFoldFunctions.sln
   - solution_path: Semester-2/Homework-6/WalkingGame/WalkingGame.sln 
+  - solution_path: Semester-2/Homework-7/WinFormsCalculator/WinFormsCalculator.sln
 
 
 before_build:

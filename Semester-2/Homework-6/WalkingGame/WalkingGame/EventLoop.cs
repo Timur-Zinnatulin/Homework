@@ -8,10 +8,13 @@ namespace WalkingGame
     public class EventLoop
     {
         public event EventHandler<EventArgs> LeftHandler = (sender, args) => { };
+
         public event EventHandler<EventArgs> RightHandler = (sender, args) => { };
+
         public event EventHandler<EventArgs> UpHandler = (sender, args) => { };
+
         public event EventHandler<EventArgs> DownHandler = (sender, args) => { };
-        
+
         /// <summary>
         /// Perpetual program run loop
         /// </summary>

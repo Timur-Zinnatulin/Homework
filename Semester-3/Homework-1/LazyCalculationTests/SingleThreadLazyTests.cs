@@ -1,10 +1,12 @@
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 using LazyCalculation;
 
 namespace LazyTests
 {
+    /// <summary>
+    /// Single Thread Lazy Calculation unit test class
+    /// </summary>
     [TestFixture]
     public class SingleThreadTests
     {

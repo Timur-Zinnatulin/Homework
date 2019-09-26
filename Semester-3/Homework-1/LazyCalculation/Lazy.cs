@@ -31,6 +31,7 @@ namespace LazyCalculation
             {
                 value = supplier();
                 isCalculated = true;
+                supplier = null;
             }
             
             return value;

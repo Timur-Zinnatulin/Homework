@@ -11,6 +11,7 @@ namespace LazyTests
     [TestFixture]
     public class MultiThreadTests
     {
+        private const int magicNumber = 5;
         private Thread[] threads;
         private int[] intResults;
         private string[] strResults;
@@ -18,9 +19,9 @@ namespace LazyTests
         [SetUp]
         public void SetUp()
         {
-            threads = new Thread[5];
-            intResults = new int[5];
-            strResults = new string[5];
+            threads = new Thread[magicNumber];
+            intResults = new int[magicNumber];
+            strResults = new string[magicNumber];
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace LazyTests
             };
 
             var intLazy = LazyFactory<int>.CreateMultiThread(supp);
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < magicNumber; ++i)
             {
                 var index = i;
                 threads[i] = new Thread(() => 
@@ -49,7 +50,7 @@ namespace LazyTests
                 thread.Join();
             }
 
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < magicNumber; ++i)
             {
                 Assert.AreEqual(10, intResults[i]);
             }
@@ -63,7 +64,7 @@ namespace LazyTests
 
             var strLazy = LazyFactory<string>.CreateMultiThread(supp);
 
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < magicNumber; ++i)
             {
                 var index = i;
                 threads[i] = new Thread(() => 
@@ -78,7 +79,7 @@ namespace LazyTests
                 thread.Join();
             }
 
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < magicNumber; ++i)
             {
                 Assert.AreEqual("Nate Higgers", strResults[i]);
             }

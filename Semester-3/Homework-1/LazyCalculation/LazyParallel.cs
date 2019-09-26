@@ -39,6 +39,7 @@ namespace LazyCalculation
                     }
 
                     value = supplier();
+                    supplier = null;
                     isCalculated = true;
                 }
             }

@@ -1,22 +1,7 @@
-image: Visual Studio 2017
+image: ubuntu
 
-environment:
-  matrix:
-  - solution_path: Semester-2/TestGame/TestGame.sln
-  - solution_path: Semester-2/Homework-2/SinglyLinkedList/SinglyLinkedList.sln
-  - solution_path: Semester-2/Homework-2/HashTable/HashTable.sln
-  - solution_path: Semester-2/Homework-8/GenericSet/GenericSet.sln
-  - solution_path: Semester-2/Homework-8/GenericList/GenericList.sln
-  - solution_path: Semester-2/Homework-2/StackCalculator/StackCalculator.sln
-  - solution_path: Semester-2/Homework-4/ParseTree/ParseTree.sln
-  - solution_path: Semester-2/Homework-6/MapFilterFoldFunctions/MapFilterFoldFunctions.sln
-  - solution_path: Semester-2/Homework-6/WalkingGame/WalkingGame.sln 
-  - solution_path: Semester-2/Homework-7/WinFormsCalculator/WinFormsCalculator.sln
-  - solution_path: Semester-2/Homework-7/WinFormsClock/WinFormsClock.sln
+build:
+  project: Semester-3/Homework-1/LazyCalculation.sln
 
-
-before_build:
-  - nuget restore %solution_path%
-
-build_script:
-  - msbuild %solution_path%
+test_script:
+  - dotnet test Semester-3/Homework-1/LazyCalculation.sln

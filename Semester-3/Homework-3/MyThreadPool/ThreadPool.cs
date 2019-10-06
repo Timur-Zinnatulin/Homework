@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace ThreadPool
@@ -12,6 +13,8 @@ namespace ThreadPool
 
         private bool[] isOccupied;
 
+        private ConcurrentQueue<MyTask> taskQueue;
+
         public ThreadPool(int n)
         {
             threads = new Thread[n];
@@ -19,7 +22,14 @@ namespace ThreadPool
             for (int i = 0; i < n; ++i)
             {
                 isOccupied[i] = false;
-            }            
+            }
+
+            taskQueue = new ConcurrentQueue<MyTask>();
         }
+
+        public void Submit(MyTask task)
+            => taskQueue.Enqueue(task);
+
+        
     }
 }

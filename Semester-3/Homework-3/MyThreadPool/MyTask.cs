@@ -5,7 +5,7 @@ using System.Threading;
 namespace ThreadPool
 {
     /// <summary>
-    /// ThreadPool tasks interface
+    /// ThreadPool task
     /// </summary>
     public class MyTask<TResult> : IMyTask<TResult>
     {
@@ -16,9 +16,38 @@ namespace ThreadPool
             this.IsCompleted = false;
         }
 
-        TResult Result { get; private set; }
+        private object lockObject = new Object();
 
-        MyTask<TNewResult> ContinueWith(Func<TResult, TNewResult> function)
+        /// <summary>
+        /// Result of Task result calculation
+        /// </summary>
+        public TResult Result 
+        { 
+            get
+            {
+                if (!IsCompleted)
+                {
+                    lock (lockObject)
+                    {
+                        if (isCompleted)
+                        {
+                            return Result;
+                        }
+
+                        Result = Function();
+                        Function = null;
+                        IsCompleted = true;
+                    }
+                }
+                return Result;
+            } 
+        }
+
+        /// <summary>
+        /// Method that lets us calculate composition of functions in a single task
+        /// </summary>
+        /// <returns>Result of composition</returns>
+        public MyTask<TNewResult> ContinueWith(Func<TResult, TNewResult> function)
             => new MyTask<TNewResult>(() => function(this.Result));
     }
 }

@@ -11,7 +11,7 @@ namespace ThreadPool
     {
         bool IsCompleted { get; private set; }
 
-        TResult Result {get; private set; }
+        TResult Result { get; }
 
         Func<TResult> Function {get; private set;}
 

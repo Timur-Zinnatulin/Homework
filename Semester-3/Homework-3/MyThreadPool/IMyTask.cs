@@ -15,6 +15,6 @@ namespace ThreadPool
 
         Func<TResult> Function {get; private set;}
 
-        MyTask<TNewResult> ContinueWith(Func<TResult, TNewResult> function);
+        IMyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function);
     }
 }

@@ -47,7 +47,7 @@ namespace ThreadPool
         /// Method that lets us calculate composition of functions in a single task
         /// </summary>
         /// <returns>Result of composition</returns>
-        public MyTask<TNewResult> ContinueWith(Func<TResult, TNewResult> function)
+        public MyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function)
             => new MyTask<TNewResult>(() => function(this.Result));
     }
 }

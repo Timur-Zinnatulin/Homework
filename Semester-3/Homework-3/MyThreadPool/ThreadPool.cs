@@ -13,7 +13,7 @@ namespace ThreadPool
 
         private volatile bool[] isOccupied;
 
-        private ConcurrentQueue<MyTask> taskQueue;
+        private ConcurrentQueue<Action<bool>> taskQueue;
         private CancellationTokenSource source;
         private CancellationToken token;
 
@@ -32,7 +32,7 @@ namespace ThreadPool
                     {
                         while (!token.IsCancellationRequested)
                         {
-                            if (!isOccupied[index] && !taskQueue.IsEmpty)
+                            if (taskQueue.TryDequeue(out Action<bool> task))
                             {
                                 isOccupied[index] = true;
                                 var answer = taskQueue.Dequeue().Result;

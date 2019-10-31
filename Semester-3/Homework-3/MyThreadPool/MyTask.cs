@@ -11,12 +11,17 @@ namespace ThreadPool
     {
         public MyTask(Func<TResult> function)
         {
-            this.Function = function;
+            this.function = function;
             this.Result = null;
             this.IsCompleted = false;
         }
-
         private object lockObject = new Object();
+        private Func<TResult> function;
+        private ManualResetEvent waitResult = new ManualResetEvent(false);
+
+        private Exception internalException = null;
+
+        private TResult calculationResult;
 
         /// <summary>
         /// Result of Task result calculation
@@ -25,24 +30,20 @@ namespace ThreadPool
         { 
             get
             {
-                if (!IsCompleted)
+                waitResult.WaitOne();
+                if (internalException == null)
                 {
-                    lock (lockObject)
-                    {
-                        if (isCompleted)
-                        {
-                            return Result;
-                        }
-
-                        Result = Function();
-                        Function = null;
-                        IsCompleted = true;
-                    }
+                    return calculationResult;
                 }
-                return Result;
+
+                throw new AggregateException(internalException);
             } 
         }
 
+        public void ExecuteTask(bool normalExecution = false)
+        {
+            
+        }
         /// <summary>
         /// Method that lets us calculate composition of functions in a single task
         /// </summary>

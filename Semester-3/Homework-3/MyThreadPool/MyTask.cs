@@ -17,7 +17,7 @@ namespace ThreadPool
         /// <summary>
         /// MyThreadPool that created this task
         /// </summary>
-        private MyThreadPool threadPool;
+        private ThreadPool threadPool;
 
         /// <summary>
         /// Result of task calculation
@@ -35,7 +35,7 @@ namespace ThreadPool
         /// </summary>
         private Exception exception = null;
 
-        public MyTask(MyThreadPool pool, Func<TResult> supplier)
+        public MyTask(ThreadPool pool, Func<TResult> supplier)
         {
             this.threadPool = pool;
             this.supplier = supplier;
@@ -67,7 +67,7 @@ namespace ThreadPool
         {
             TNewResult wrapper () => function(Result);
 
-            //TODO: Add new task to thread pool
+            return threadPool.AddTask(wrapper);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace ThreadPool
         {
             try
             {
-                this.Result = supplier();
+                this.taskResult = supplier();
             }
 
             catch (Exception e)

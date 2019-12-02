@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 
 namespace ThreadPool
@@ -22,7 +22,6 @@ namespace ThreadPool
         /// <summary>
         /// Cancellation token
         /// </summary>
-        /// <returns></returns>
         private CancellationTokenSource cancel = new CancellationTokenSource();
 
         /// <summary>
@@ -35,6 +34,85 @@ namespace ThreadPool
         /// </summary>
         private volatile int availableThreads;
 
-        
+        public ThreadPool(int threadAmount)
+        {
+            MaxAmount = threadAmount;
+            availableThreads = threadAmount;
+
+            threads = new Thread[threadAmount];
+            for (int i = 0; i < threadAmount; ++i)
+            {
+                threads[i] = new Thread(() => 
+                {
+                    while (!cancel.IsCancellationRequested)
+                    {
+                        if (taskQueue.TryDequeue(out Action task))
+                        {
+                            task();
+                        }
+
+                        else
+                        {
+                            threadBlocker.WaitOne();
+
+                            if (cancel.IsCancellationRequested)
+                            {
+                                threadBlocker.Set();
+                            }
+                        }
+                    }
+
+                    --availableThreads;
+                });
+
+                threads[i].IsBackground = true;
+                threads[i].Start();
+            }
+        }
+
+        /// <summary>
+        /// Max amount of working threads
+        /// </summary>
+        public int MaxAmount { get; }
+
+        /// <summary>
+        /// Amount of available threads
+        /// </summary>
+        public int AvailableThreads => this.availableThreads;
+
+        /// <summary>
+        /// Inserts a task into a queue
+        /// </summary>
+        /// <param name="supplier">Supplier function for the task</param>
+        public IMyTask<TResult> AddTask<TResult>(Func<TResult> supplier)
+        {
+            if (cancel.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            var newTask = new MyTask<TResult>(this, supplier);
+            taskQueue.Enqueue(newTask.ExecuteTask);
+            threadBlocker.Set();
+
+            return newTask;
+        }
+
+        /// <summary>
+        /// Shuts down the thread pool
+        /// </summary>
+        public void Shutdown()
+        {
+            cancel.Cancel();
+            threadBlocker.Set();
+
+            foreach (var thread in threads)
+            {
+                if (thread.IsAlive)
+                {
+                    thread.Join();
+                }
+            }
+        }
     }
 }

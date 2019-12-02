@@ -29,6 +29,12 @@ namespace ThreadPool
         /// </summary>
         private ManualResetEvent threadBlocker = new ManualResetEvent(false);
 
+
+        /// <summary>
+        /// Exception that we catch from supplier function and rethrow as AggregateException to MyThreadPool
+        /// </summary>
+        private Exception exception = null;
+
         public MyTask(MyThreadPool pool, Func<TResult> supplier)
         {
             this.threadPool = pool;
@@ -43,11 +49,44 @@ namespace ThreadPool
             {
                 threadBlocker.WaitOne();
 
-                if (!IsCompleted)
+                if (exception == null)
                 {
-                    
+                    return taskResult;
                 }
+
+                throw new AggregateException(exception);
             }
+        }
+
+        /// <summary>
+        /// Generates new task
+        /// </summary>
+        /// <param name="function">New function</param>
+        /// <returns>Newly generated task</returns>
+        public IMyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function)
+        {
+            TNewResult wrapper () => function(Result);
+
+            //TODO: Add new task to thread pool
+        }
+
+        /// <summary>
+        /// Executes task synchronically
+        /// </summary>
+        public void ExecuteTask()
+        {
+            try
+            {
+                this.Result = supplier();
+            }
+
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            IsCompleted = true;
+            threadBlocker.Set();
         }
     }
 }

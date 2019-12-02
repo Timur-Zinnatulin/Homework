@@ -12,7 +12,7 @@ namespace ThreadPool
         /// <summary>
         /// Returns true if the task is completed, false if not.
         /// </summary>
-        bool IsCompleted { get; private set; }
+        bool IsCompleted { get; }
 
         /// <summary>
         /// Returns task result. BLocks called thread until the result is ready.

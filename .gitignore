@@ -1,5 +1,7 @@
 **/hw-3.1.vcxproj.user
 **/StackCalculator.Test/obj
+**/.vscode
+VK-Client
 Semester-3/**/bin
 Semester-3/**/obj
 .directory

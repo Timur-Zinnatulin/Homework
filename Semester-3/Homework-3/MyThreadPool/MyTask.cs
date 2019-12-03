@@ -17,7 +17,7 @@ namespace ThreadPool
         /// <summary>
         /// MyThreadPool that created this task
         /// </summary>
-        private ThreadPool threadPool;
+        private MyThreadPool threadPool;
 
         /// <summary>
         /// Result of task calculation
@@ -35,7 +35,7 @@ namespace ThreadPool
         /// </summary>
         private Exception exception = null;
 
-        public MyTask(ThreadPool pool, Func<TResult> supplier)
+        public MyTask(MyThreadPool pool, Func<TResult> supplier)
         {
             this.threadPool = pool;
             this.supplier = supplier;

@@ -7,7 +7,7 @@ namespace ThreadPool
     /// <summary>
     /// Self-made ThreadPool class
     /// </summary>
-    public class ThreadPool
+    public class MyThreadPool
     {
         /// <summary>
         /// Amount of threads in pool
@@ -34,7 +34,7 @@ namespace ThreadPool
         /// </summary>
         private volatile int availableThreads;
 
-        public ThreadPool(int threadAmount)
+        public MyThreadPool(int threadAmount)
         {
             MaxAmount = threadAmount;
             availableThreads = threadAmount;
@@ -48,7 +48,9 @@ namespace ThreadPool
                     {
                         if (taskQueue.TryDequeue(out Action task))
                         {
+                            Interlocked.Decrement(ref availableThreads);
                             task();
+                            Interlocked.Increment(ref availableThreads);
                         }
 
                         else

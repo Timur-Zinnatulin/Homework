@@ -5,5 +5,8 @@ environment:
   - solution_path: Semester-3/Homework-1/LazyCalculation.sln
   - solution_path: Semester-3/Homework-3/MyThreadPool.sln
 
+build_script:
+  - dotnet build %solution_path%
+
 test_script:
   - dotnet test %solution_path%

@@ -1,9 +1,12 @@
 image: ubuntu
 
-build:
-  project: Semester-3/Homework-1/LazyCalculation.sln
-  project: Semester-3/Homework-3/MyThreadPool.sln
+environment:
+  matrix: 
+  - solution_name: Semester-3/Homework-1/LazyCalculation.sln
+  - solution_name: Semester-3/Homework-3/MyThreadPool.sln
+
+build_script:
+  - dotnet build %solution_name%
 
 test_script:
-  - dotnet test Semester-3/Homework-1/LazyCalculation.sln
-  - dotnet test Semester-3/Homework-3/MyThreadPool.sln
+  - dotnet test %solution_name%

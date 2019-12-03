@@ -2,11 +2,11 @@ image: ubuntu
 
 environment:
   matrix: 
-  - solution_name: Semester-3/Homework-1/LazyCalculation.sln
-  - solution_name: Semester-3/Homework-3/MyThreadPool.sln
+  - solution_path: Semester-3/Homework-1/LazyCalculation.sln
+  - solution_path: Semester-3/Homework-3/MyThreadPool.sln
 
 build_script:
-  - dotnet build %solution_name%
+  - dotnet build %solution_path%
 
 test_script:
-  - dotnet test %solution_name%
+  - dotnet test %solution_path%

@@ -2,6 +2,8 @@ image: ubuntu
 
 build:
   project: Semester-3/Homework-1/LazyCalculation.sln
+  project: Semester-3/Homework-3/MyThreadPool.sln
 
 test_script:
   - dotnet test Semester-3/Homework-1/LazyCalculation.sln
+  - dotnet test Semester-3/Homework-3/MyThreadPool.sln

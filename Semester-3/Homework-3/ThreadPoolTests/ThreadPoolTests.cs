@@ -10,8 +10,8 @@ namespace ThreadPoolTests
     [TestFixture]
     public class ThreadPoolTests
     {
-        MyThreadPool testPool;
-        const int maxAmountOfThreads = 10;
+        private MyThreadPool testPool;
+        private const int maxAmountOfThreads = 10;
 
         [SetUp]
         public void Setup()
@@ -56,7 +56,7 @@ namespace ThreadPoolTests
         public void ShutdownWorksTest()
         {
             testPool.Shutdown();
-            Assert.IsNull(testPool.AddTask(() => "zdarova"));
+            Assert.Throws<InvalidOperationException>(() => {testPool.AddTask(() => "zdarova");}, "ThreadPool was shut down!");
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace ThreadPoolTests
         [Test]
         public void ContinueWithSimpleTest()
         {
-            var task = testPool.AddTask(() => 2*2*8).ContinueWith(result => result.ToString());
+            var task = testPool.AddTask(() => 2 * 2 * 8).ContinueWith(result => result.ToString());
 
             Assert.AreEqual("32", task.Result);
         }
@@ -88,7 +88,7 @@ namespace ThreadPoolTests
             var task = testPool.AddTask(() =>
             {
                 System.Threading.Thread.Sleep(100);
-                return 1+4+8+8;
+                return 1 + 4 + 8 + 8;
             }).ContinueWith(result => 
                    {
                        System.Threading.Thread.Sleep(100);

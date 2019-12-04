@@ -29,6 +29,98 @@ namespace ThreadPool
         /// </summary>
         private readonly AutoResetEvent threadBlocker = new AutoResetEvent(false);
 
+            /// <summary>
+        /// ThreadPool generated task
+        /// </summary>
+        private class MyTask<TResult> : IMyTask<TResult>
+        {
+            /// <summary>
+            /// Task supplier function
+            /// </summary>
+            private Func<TResult> supplier;
+
+            /// <summary>
+            /// MyThreadPool that created this task
+            /// </summary>
+            private MyThreadPool threadPool;
+
+            /// <summary>
+            /// Result of task calculation
+            /// </summary>
+            private TResult taskResult;
+
+            /// <summary>
+            /// Blocks the thread until it returns task result
+            /// </summary>
+            private ManualResetEvent threadBlocker = new ManualResetEvent(false);
+
+
+            /// <summary>
+            /// Exception that we catch from supplier function and rethrow as AggregateException to MyThreadPool
+            /// </summary>
+            private Exception exception = null;
+
+            public MyTask(MyThreadPool pool, Func<TResult> supplier)
+            {
+                this.threadPool = pool;
+                this.supplier = supplier;
+            }
+
+            public bool IsCompleted { get; private set; } = false;
+
+            public TResult Result
+            {
+                get
+                {
+                    threadBlocker.WaitOne();
+
+                    if (exception == null)
+                    {
+                        return taskResult;
+                    }
+
+                    throw new AggregateException(exception);
+                }
+            }
+
+            /// <summary>
+            /// Generates new task
+            /// </summary>
+            /// <param name="function">New function</param>
+            /// <returns>Newly generated task</returns>
+            public IMyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function)
+            {
+                while (!this.IsCompleted);
+
+                TNewResult wrapper () => function(Result);
+
+                return threadPool.AddTask(wrapper);
+            }
+
+            /// <summary>
+            /// Executes task synchronically
+            /// </summary>
+            public void ExecuteTask()
+            {
+                try
+                {
+                    this.taskResult = supplier();
+                }
+
+                catch (Exception e)
+                {
+                    exception = e;
+                }
+
+                finally
+                {
+                    supplier = null;
+                    IsCompleted = true;
+                    threadBlocker.Set();
+                }
+            }
+        }
+
         /// <summary>
         /// Amount of available threads
         /// </summary>
@@ -63,10 +155,7 @@ namespace ThreadPool
                             }
                         }
                     }
-
-                    --availableThreads;
                 });
-
                 threads[i].IsBackground = true;
                 threads[i].Start();
             }
@@ -90,14 +179,19 @@ namespace ThreadPool
         {
             if (cancel.IsCancellationRequested)
             {
-                return null;
+                throw new InvalidOperationException("ThreadPool was shut down!");
             }
 
             var newTask = new MyTask<TResult>(this, supplier);
-            taskQueue.Enqueue(newTask.ExecuteTask);
+
+            if (!cancel.IsCancellationRequested)
+            {
+                taskQueue.Enqueue(newTask.ExecuteTask);
+            }
+
             threadBlocker.Set();
 
-            return newTask;
+            return (cancel.IsCancellationRequested ? null : newTask);
         }
 
         /// <summary>
@@ -107,6 +201,7 @@ namespace ThreadPool
         {
             cancel.Cancel();
             threadBlocker.Set();
+            availableThreads = 0;
 
             foreach (var thread in threads)
             {

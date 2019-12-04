@@ -34,7 +34,7 @@ namespace ThreadPool
         /// <summary>
         /// Checks if cancellation has been requested
         /// </summary>
-        private void cancellationCheck()
+        private void CancellationCheck()
         {
             if (cancel.IsCancellationRequested)
             {
@@ -103,6 +103,10 @@ namespace ThreadPool
             /// <returns>Newly generated task</returns>
             public IMyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function)
             {
+                while (!IsCompleted)
+                {
+                    threadBlocker.Set();
+                }
                 threadBlocker.WaitOne();
 
                 TNewResult wrapper () => function(Result);
@@ -190,7 +194,7 @@ namespace ThreadPool
         /// <param name="supplier">Supplier function for the task</param>
         public IMyTask<TResult> AddTask<TResult>(Func<TResult> supplier)
         {
-            cancellationCheck();
+            CancellationCheck();
 
             var newTask = new MyTask<TResult>(this, supplier);
 
@@ -200,13 +204,10 @@ namespace ThreadPool
                 {
                     taskQueue.Enqueue(newTask.ExecuteTask);
                 }
-            }
 
-            threadBlocker.Set();
-            
-            lock (lockObject)
-            {
-                cancellationCheck();
+                threadBlocker.Set();
+
+                CancellationCheck();
                 return newTask;
             }
         }
@@ -216,19 +217,22 @@ namespace ThreadPool
         /// </summary>
         public void Shutdown()
         {
-            cancel.Cancel();
-            threadBlocker.Set();
-            availableThreads = 0;
-
-            foreach (var thread in threads)
+            lock (lockObject)
             {
-                if (thread.IsAlive)
-                {
-                    thread.Join();
-                }
-            }
+                cancel.Cancel();
+                threadBlocker.Set();
+                availableThreads = 0;
 
-            taskQueue = null;
+                foreach (var thread in threads)
+                {
+                    if (thread.IsAlive)
+                    {
+                        thread.Join();
+                    }
+                }
+
+                taskQueue = null;
+            }
         }
     }
 }

@@ -29,7 +29,20 @@ namespace ThreadPool
         /// </summary>
         private readonly AutoResetEvent threadBlocker = new AutoResetEvent(false);
 
-            /// <summary>
+        private Object lockObject = new Object();
+
+        /// <summary>
+        /// Checks if cancellation has been requested
+        /// </summary>
+        private void cancellationCheck()
+        {
+            if (cancel.IsCancellationRequested)
+            {
+                throw new InvalidOperationException("ThreadPool was shut down!");
+            }
+        }
+
+        /// <summary>
         /// ThreadPool generated task
         /// </summary>
         private class MyTask<TResult> : IMyTask<TResult>
@@ -90,7 +103,7 @@ namespace ThreadPool
             /// <returns>Newly generated task</returns>
             public IMyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function)
             {
-                while (!this.IsCompleted);
+                threadBlocker.WaitOne();
 
                 TNewResult wrapper () => function(Result);
 
@@ -177,21 +190,25 @@ namespace ThreadPool
         /// <param name="supplier">Supplier function for the task</param>
         public IMyTask<TResult> AddTask<TResult>(Func<TResult> supplier)
         {
-            if (cancel.IsCancellationRequested)
-            {
-                throw new InvalidOperationException("ThreadPool was shut down!");
-            }
+            cancellationCheck();
 
             var newTask = new MyTask<TResult>(this, supplier);
 
-            if (!cancel.IsCancellationRequested)
+            lock (lockObject)
             {
-                taskQueue.Enqueue(newTask.ExecuteTask);
+                if (!cancel.IsCancellationRequested)
+                {
+                    taskQueue.Enqueue(newTask.ExecuteTask);
+                }
             }
 
             threadBlocker.Set();
-
-            return (cancel.IsCancellationRequested ? null : newTask);
+            
+            lock (lockObject)
+            {
+                cancellationCheck();
+                return newTask;
+            }
         }
 
         /// <summary>
@@ -210,6 +227,8 @@ namespace ThreadPool
                     thread.Join();
                 }
             }
+
+            taskQueue = null;
         }
     }
 }

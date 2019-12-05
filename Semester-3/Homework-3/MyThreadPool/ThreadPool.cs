@@ -67,6 +67,9 @@ namespace ThreadPool
             /// </summary>
             private ManualResetEvent threadBlocker = new ManualResetEvent(false);
 
+            private ConcurrentQueue<Action> localTaskQueue = new ConcurrentQueue<Action>();
+
+            private Object taskLockObject = new Object();
 
             /// <summary>
             /// Exception that we catch from supplier function and rethrow as AggregateException to MyThreadPool
@@ -103,15 +106,19 @@ namespace ThreadPool
             /// <returns>Newly generated task</returns>
             public IMyTask<TNewResult> ContinueWith<TNewResult>(Func<TResult, TNewResult> function)
             {
-                while (!IsCompleted)
+                var continueTask = new MyTask<TNewResult>(this.threadPool, () => function(Result));
+
+                lock (taskLockObject)
                 {
-                    threadBlocker.Set();
+                    if (IsCompleted)
+                    {
+                        return threadPool.AddTask(() => function(Result));
+                    }
+
+                    //Local queue consumes this task and throws it up later
+                    localTaskQueue.Enqueue(continueTask.ExecuteTask);
+                    return continueTask;
                 }
-                threadBlocker.WaitOne();
-
-                TNewResult wrapper () => function(Result);
-
-                return threadPool.AddTask(wrapper);
             }
 
             /// <summary>
@@ -131,9 +138,16 @@ namespace ThreadPool
 
                 finally
                 {
-                    supplier = null;
-                    IsCompleted = true;
-                    threadBlocker.Set();
+                    lock (taskLockObject)
+                    {
+                        supplier = null;
+                        IsCompleted = true;
+                        threadBlocker.Set();
+                        while (localTaskQueue.TryDequeue(out Action taskExecution))
+                        {
+                            threadPool.AddAction(taskExecution);
+                        }
+                    }
                 }
             }
         }
@@ -188,6 +202,17 @@ namespace ThreadPool
         /// </summary>
         public int AvailableThreads => this.availableThreads;
 
+        /// <summary>
+        /// Inserts an action into a queue
+        /// </summary>
+        public Action AddAction(Action action)
+        {
+            lock (lockObject)
+            {
+                taskQueue.Enqueue(action);
+                return action;
+            }
+        }
         /// <summary>
         /// Inserts a task into a queue
         /// </summary>

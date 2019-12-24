@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Security;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace Server
         /// </summary>
         public async Task Start()
         {
-            var listener = TcpListener(IPAddress.Any, this.Port);
+            var listener = new TcpListener(IPAddress.Any, this.Port);
             listener.Start();
 
             Console.WriteLine("Server started on port {0}", this.Port);
@@ -59,6 +58,7 @@ namespace Server
                     return;
                 }
 
+                IPAddress clientIP;
                 try
                 {
                     clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
@@ -115,18 +115,20 @@ namespace Server
                         {
                             Console.WriteLine($"Client {clientIP} requested directory contents.");
                             this.WriteDirPath(path, outputStream);
+                            break;
                         }
 
                         case '2':
                         {
                             Console.WriteLine($"Client {clientIP} requested file.");
                             this.WriteFileBytes(path, outputStream);
+                            break;
                         }
                     }
                 }
             }
 
-            catch (System.IO.Exception)
+            catch (IOException)
             {
                 this.HandleClientDisconnected();
                 --this.currentConnections;
@@ -212,7 +214,7 @@ namespace Server
                 {
                     if (entity is DirectoryInfo)
                     {
-                        output.Write($" {((DirectotyInfo)entity).Name.Replace(' ', '/')} {true.ToString()}");
+                        output.Write($" {((DirectoryInfo)entity).Name.Replace(' ', '/')} {true.ToString()}");
                     }
 
                     else if (entity is FileInfo)
@@ -247,7 +249,6 @@ namespace Server
         /// </summary>
         private void WriteFileBytes(string path, StreamWriter output)
         {
-            var md5 = MD5.Create();
             var rootPath = Path.GetTempPath();
             if (path != "~")
             {

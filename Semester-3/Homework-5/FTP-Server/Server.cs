@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Security;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -171,7 +172,8 @@ namespace Server
 
             if (!directory.Exists)
             {
-                this.HandleIncorrectPath(output, "The path is too long.");
+                this.HandleIncorrectPath(output, "Directory does not exist.");
+                return;
             }
 
             FileSystemInfo[] directoryContents;
@@ -205,12 +207,12 @@ namespace Server
                 {
                     if (entity is DirectoryInfo)
                     {
-                        output.Write($"{((DirectotyInfo)entity).Name.Replace(' ', '/')} {true.ToString()}");
+                        output.Write($" {((DirectotyInfo)entity).Name.Replace(' ', '/')} {true.ToString()}");
                     }
 
                     else if (entity is FileInfo)
                     {
-                        output.Write($"{((FileInfo)entity).Name.Replace(' ', '/')} {false.ToString()}");
+                        output.Write($" {((FileInfo)entity).Name.Replace(' ', '/')} {false.ToString()}");
                     }
                 }
 
@@ -232,7 +234,118 @@ namespace Server
 
             }
         }
+        
+        /// <summary>
+        /// Writes file information by given path
+        /// </summary>
+        private void WriteFileBytes(string path, StreamWriter output)
+        {
+            var md5 = MD5.Create();
+            var rootPath = Path.GetTempPath();
+            if (path != "~")
+            {
+                rootPath += path; 
+            }
 
-        private void Write
+            FileInfo file;
+            try
+            {
+                file = new FileInfo(rootPath);
+            }
+
+            catch (SecurityException)
+            {
+
+            }
+            catch (UnauthorizedAccessException)
+            {
+
+            }
+            catch (ArgumentException)
+            {
+
+            }
+            catch (PathTooLongException)
+            {
+
+            }
+
+            if (!file.Exists)
+            {
+                this.HandleIncorrectPath(output, "File does not exist.");
+                return;
+            }
+
+            FileStream fileStream;
+            try
+            {
+                fileStream = file.OpenRead();
+            }
+
+            catch (IOException)
+            {
+
+            }
+            catch (UnauthorizedAccessException)
+            {
+
+            }
+
+            try
+            {
+                output.Write($"{file.Length}");
+                output.Flush();
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
+
+            try
+            {
+                fileStream.CopyTo(output.BaseStream);
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
+            catch (IOException)
+            {
+
+            }
+
+            try
+            {
+                output.Flush();
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Handles client disconnection
+        /// </summary>
+        private void HandleClientDisconnected()
+            => Console.WriteLine("Client has closed socket, skipping.");
+
+        /// <summary>
+        /// Handles incorrect requested path
+        /// </summary>
+        private void HandleIncorrectPath(StreamWriter output, string message = "")
+        {
+            Console.WriteLine("Client requested incorrect path: " + message);
+
+            try
+            {
+                output.WriteLine("-1");
+                output.Flush();
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
+        }
     }
 }

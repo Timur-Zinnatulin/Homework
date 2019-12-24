@@ -39,6 +39,9 @@ namespace Server
         /// </summary>
         public int CurrentConnections => this.currentConnections;
 
+        public void Shutdown()
+            => this.cancellationToken.Cancel();
+
         /// <summary>
         /// Starts up the server
         /// </summary>
@@ -252,10 +255,12 @@ namespace Server
         /// </summary>
         private void WriteFileBytes(string path, StreamWriter output)
         {
+            const int bufferSize = 1024 * 1024;
+
             var rootPath = Path.GetTempPath();
             if (path != "~")
             {
-                rootPath += path; 
+                rootPath += path;
             }
 
             FileInfo file;
@@ -321,7 +326,7 @@ namespace Server
 
             try
             {
-                fileStream.CopyTo(output.BaseStream);
+                fileStream.CopyTo(output.BaseStream, bufferSize);
             }
             catch (ObjectDisposedException)
             {

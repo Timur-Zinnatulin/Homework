@@ -160,6 +160,8 @@ namespace Client
         /// <param name="newFilePath"> Download result path </param>
         public bool ReceiveFileData(string path, string newFilePath)
         {
+            const int bufferSize = 1024 * 1024;
+
             try
             {
                 this.Connect();
@@ -196,12 +198,13 @@ namespace Client
                 return false;
             }
 
-            if (firstChar == '-')
+            if ((char)firstChar == '-')
             {
+                Console.WriteLine("File does not exist.");
                 this.inputStream.ReadLine();
                 this.Disconnect();
                 return false;
-            }
+            }   
 
             Console.WriteLine("Answer received.");
 
@@ -239,11 +242,11 @@ namespace Client
 
             try
             {
-                this.inputStream.BaseStream.CopyTo(resultFileStream);
+                this.inputStream.BaseStream.CopyTo(resultFileStream, bufferSize);
             }
             catch (ObjectDisposedException)
             {
-                Console.WriteLine("COnnection terminated.");
+                Console.WriteLine("Connection terminated.");
                 this.Disconnect();
                 return false;
             }

@@ -73,7 +73,7 @@ namespace Client
             return resultSize;
         }
 
-        public Client(string serverName, int port)
+        public FTP_Client(string serverName, int port)
         {
             this.serverName = serverName;
             this.serverPort = port;

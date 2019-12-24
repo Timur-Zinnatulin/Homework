@@ -1,7 +1,7 @@
 image: ubuntu
 
 build:
-  project: Semester-3/Homework-1/LazyCalculation.sln
+  project: Semester-3/Homework-5/SimpleFTP.sln
 
 test_script:
-  - dotnet test Semester-3/Homework-1/LazyCalculation.sln
+  - dotnet test Semester-3/Homework-5/SimpleFTP.sln

@@ -91,7 +91,7 @@ namespace Server
         /// <summary>
         /// Supplies the client with information on demand
         /// </summary>
-        private void SupplyClient(object clientObject)
+        private async void SupplyClient(object clientObject)
         {
             var client = (TcpClient)clientObject;
 
@@ -159,15 +159,18 @@ namespace Server
 
             catch (SecurityException)
             {
-
+                this.HandleIncorrectPath(output, "Access forbidden.");
+                return;
             }
             catch (ArgumentException)
             {
-
+                this.HandleIncorrectPath(output, "Path contains prohibited characters.");
+                return;
             }
             catch (PathTooLongException)
             {
-
+                this.HandleIncorrectPath(output, "Path is too long.");
+                return;
             }
 
             if (!directory.Exists)
@@ -186,7 +189,8 @@ namespace Server
 
             catch (UnauthorizedAccessException)
             {
-
+                this.HandleIncorrectPath(output, "Access forbidden.");
+                return;
             }
 
             // Write length of output
@@ -197,7 +201,8 @@ namespace Server
 
             catch (ObjectDisposedException)
             {
-
+                this.HandleClientDisconnected();
+                return;
             }
 
             foreach (var entity in directoryContents)
@@ -218,7 +223,8 @@ namespace Server
 
                 catch (ObjectDisposedException)
                 {
-
+                    this.HandleClientDisconnected();
+                    return;
                 }
             }
 
@@ -231,7 +237,8 @@ namespace Server
 
             catch (ObjectDisposedException)
             {
-
+                this.HandleClientDisconnected();
+                return;
             }
         }
         
@@ -255,19 +262,23 @@ namespace Server
 
             catch (SecurityException)
             {
-
+                this.HandleIncorrectPath(output, "Access forbidden.");
+                return;
             }
             catch (UnauthorizedAccessException)
             {
-
+                this.HandleIncorrectPath(output, "Access denied.");
+                return;
             }
             catch (ArgumentException)
             {
-
+                this.HandleIncorrectPath(output, "Path contains prohibited characters.");
+                return;
             }
             catch (PathTooLongException)
             {
-
+                this.HandleIncorrectPath(output, "Path is too long.");
+                return;
             }
 
             if (!file.Exists)
@@ -284,11 +295,13 @@ namespace Server
 
             catch (IOException)
             {
-
+                this.HandleIncorrectPath(output, "File is already open.");
+                return;
             }
             catch (UnauthorizedAccessException)
             {
-
+                this.HandleIncorrectPath(output, "Path leads to directory.");
+                return;
             }
 
             try
@@ -298,7 +311,8 @@ namespace Server
             }
             catch (ObjectDisposedException)
             {
-
+                this.HandleClientDisconnected();
+                return;
             }
 
             try
@@ -307,11 +321,13 @@ namespace Server
             }
             catch (ObjectDisposedException)
             {
-
+                this.HandleClientDisconnected();
+                return;
             }
             catch (IOException)
             {
-
+                this.HandleClientDisconnected();
+                return;
             }
 
             try
@@ -320,7 +336,7 @@ namespace Server
             }
             catch (ObjectDisposedException)
             {
-
+                this.HandleClientDisconnected();
             }
         }
 
@@ -344,7 +360,8 @@ namespace Server
             }
             catch (ObjectDisposedException)
             {
-
+                this.HandleClientDisconnected();
+                return;
             }
         }
     }

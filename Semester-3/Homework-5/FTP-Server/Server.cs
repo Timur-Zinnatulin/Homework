@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Server
 {
+    /// <summary>
+    /// FTP server class
+    /// </summary>
     public class FTP_Server
     {
         private volatile int currentConnections;

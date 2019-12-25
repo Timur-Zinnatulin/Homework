@@ -11,6 +11,9 @@ using Project5;
 using System;
 namespace Tests
 {
+    /// <summary>
+    /// Tests for my test system
+    /// </summary>
     [TestFixture]
     public class TestsForTests
     {

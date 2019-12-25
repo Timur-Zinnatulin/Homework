@@ -315,7 +315,7 @@ namespace Server
 
             try
             {
-                output.Write($"{file.Length}");
+                output.Write($"{file.Length} ");
                 output.Flush();
             }
             catch (ObjectDisposedException)

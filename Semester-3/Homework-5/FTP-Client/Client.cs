@@ -94,7 +94,7 @@ namespace Client
 
             try
             {
-                this.outputStream.WriteLine("1 " + path);
+                this.outputStream.WriteLine('1' + path);
                 this.outputStream.Flush();
             }
             catch (ObjectDisposedException)
@@ -174,7 +174,7 @@ namespace Client
 
             try
             {
-                this.outputStream.WriteLine("2 " + path);
+                this.outputStream.WriteLine('2' + path);
                 this.outputStream.Flush();
             }
             catch (ObjectDisposedException)

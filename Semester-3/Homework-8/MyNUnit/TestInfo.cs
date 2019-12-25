@@ -44,7 +44,7 @@ namespace MyNUnit
             this.MethodName = method;
             this.Expected = expected;
             this.Ignore = ignore;
-            this. IsPassed = isPassed;
+            this.IsPassed = isPassed;
             this.Time = time;
         }
     }

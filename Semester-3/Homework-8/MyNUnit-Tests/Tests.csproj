@@ -14,5 +14,10 @@
 
   <ItemGroup>
     <ProjectReference Include="../MyNUnit/MyNUnit.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project1/Project1.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project2/Project2.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project3/Project3.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project4/Project4.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project5/Project5.csproj" />
   </ItemGroup>
 </Project>

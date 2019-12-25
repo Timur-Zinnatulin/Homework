@@ -155,7 +155,7 @@ namespace Server
             var rootPath = Path.GetTempPath();
             if (path != "~")
             {
-                rootPath += path; 
+                rootPath += path;
             }
 
             // Get info about directory

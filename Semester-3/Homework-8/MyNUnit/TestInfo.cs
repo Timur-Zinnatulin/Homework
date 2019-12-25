@@ -37,8 +37,8 @@ namespace MyNUnit
         /// </summary>
         public long Time { get; }
 
-        public TestInfo(string assembly, string method, Type expected = null, 
-            bool isPassed, string ignore = null, long time)
+        public TestInfo(string assembly, string method,
+            long time, bool isPassed, string ignore = null, Type expected = null)
         {
             this.AssemblyName = assembly;
             this.MethodName = method;

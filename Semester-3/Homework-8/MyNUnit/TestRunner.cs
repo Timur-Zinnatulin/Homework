@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Collection.Concurrent;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,39 +40,63 @@ namespace MyNUnit
         }
 
         /// <summary>
+        /// Checks if the method has input or return params
+        /// </summary>
+        private static void CheckIfMethodIsWrong(MethodInfo info)
+        {
+            if (info.GetParameters().Length != 0)
+            {
+                throw new InvalidOperationException($"{info.Name}: Method cannot have parameters.");
+            }
+            if (info.ReturnType != typeof(void))
+            {
+                throw new InvalidOperationException($"{info.Name}: Method cannot return value.");
+            }
+        }
+
+        /// <summary>
         /// Executes all methods of certain type in correct order
         /// </summary>
         private static void ExecuteAllMethods(Type type)
         {
-            ExecuteAllMethodsWithAttribute<BeforeClassAttribute>(type);
-            ExecuteAllMethodsWithAttribute<TestAttribute>(type);
-            ExecuteAllMethodsWithAttribute<AfterClassAttribute>(type);
+            ExecuteAllMethodsWithAnnotation<BeforeClassAnnotation>(type);
+            ExecuteAllMethodsWithAnnotation<TestAnnotation>(type);
+            ExecuteAllMethodsWithAnnotation<AfterClassAnnotation>(type);
         }
 
+        private static bool IsNonTestAnnotation(Type type)
+            => (type == typeof(BeforeClassAnnotation))
+                || (type == typeof(AfterClassAnnotation)) 
+                    || (type == typeof(BeforeAnnotation))
+                        || (type == typeof(AfterAnnotation));
+
         /// <summary>
-        /// Executes all methods with a certain attribute
+        /// Executes all methods with a certain annotation
         /// </summary>
-        private static void ExecuteAllMethodsWithAttribute<AttributeT>(Type type, object instance = null) where AttributeT : Attribute
+        private static void ExecuteAllMethodsWithAnnotation<AttributeT>(Type type, object instance = null) where AttributeT : Attribute
         {
-            var methodsWithAttribute = type.GetTypeInfo()
+            var methodsWithAnnotation = type.GetTypeInfo()
                                            .DeclaredMethods
                                            .Where(me => Attribute.IsDefined(me, typeof(AttributeT)));
             Action<MethodInfo> RunMethod;
 
-            if (typeof(AttributeT) == typeof(TestAttribute))
+            if (typeof(AttributeT) == typeof(TestAnnotation))
             {
                 RunMethod = ExecuteTestMethod;
             }
 
-            if (typeof(AttributeT) == (typeof(BeforeClassAttribute)
-                || typeof(AfterClassAttribute) || typeof(BeforeAttribute)
-                    || typeof(AfterAttribute)))
+            else if (IsNonTestAnnotation(typeof(AttributeT)))
             {
-                var arrtibute = typeof(AttributeT);
+                var attribute = typeof(AttributeT);
                 RunMethod = (me => ExecuteAuxiliaryMethod(me, instance, attribute));
             }
 
-            Parallel.ForEach(methodsWithAttribute, RunMethod);
+            else
+            {
+                throw new InvalidProgramException("Wrong annotation.");
+            }
+
+            Parallel.ForEach(methodsWithAnnotation, RunMethod);
         }
 
         /// <summary>
@@ -80,38 +104,67 @@ namespace MyNUnit
         /// </summary>
         private static void ExecuteTestMethod(MethodInfo info)
         {
-            var attributes = Attribute.GetCustomAttribute(info, typeof(TestAttribute)) as TestAttribute;
+            CheckIfMethodIsWrong(info);
+
+            var attributes = Attribute.GetCustomAttribute(info, typeof(TestAnnotation)) as TestAnnotation;
 
             if (attributes.Ignore != null)
             {
                 Tests.Add(new TestInfo(info.DeclaringType.FullName, info.Name,
-                    time: 0, isPassed: false, ignore: attributes.Ignore));
+                    0, false, ignore: attributes.Ignore));
                     return;
             }
 
             var constructor = info.DeclaringType.GetConstructor(Type.EmptyTypes);
             if (constructor == null)
             {
-                throw new InvalidOpertaionException($"{info.DeclaringType.Name} must have a constructor.");
+                throw new InvalidOperationException($"{info.DeclaringType.Name} must have a constructor.");
             }
             var instance = constructor.Invoke(null);
 
-            ExecuteAllMethodsWithAttribute<BeforeAttribute>(info.DeclaringType, instance);
-            //TODO
-            ExecuteAllMethodsWithAttribute<AfterAttribute>(info.DeclaringType, instance);
+            ExecuteAllMethodsWithAnnotation<BeforeAnnotation>(info.DeclaringType, instance);
+
+            bool flagFailed = true;
+            var time = Stopwatch.StartNew();
+            try
+            {
+                info.Invoke(instance, null);
+                if (attributes.Expected == null)
+                {
+                    flagFailed = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (attributes.Expected == ex.InnerException.GetType())
+                {
+                    flagFailed = false;
+                }
+            }
+            finally
+            {
+                time.Stop();
+                Tests.Add(new TestInfo(info.DeclaringType.FullName, info.Name,
+                    time.ElapsedMilliseconds, !flagFailed, attributes.Ignore, attributes.Expected));
+            }
+
+            ExecuteAllMethodsWithAnnotation<AfterAnnotation>(info.DeclaringType, instance);
         }
 
         /// <summary>
         /// Executes non-test methods
         /// </summary>
-        private void ExecuteAuxiliaryMethod(MethodInfo info, object instance, Type attribute)
+        private static void ExecuteAuxiliaryMethod(MethodInfo info, object instance, Type attribute)
         {
-            if ((attribure == typeof(BeforeClassAttribute) || attribute == typeof(AfterClassAttribute)) && !info.IsStatic)
+            CheckIfMethodIsWrong(info);
+
+            if ((attribute == typeof(BeforeClassAnnotation) || attribute == typeof(AfterClassAnnotation)) && !info.IsStatic)
             {
-                throw new InvalidOperationException($"{info.Name}: BeforeClass- and AfterAlassAttributes must be static.");
+                throw new InvalidOperationException($"{info.Name}: BeforeClass- and AfterAlassAnnotations must be static.");
             }
 
             info.Invoke(instance, null);
         }
+
     }
 }

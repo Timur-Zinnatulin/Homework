@@ -9,7 +9,7 @@ namespace Client
     /// <summary>
     /// FTP client class
     /// </summary>
-    public class FTP_Client
+    public class FtpClient : IDisposable
     {
         private readonly string serverName;
 
@@ -38,6 +38,9 @@ namespace Client
                 throw;
             }
         }
+
+        public void Dispose()
+            => Disconnect();
 
         /// <summary>
         /// Disconnects the client from server
@@ -73,7 +76,7 @@ namespace Client
             return resultSize;
         }
 
-        public FTP_Client(string serverName, int port)
+        public FtpClient(string serverName, int port)
         {
             this.serverName = serverName;
             this.serverPort = port;

@@ -13,13 +13,13 @@ namespace Test
     /// <summary>
     /// FTP unit tests class
     /// </summary>
-    public class FTP_Tests
+    public class FtpTests
     {
         private const int port = 8888;
         private const string hostname = "localhost";
         private const int maxConnections = 15;
 
-        private FTP_Server server;
+        private FtpServer server;
 
         private void SendWrongCommand(TcpClient client)
         {
@@ -62,7 +62,7 @@ namespace Test
         [OneTimeSetUp]
         public void Setup()
         {
-            this.server = new FTP_Server(maxConnections, port);
+            this.server = new FtpServer(maxConnections, port);
             server.Start();
         }
 
@@ -115,7 +115,7 @@ namespace Test
             var filePath = Path.GetFileName(Path.GetTempFileName());
             var savePath = Path.GetTempFileName();
 
-            var client = new FTP_Client(hostname, port);
+            var client = new FtpClient(hostname, port);
 
             Assert.IsTrue(client.ReceiveFileData(filePath, savePath));
 
@@ -132,7 +132,7 @@ namespace Test
             var fullpath = Path.Combine(Path.GetTempPath() + path);
             var actualFileList = this.CreateDirectory(fullpath);
 
-            var client = new FTP_Client(hostname, port);
+            var client = new FtpClient(hostname, port);
             var files = client.ReceiveDirContents(path);
 
             Comparison<EntityInfo> comparison = 

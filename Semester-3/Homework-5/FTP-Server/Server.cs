@@ -11,13 +11,13 @@ namespace Server
     /// <summary>
     /// FTP server class
     /// </summary>
-    public class FTP_Server
+    public class FtpServer
     {
         private volatile int currentConnections;
 
         private CancellationTokenSource cancellationToken = new CancellationTokenSource();
 
-        public FTP_Server(int maxConnections, int port)
+        public FtpServer(int maxConnections, int port)
         {
             this.Port = port;
             this.MaxConnections = maxConnections;
@@ -137,12 +137,12 @@ namespace Server
             catch (IOException)
             {
                 this.HandleClientDisconnected();
-                --this.currentConnections;
+                Interlocked.Decrement(ref this.currentConnections);
                 return;
             }
 
             client.Close();
-            --this.currentConnections;
+            Interlocked.Decrement(ref this.currentConnections);
 
             Console.WriteLine($"Client {clientIP} disconnected.");
         }

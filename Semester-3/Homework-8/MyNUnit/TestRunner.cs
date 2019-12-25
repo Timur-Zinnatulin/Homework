@@ -59,16 +59,16 @@ namespace MyNUnit
         /// </summary>
         private static void ExecuteAllMethods(Type type)
         {
-            ExecuteAllMethodsWithAnnotation<BeforeClassAnnotation>(type);
-            ExecuteAllMethodsWithAnnotation<TestAnnotation>(type);
-            ExecuteAllMethodsWithAnnotation<AfterClassAnnotation>(type);
+            ExecuteAllMethodsWithAnnotation<BeforeClassAttribute>(type);
+            ExecuteAllMethodsWithAnnotation<TestAttribute>(type);
+            ExecuteAllMethodsWithAnnotation<AfterClassAttribute>(type);
         }
 
         private static bool IsNonTestAnnotation(Type type)
-            => (type == typeof(BeforeClassAnnotation))
-                || (type == typeof(AfterClassAnnotation)) 
-                    || (type == typeof(BeforeAnnotation))
-                        || (type == typeof(AfterAnnotation));
+            => (type == typeof(BeforeClassAttribute))
+                || (type == typeof(AfterClassAttribute)) 
+                    || (type == typeof(BeforeAttribute))
+                        || (type == typeof(AfterAttribute));
 
         /// <summary>
         /// Executes all methods with a certain annotation
@@ -80,7 +80,7 @@ namespace MyNUnit
                                            .Where(me => Attribute.IsDefined(me, typeof(AttributeT)));
             Action<MethodInfo> RunMethod;
 
-            if (typeof(AttributeT) == typeof(TestAnnotation))
+            if (typeof(AttributeT) == typeof(TestAttribute))
             {
                 RunMethod = ExecuteTestMethod;
             }
@@ -106,7 +106,7 @@ namespace MyNUnit
         {
             CheckIfMethodIsWrong(info);
 
-            var attributes = Attribute.GetCustomAttribute(info, typeof(TestAnnotation)) as TestAnnotation;
+            var attributes = Attribute.GetCustomAttribute(info, typeof(TestAttribute)) as TestAttribute;
 
             if (attributes.Ignore != null)
             {
@@ -122,7 +122,7 @@ namespace MyNUnit
             }
             var instance = constructor.Invoke(null);
 
-            ExecuteAllMethodsWithAnnotation<BeforeAnnotation>(info.DeclaringType, instance);
+            ExecuteAllMethodsWithAnnotation<BeforeAttribute>(info.DeclaringType, instance);
 
             bool flagFailed = true;
             var time = Stopwatch.StartNew();
@@ -148,7 +148,7 @@ namespace MyNUnit
                     time.ElapsedMilliseconds, !flagFailed, attributes.Ignore, attributes.Expected));
             }
 
-            ExecuteAllMethodsWithAnnotation<AfterAnnotation>(info.DeclaringType, instance);
+            ExecuteAllMethodsWithAnnotation<AfterAttribute>(info.DeclaringType, instance);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace MyNUnit
         {
             CheckIfMethodIsWrong(info);
 
-            if ((attribute == typeof(BeforeClassAnnotation) || attribute == typeof(AfterClassAnnotation)) && !info.IsStatic)
+            if ((attribute == typeof(BeforeClassAttribute) || attribute == typeof(AfterClassAttribute)) && !info.IsStatic)
             {
-                throw new InvalidOperationException($"{info.Name}: BeforeClass- and AfterAlassAnnotations must be static.");
+                throw new InvalidOperationException($"{info.Name}: BeforeClass- and AfterAlassAttributes must be static.");
             }
 
             info.Invoke(instance, null);

@@ -6,7 +6,7 @@ namespace MyNUnit.Annotations
     /// Methods with this annotation compute before all tests are run
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public class BeforeClassAnnotation : Attribute
+    public class BeforeClassAttribute : Attribute
     {
     }
 }

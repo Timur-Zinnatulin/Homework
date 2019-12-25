@@ -3,10 +3,10 @@ using System;
 namespace MyNUnit.Annotations
 {
     /// <summary>
-    /// Methods with this annotation compute after every test
+    /// Methods with this annotation compute before every test
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public class AfterAnnotation : Attribute
+    public class BeforeAttribute : Attribute
     {
     }
 }

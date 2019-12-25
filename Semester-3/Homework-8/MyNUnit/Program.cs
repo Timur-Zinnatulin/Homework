@@ -6,6 +6,10 @@ namespace MyNUnit
     {
         static void Main(string[] args)
         {
+            string path = Console.ReadLine();
+            TestRunner.Run(path);
+
+            TestRunner.PrintResults();
         }
     }
 }

@@ -7,4 +7,7 @@ Semester-3/**/obj
 .directory
 FIrstProjectInKubuntu
 Philosophers
-Third Semester Homework.code-workspace
+**/DesignTimeBuild
+**/v16
+**/.ionide
+*.code-workspace

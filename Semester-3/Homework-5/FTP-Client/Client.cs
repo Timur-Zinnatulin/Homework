@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Client
 {
@@ -30,7 +31,7 @@ namespace Client
             {
                 this.client = new TcpClient(this.serverName, this.serverPort);
                 this.inputStream = new StreamReader(this.client.GetStream());
-                this.outputStream = new StreamWriter(this.client.GetStream());
+                this.outputStream = new StreamWriter(this.client.GetStream()) { AutoFlush = true };
             }
             catch (ObjectDisposedException)
             {
@@ -55,21 +56,24 @@ namespace Client
         /// <summary>
         /// Reads file size from GET reply
         /// </summary>
-        private int ReadIntFromInput()
+        private async Task<int> ReadIntFromInput()
         {
             var fileSize = string.Empty;
             while (!fileSize.EndsWith(" ", StringComparison.Ordinal))
             {
+                int index = 0;
                 if (!this.inputStream.EndOfStream)
                 {
-                    var t = this.inputStream.Read();
-                    fileSize += (char)t;
+                    var buffer = new char[1];
+                    await this.inputStream.ReadAsync(buffer, index, 1);
+                    ++index;
+                    fileSize += buffer[0];
                 }
             }
 
             if (!int.TryParse(fileSize, out int resultSize))
             {
-                this.inputStream.ReadToEnd();
+                await this.inputStream.ReadToEndAsync();
                 throw new FormatException();
             }
 
@@ -91,14 +95,13 @@ namespace Client
         /// Sends LIST request to server
         /// </summary>
         /// <returns> List of contents metainfo </returns>
-        public List<EntityInfo> ReceiveDirContents(string path)
+        public async Task<List<EntityInfo>> ReceiveDirContents(string path)
         {
             this.Connect();
 
             try
             {
-                this.outputStream.WriteLine('1' + path);
-                this.outputStream.Flush();
+                await this.outputStream.WriteLineAsync('1' + path);
             }
             catch (ObjectDisposedException)
             {
@@ -112,7 +115,8 @@ namespace Client
             string[] dirContents;
             try
             {
-                dirContents = this.inputStream.ReadLine().Split(' ');
+                var dirInput = await this.inputStream.ReadLineAsync();
+                dirContents = dirInput.Split(' ');
             }
             catch (IOException)
             {
@@ -161,7 +165,7 @@ namespace Client
         /// </summary>
         /// <param name="path"> Path to requested file </param>
         /// <param name="newFilePath"> Download result path </param>
-        public bool ReceiveFileData(string path, string newFilePath)
+        public async Task<bool> ReceiveFileData(string path, string newFilePath)
         {
             const int bufferSize = 1024 * 1024;
 
@@ -177,8 +181,7 @@ namespace Client
 
             try
             {
-                this.outputStream.WriteLine('2' + path);
-                this.outputStream.Flush();
+                await this.outputStream.WriteLineAsync('2' + path);
             }
             catch (ObjectDisposedException)
             {
@@ -204,7 +207,7 @@ namespace Client
             if ((char)firstChar == '-')
             {
                 Console.WriteLine("File does not exist.");
-                this.inputStream.ReadLine();
+                await this.inputStream.ReadLineAsync();
                 this.Disconnect();
                 return false;
             }   
@@ -214,17 +217,17 @@ namespace Client
             int bytes;
             try
             {
-                bytes = this.ReadIntFromInput();
+                bytes = await this.ReadIntFromInput();
             }
             catch (FormatException)
             {
                 try
                 {
-                    this.inputStream.ReadLine();
+                    await this.inputStream.ReadLineAsync();
                 }
                 catch (IOException)
                     {}
-                
+
                 this.Disconnect();
                 return false;
             }
@@ -245,7 +248,7 @@ namespace Client
 
             try
             {
-                this.inputStream.BaseStream.CopyTo(resultFileStream, bufferSize);
+                await this.inputStream.BaseStream.CopyToAsync(resultFileStream, bufferSize);
             }
             catch (ObjectDisposedException)
             {

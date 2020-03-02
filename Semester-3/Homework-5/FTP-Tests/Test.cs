@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 using Client;
 using Server;
@@ -21,10 +22,10 @@ namespace Test
 
         private FtpServer server;
 
-        private void SendWrongCommand(TcpClient client)
+        private async void SendWrongCommand(TcpClient client)
         {
             var writer = new StreamWriter(client.GetStream());
-            writer.Write("Do you even test bro?");
+            await writer.WriteAsync("Do you even test bro?");
             writer.Flush();
         }
 
@@ -34,7 +35,7 @@ namespace Test
             client.Close();
         }
 
-        private List<EntityInfo> CreateDirectory(string dirName)
+        private async Task<List<EntityInfo>> CreateDirectory(string dirName)
         {
             var result = new List<EntityInfo>();
             result.Add(new EntityInfo("subDirectory", true));
@@ -45,12 +46,12 @@ namespace Test
             }
 
             Directory.CreateDirectory(dirName);
-            File.WriteAllText(
+            await File.WriteAllTextAsync(
                 Path.Combine(Path.GetFullPath(dirName), "hugeFile.txt"),
                         "This is a big test file");
             for (int i = 1; i <= 4; ++i)
             {
-                File.WriteAllText(
+                await File.WriteAllTextAsync(
                         Path.Combine(Path.GetFullPath(dirName), $"smallFile{i}.txt"),
                         "This is a smaller test file");
             }
@@ -77,13 +78,13 @@ namespace Test
         }
 
         [Test]
-        public void ServerDoesNotComputeWrongCommandsTest()
+        public async Task ServerDoesNotComputeWrongCommandsTest()
         {
             var client = new TcpClient(hostname, port);
             var reader = new StreamReader(client.GetStream());
 
             this.SendWrongCommand(client);
-            var data = reader.ReadToEnd();
+            var data = await reader.ReadToEndAsync();
 
             if (data != string.Empty)
             {
@@ -97,43 +98,43 @@ namespace Test
         }
 
         [Test]
-        public void ClientDisconnectDuringHandlingIsFineTest()
+        public async Task ClientDisconnectDuringHandlingIsFineTest()
         {
             var client = new TcpClient(hostname, port);
 
             var writer = new StreamWriter(client.GetStream());
             var reader = new StreamReader(client.GetStream());
 
-            writer.WriteLine("1 WHATEVERPATH");
+            await writer.WriteLineAsync("1 WHATEVERPATH");
 
             client.Close();
         }
 
         [Test]
-        public void ClientShouldReceiveCorrectFileTest()
+        public async Task ClientShouldReceiveCorrectFileTest()
         {
             var filePath = Path.GetFileName(Path.GetTempFileName());
             var savePath = Path.GetTempFileName();
 
             var client = new FtpClient(hostname, port);
+            var answer = await client.ReceiveFileData(filePath, savePath);
+            Assert.IsTrue(answer);
 
-            Assert.IsTrue(client.ReceiveFileData(filePath, savePath));
-
-            var testFileContent = new StreamReader(File.OpenRead(Path.GetTempPath() + filePath)).ReadToEnd();
-            var receivedFileContent = new StreamReader(File.OpenRead(savePath)).ReadToEnd();
+            var testFileContent = await new StreamReader(File.OpenRead(Path.GetTempPath() + filePath)).ReadToEndAsync();
+            var receivedFileContent = await new StreamReader(File.OpenRead(savePath)).ReadToEndAsync();
 
             Assert.AreEqual(testFileContent, receivedFileContent);
         }
 
         [Test]
-        public void ClientShouldReceiveCorrectFileListTest()
+        public async Task ClientShouldReceiveCorrectFileListTest()
         {
             var path = ".test_dir";
             var fullpath = Path.Combine(Path.GetTempPath() + path);
             var actualFileList = this.CreateDirectory(fullpath);
 
             var client = new FtpClient(hostname, port);
-            var files = client.ReceiveDirContents(path);
+            var files = await client.ReceiveDirContents(path);
 
             Comparison<EntityInfo> comparison = 
                 (item1, item2) =>
@@ -149,7 +150,7 @@ namespace Test
                     }
                 };
 
-            Assert.That(files, Is.EquivalentTo(actualFileList).Using(comparison));
+            Assert.That(files, Is.EquivalentTo(actualFileList.Result).Using(comparison));
         }
     }
 }

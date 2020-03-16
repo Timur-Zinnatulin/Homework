@@ -9,7 +9,7 @@ namespace FTP_ClientGUI.DownloadStatus
     /// <summary>
     /// Логика взаимодействия для DownloadStatus.xaml
     /// </summary>
-    public partial class DownloadStatus : Window, INotifyPropertyChanged
+    public partial class DownloadStatusWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// IsPropertyChanged Handler
@@ -19,7 +19,7 @@ namespace FTP_ClientGUI.DownloadStatus
         /// <summary>
         /// Initializes DownloadStatus
         /// </summary>
-        public DownloadStatus(IEnumerable<string> names)
+        public DownloadStatusWindow(IEnumerable<string> names)
         {
             InitializeComponent();
 

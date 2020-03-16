@@ -4,8 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FTP_ClientGUI"
+        xmlns:fileexplorer="clr-namespace:FTP_ClientGUI.FileExplorer"
         mc:Ignorable="d"
         Title="FTP Client" Height="300" Width="450">
+    <Window.DataContext>
+        <local:ViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <local:Minus x:Key="MinusOneConverter"/>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -20,5 +29,27 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Margin="2" HorizontalAlignment="Center">IP:</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" MaxLines="1" Margin="2"
+                 Text="{Binding ServerIP, Mode=OneWayToSource}"/>
+        <Label Grid.Row="0" Grid.Column="2" Margin="2" HorizontalAlignment="Center">Port:</Label>
+        <TextBox Grid.Row="0" Grid.Column="3" MaxLines="1" Margin="2"
+                 Text="{Binding ServerPort, Mode=OneWayToSource}"/>
+        <Button Grid.Row="0" Grid.Column="4" Margin="2" Command="{Binding Connect}">Connect</Button>
+
+        <fileexplorer:FileExplorer Grid.Row="1" Grid.Column="0" Margin="2"
+                                   Grid.ColumnSpan="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ColumnDefinitions.Count, Mode=OneWay}"
+                                   Content="{Binding ItemList, Mode=OneWay}"
+                                   SelectedItems="{Binding SelectedForHandling, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                                   ItemRequested="UserRequestedFolderOpening" />
+
+        <Button Grid.Row="2" Margin="2" Command="{Binding DownloadFiles}" CommandParameter="All"
+                Grid.Column="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ColumnDefinitions.Count, Mode=OneWay, Converter={StaticResource MinusOneConverter}}" >
+            Load All
+        </Button>
+        <Button Grid.Row="2" Margin="2" Command="{Binding DownloadFiles}" CommandParameter="Selected"
+                Grid.Column="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=ColumnDefinitions.Count, Mode=OneWay}" >
+            Download
+        </Button>
     </Grid>
 </Window>

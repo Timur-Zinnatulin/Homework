@@ -8,7 +8,7 @@
     <Grid>
         <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                   Margin="0" ScrollViewer.CanContentScroll="True"
-                  x:Name="ItemList" AllowDrop="True" SelectionMode="Single">
+                  x:Name="ItemList" AllowDrop="True" SelectionMode="Extended">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                 <GridViewColumn x:Name="NameColumn" Width="400" Header="Name">

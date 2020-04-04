@@ -9,46 +9,29 @@ namespace FTP_ClientGUI
     /// </summary>
     public class OpenFolderCommand : ICommand
     {
-        /// <summary>
-        /// MVVM ViewModel
-        /// </summary>
         private ViewModel viewModel;
 
-        /// <summary>
-        /// MVVM Model
-        /// </summary>
         private Model model;
 
-        /// <summary>
-        /// Can command availability changed
-        /// </summary>
         public event EventHandler CanExecuteChanged;
 
         /// <summary>
-        /// Initializes new instance of open folder command
+        /// Initializes the command
         /// </summary>
-        /// <param name="viewModel">App's MVVM ViewModel</param>
-        /// <param name="model">App's MVVM Model</param>
         public OpenFolderCommand(ViewModel viewModel, Model model)
         {
             this.viewModel = viewModel;
             this.model = model;
         }
 
-        /// <summary>
-        /// Can command be executed
-        /// </summary>
-        /// <param name="o">Some unused object</param>
-        /// <returns>True if can be executed</returns>
         public bool CanExecute(object o)
         {
             return viewModel != null;
         }
 
         /// <summary>
-        /// Executes command
+        /// Executes the command
         /// </summary>
-        /// <param name="a">Some unused object</param>
         public void Execute(object o)
         {
             if (this.viewModel.SelectedForHandling != null

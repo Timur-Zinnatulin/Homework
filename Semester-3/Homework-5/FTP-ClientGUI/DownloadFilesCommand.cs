@@ -8,6 +8,9 @@ using FTP_ClientGUI.FileExplorer;
 
 namespace FTP_ClientGUI
 {
+    /// <summary>
+    /// Command which handles the download request
+    /// </summary>
     public class DownloadFilesCommand : ICommand
     {
         private ViewModel viewModel;
@@ -21,6 +24,9 @@ namespace FTP_ClientGUI
             return this.viewModel != null;
         }
 
+        /// <summary>
+        /// Executes the command
+        /// </summary>
         public void Execute(object o)
         {
             IList<ItemInfo> filesToDownload;
@@ -49,6 +55,9 @@ namespace FTP_ClientGUI
             return folderChooser.SelectedPath;
         }
 
+        /// <summary>
+        /// Initializes the command
+        /// </summary>
         public DownloadFilesCommand(ViewModel viewModel, Model model)
         {
             this.viewModel = viewModel;

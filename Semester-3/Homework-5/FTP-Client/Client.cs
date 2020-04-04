@@ -147,7 +147,7 @@ namespace Client
             CancellationToken ct = tokenSource.Token;
             try
             {
-                for (int i = 0; i < fileCount - 1; ++i)
+                for (int i = 0; i < fileCount; ++i)
                 {
                     var index = i;
                     tasks.Add(Task.Run(() =>

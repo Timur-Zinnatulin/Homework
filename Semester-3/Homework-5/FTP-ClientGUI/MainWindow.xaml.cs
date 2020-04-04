@@ -13,6 +13,9 @@ namespace FTP_ClientGUI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the folder opening event
+        /// </summary>
         private void UserRequestedFolderOpening(object sender, EventArgs e)
         {
             var viewModel = this.DataContext as ViewModel;

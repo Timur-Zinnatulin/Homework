@@ -13,8 +13,14 @@ namespace FTP_ClientGUI.DownloadStatus
     /// </summary>
     public class ItemStatusInfo : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Downloaded item name
+        /// </summary>
         public string ItemName { get; private set; }
 
+        /// <summary>
+        /// Color indicating download status of the item
+        /// </summary>
         public Brush ColorStatus { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -25,6 +31,9 @@ namespace FTP_ClientGUI.DownloadStatus
             this.SetItemStatus(itemStatus);
         }
 
+        /// <summary>
+        /// Sets a different background color for an item
+        /// </summary
         public void SetItemStatus(ItemStatus status)
         {
             switch(status)

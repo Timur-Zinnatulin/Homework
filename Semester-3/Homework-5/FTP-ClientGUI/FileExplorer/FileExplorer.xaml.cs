@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace FTP_ClientGUI.FileExplorer
 {
@@ -27,9 +28,6 @@ namespace FTP_ClientGUI.FileExplorer
             set => SetValue(ContentProperty, value);
         }
 
-        /// <summary>
-        /// Item list content
-        /// </summary>
         public static readonly new DependencyProperty ContentProperty =
             DependencyProperty.Register(
             "Content",
@@ -107,7 +105,7 @@ namespace FTP_ClientGUI.FileExplorer
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
             SetValue(
                 SelectedItemsProperty,
-                new List<ItemInfo>() { (ItemInfo)this.ItemList.SelectedItem });
+                this.ItemList.SelectedItems.Cast<ItemInfo>().ToList());
         }
 
         /// <summary>

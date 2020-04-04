@@ -1,4 +1,4 @@
-image: ubuntu
+image: Visual Studio 2019
 
 build:
   project: Semester-3/Homework-5/SimpleFTP.sln

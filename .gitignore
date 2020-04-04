@@ -11,4 +11,4 @@ Philosophers
 **/v16
 **/.ionide
 *.code-workspace
-**.csproj.user
+**/*.csproj.user

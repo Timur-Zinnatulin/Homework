@@ -13,18 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ookii.Dialogs" Version="1.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FTP-Client\Client.csproj" />
     <ProjectReference Include="..\FTP-Server\Server.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>..\..\..\..\Windows\Microsoft.NET\Framework\v4.0.30319\System.Windows.Forms.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

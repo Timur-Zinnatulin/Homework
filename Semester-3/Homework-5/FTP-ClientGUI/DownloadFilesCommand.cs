@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Threading.Tasks;
 
 using FTP_ClientGUI.FileExplorer;
+
+using Ookii.Dialogs.Wpf;
 
 namespace FTP_ClientGUI
 {
@@ -49,7 +50,9 @@ namespace FTP_ClientGUI
         private string GetDestinationPath()
 
         {
-            var folderChooser = new FolderBrowserDialog();
+            var folderChooser = new VistaFolderBrowserDialog();
+            folderChooser.ShowNewFolderButton = true;
+
             folderChooser.ShowDialog();
 
             return folderChooser.SelectedPath;

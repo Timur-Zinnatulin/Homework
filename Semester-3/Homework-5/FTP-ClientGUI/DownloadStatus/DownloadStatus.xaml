@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FTP_ClientGUI.DownloadStatus"
         mc:Ignorable="d"
-        Title="SimpleFTP - DownloadStatus" Height="400" Width="300"
-        MinHeight="400" MinWidth="300">
+        Title="SimpleFTP - DownloadStatus" Height="400" Width="500"
+        MinHeight="400" MinWidth="400">
     <Grid>
         <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                   Margin="0" ScrollViewer.CanContentScroll="True"
@@ -21,7 +21,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Text="{Binding ItemName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Margin="0" Background="{Binding StatusColor, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                Margin="0" Background="{Binding ColorStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

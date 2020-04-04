@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 using FTP_ClientGUI.FileExplorer;
 
 namespace FTP_ClientGUI
 {
     /// <summary>
-    /// SimpleFTP ViewModel
+    /// SimpleFTP MVVM ViewModel
     /// </summary>
     public class ViewModel : INotifyPropertyChanged
     {
@@ -19,10 +20,11 @@ namespace FTP_ClientGUI
 
         private OpenFolderCommand openFolderCommand;
 
+        private List<ItemInfo> ItemListGetter()
+            => this.model.IsConnected ? this.model.GetItemsInDirectory().Result : null;
+
         public List<ItemInfo> ItemList
-        {
-            get => this.model.IsConnected ? this.model.GetItemsInDirectory() : null;
-        }
+            => this.ItemListGetter();
 
         public List<ItemInfo> SelectedForHandling { get; set; }
 
@@ -45,7 +47,7 @@ namespace FTP_ClientGUI
             this.openFolderCommand = new OpenFolderCommand(this, model);
         }
 
-        public void UpdateControlsState(string ChangedProperty)
+        public void UpdateControlsState(string changedProperty)
         {
             this.PropertyChanged?.Invoke(this,
                 new PropertyChangedEventArgs(null));

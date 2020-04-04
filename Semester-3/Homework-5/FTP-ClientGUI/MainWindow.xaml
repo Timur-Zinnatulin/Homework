@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FTP_ClientGUI"
         xmlns:fileexplorer="clr-namespace:FTP_ClientGUI.FileExplorer"
         mc:Ignorable="d"
-        Title="FTP Client" Height="300" Width="450">
+        Title="FTP Client" Height="300" Width="450" MinHeight="300" MinWidth="450">
     <Window.DataContext>
         <local:ViewModel />
     </Window.DataContext>
@@ -31,10 +31,10 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Margin="2" HorizontalAlignment="Center">IP:</Label>
         <TextBox Grid.Row="0" Grid.Column="1" MaxLines="1" Margin="2"
-                 Text="{Binding ServerIP, Mode=OneWayToSource}"/>
+                 Text="{Binding IP, Mode=OneWayToSource, FallbackValue='localhost'}"/>
         <Label Grid.Row="0" Grid.Column="2" Margin="2" HorizontalAlignment="Center">Port:</Label>
         <TextBox Grid.Row="0" Grid.Column="3" MaxLines="1" Margin="2"
-                 Text="{Binding ServerPort, Mode=OneWayToSource}"/>
+                 Text="{Binding Port, Mode=OneWayToSource, FallbackValue='8888'}"/>
         <Button Grid.Row="0" Grid.Column="4" Margin="2" Command="{Binding Connect}">Connect</Button>
 
         <fileexplorer:FileExplorer Grid.Row="1" Grid.Column="0" Margin="2"

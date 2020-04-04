@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client
@@ -101,7 +103,7 @@ namespace Client
 
             try
             {
-                await this.outputStream.WriteLineAsync('1' + path);
+                await this.outputStream.WriteLineAsync('1' + path).ConfigureAwait(false);
             }
             catch (ObjectDisposedException)
             {
@@ -115,7 +117,7 @@ namespace Client
             string[] dirContents;
             try
             {
-                var dirInput = await this.inputStream.ReadLineAsync();
+                var dirInput = await this.inputStream.ReadLineAsync().ConfigureAwait(false);
                 dirContents = dirInput.Split(' ');
             }
             catch (IOException)
@@ -140,21 +142,41 @@ namespace Client
 
             Console.WriteLine("Directory info received.");
 
-            var result = new List<EntityInfo>();
-
-            for (int i = 0; i < fileCount; ++i)
+            var tasks = new List<Task<EntityInfo>>();
+            var tokenSource = new CancellationTokenSource();
+            CancellationToken ct = tokenSource.Token;
+            try
             {
-                var fileName = dirContents[(i * 2) + 1].Replace('/', ' ');
-                var isDirString = dirContents[(i * 2) + 2];
-
-                if (!bool.TryParse(isDirString, out bool isDir))
+                for (int i = 0; i < fileCount - 1; ++i)
                 {
-                    this.Disconnect();
-                    return null;
-                }
+                    var index = i;
+                    tasks.Add(Task.Run(() =>
+                        {
+                            var fileName = dirContents[(index * 2) + 1].Replace('/', ' ');
+                            var isDirString = dirContents[(index * 2) + 2];
 
-                result.Add(new EntityInfo(fileName, isDir));
+                            if (!bool.TryParse(isDirString, out bool isDir))
+                            {
+                                tokenSource.Cancel();
+                            }
+
+                            if (ct.IsCancellationRequested)
+                            {
+                                ct.ThrowIfCancellationRequested();
+                            }
+
+                            return new EntityInfo(fileName, isDir);
+                        }, tokenSource.Token));
+                }
             }
+            catch (OperationCanceledException)
+            {
+                this.Disconnect();
+                return null;
+            }
+
+            var infos = await Task.WhenAll(tasks).ConfigureAwait(false);
+            var result = infos.OfType<EntityInfo>().ToList();
 
             this.Disconnect();
             return result;
@@ -181,7 +203,7 @@ namespace Client
 
             try
             {
-                await this.outputStream.WriteLineAsync('2' + path);
+                await this.outputStream.WriteLineAsync('2' + path).ConfigureAwait(false);
             }
             catch (ObjectDisposedException)
             {
@@ -207,7 +229,7 @@ namespace Client
             if ((char)firstChar == '-')
             {
                 Console.WriteLine("File does not exist.");
-                await this.inputStream.ReadLineAsync();
+                this.inputStream.ReadLine();
                 this.Disconnect();
                 return false;
             }   
@@ -223,7 +245,7 @@ namespace Client
             {
                 try
                 {
-                    await this.inputStream.ReadLineAsync();
+                    this.inputStream.ReadLine();
                 }
                 catch (IOException)
                     {}
@@ -248,7 +270,7 @@ namespace Client
 
             try
             {
-                await this.inputStream.BaseStream.CopyToAsync(resultFileStream, bufferSize);
+                await this.inputStream.BaseStream.CopyToAsync(resultFileStream, bufferSize).ConfigureAwait(false);
             }
             catch (ObjectDisposedException)
             {

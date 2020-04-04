@@ -11,7 +11,7 @@ namespace FTP_ClientGUI.DownloadStatus
     /// <summary>
     /// Information about item class
     /// </summary>
-    public class ItemStatusInfo
+    public class ItemStatusInfo : INotifyPropertyChanged
     {
         public string ItemName { get; private set; }
 
@@ -55,7 +55,8 @@ namespace FTP_ClientGUI.DownloadStatus
                         break;
                     }
             }
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+            this.PropertyChanged?.Invoke(this,
+                new PropertyChangedEventArgs(null));
         }
     }
 }

@@ -37,7 +37,7 @@
             </ListView.View>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseDoubleClick" Handler="UserRequestedItem" />
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="UserRequestedItem"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

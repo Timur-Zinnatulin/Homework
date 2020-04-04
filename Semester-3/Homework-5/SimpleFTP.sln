@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "FTP-Client\Client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "FTP-Tests\Test.csproj", "{2767F54D-756B-40CC-9D4D-DF0ED011AF85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTP-ClientGUI", "FTP-ClientGUI\FTP-ClientGUI.csproj", "{8DDCEA3B-62A8-42F1-B16D-999E04185F21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FTP-ClientGUI", "FTP-ClientGUI\FTP-ClientGUI.csproj", "{8DDCEA3B-62A8-42F1-B16D-999E04185F21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

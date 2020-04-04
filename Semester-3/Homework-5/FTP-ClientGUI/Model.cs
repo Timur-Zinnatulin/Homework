@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Server;
@@ -12,12 +13,15 @@ using FTP_ClientGUI.DownloadStatus;
 namespace FTP_ClientGUI
 {
     /// <summary>
-    /// SimpleFTP Model
+    /// SimpleFTP MVVM Model
     /// </summary>
     public class Model
     {
         public const string DefaultFolder = "~";
 
+        /// <summary>
+        /// Folder that puts you one level above
+        /// </summary>
         public const string LevelUpFolder = "...";
 
         private string hostname;
@@ -26,6 +30,9 @@ namespace FTP_ClientGUI
 
         private Stack<string> Path = new Stack<string>();
 
+        /// <summary>
+        /// Currently observed directory
+        /// </summary>
         public string CurrentDirectory
         {
             get
@@ -51,12 +58,15 @@ namespace FTP_ClientGUI
             get => new FtpClient(this.hostname, this.port);
         }
 
-        public bool IsConnected => true;
+        public bool IsConnected = false;
 
         public Model()
         {
         }
 
+        /// <summary>
+        /// Goes to a subfolder of current folder
+        /// </summary>
         public void GoToSubfolder(string subfolderName)
         {
             if (subfolderName == LevelUpFolder)
@@ -68,6 +78,9 @@ namespace FTP_ClientGUI
             this.Path.Push(subfolderName);
         }
 
+        /// <summary>
+        /// Goes oe level above current folder
+        /// </summary>
         public string GoLevelUp()
         {
             if (this.Path.Count == 0)
@@ -78,12 +91,21 @@ namespace FTP_ClientGUI
             return this.Path.Pop();
         }
 
+        /// <summary>
+        /// Connects to server to perform operation
+        /// </summary>
         public void ReconnectToServer(string hostname, int port)
         {
             this.hostname = hostname;
             this.port = port;
+            this.IsConnected = true;
         }
 
+        /// <summary>
+        /// Downloads selected files to a folder of your choice
+        /// </summary>
+        /// <param name="files">Files selected for download</param>
+        /// <param name="folderToSaveTo">Folder selected to download files to</param>
         public void DownloadSelectedFiles(
             IEnumerable<ItemInfo> files,
             string folderToSaveTo,
@@ -97,11 +119,10 @@ namespace FTP_ClientGUI
                 statusWindow.Show();
             }
 
-            foreach(var file in statusWindow.Items)
-            {
-                var task = new Task(() =>
+            var tasks = new List<Task>();
+            Parallel.ForEach(statusWindow.Items, async (file) => 
                 {
-                    statusWindow.Dispatcher.Invoke((Action)(() => file.SetItemStatus(ItemStatus.InProgress)));
+                    await statusWindow.Dispatcher.InvokeAsync((Action)(() => file.SetItemStatus(ItemStatus.InProgress)));
 
                     string filePath = string.Empty;
                     if (this.CurrentDirectory != DefaultFolder)
@@ -110,21 +131,22 @@ namespace FTP_ClientGUI
                     }
 
                     bool isReceived = false;
-                    isReceived = this.Client.ReceiveFileData(
+                    isReceived = await this.Client.ReceiveFileData(
                         filePath + file.ItemName,
-                        folderToSaveTo + '\\' + file.ItemName).Result;
+                        folderToSaveTo + '\\' + file.ItemName).ConfigureAwait(false);
 
-                    statusWindow.Dispatcher.Invoke((Action)(() => file.SetItemStatus(
+                    await statusWindow.Dispatcher.InvokeAsync((Action)(() => file.SetItemStatus(
                         isReceived ? ItemStatus.Downloaded : ItemStatus.Failed)));
                 });
-
-                task.Start();
-            }
         }
 
-        public List<ItemInfo> GetItemsInDirectory()
+        /// <summary>
+        /// Receive a list of items in curent directory
+        /// </summary>
+        /// <returns>List of items</returns>
+        public async Task<List<ItemInfo>> GetItemsInDirectory()
         {
-            var items = this.Client.ReceiveDirContents(this.CurrentDirectory).Result;
+            var items = await this.Client.ReceiveDirContents(this.CurrentDirectory).ConfigureAwait(false);
 
             var result = new List<ItemInfo>();
 

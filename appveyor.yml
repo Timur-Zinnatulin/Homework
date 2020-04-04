@@ -1,7 +1,7 @@
 image: Visual Studio 2019
 
 before_build:
-  - dotnet restore Semester-3/Homework-5/SimpleFTP.sln\
+  - dotnet restore Semester-3/Homework-5/SimpleFTP.sln
 
 build:
   project: Semester-3/Homework-5/SimpleFTP.sln

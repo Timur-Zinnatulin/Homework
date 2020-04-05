@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// Command which handles Connect request
@@ -27,7 +27,7 @@ namespace FTP_ClientGUI
             if (viewModel.IP != null && isPortConnected)
             {
                 this.model.ReconnectToServer(this.viewModel.IP, port);
-                this.viewModel.UpdateControlsState("ItemList");
+                this.viewModel.UpdateControlsState();
             }
         }
 

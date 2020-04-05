@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Server;
 using Client;
 
-using FTP_ClientGUI.FileExplorer;
-using FTP_ClientGUI.DownloadStatus;
+using FtpClientGUI.FileExplorer;
+using FtpClientGUI.DownloadStatus;
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// SimpleFTP MVVM Model
@@ -28,7 +28,7 @@ namespace FTP_ClientGUI
 
         private int port;
 
-        private Stack<string> Path = new Stack<string>();
+        private Stack<string> path = new Stack<string>();
 
         /// <summary>
         /// Currently observed directory
@@ -37,14 +37,14 @@ namespace FTP_ClientGUI
         {
             get
             {
-                if (this.Path.Count == 0)
+                if (this.path.Count == 0)
                 {
                     return DefaultFolder;
                 }
 
                 string result = string.Empty;
 
-                foreach (var e in this.Path)
+                foreach (var e in this.path)
                 {
                     result = $"{e}/{result}";
                 }
@@ -75,20 +75,20 @@ namespace FTP_ClientGUI
                 return;
             }
 
-            this.Path.Push(subfolderName);
+            this.path.Push(subfolderName);
         }
 
         /// <summary>
-        /// Goes oe level above current folder
+        /// Goes one level above current folder
         /// </summary>
         public string GoLevelUp()
         {
-            if (this.Path.Count == 0)
+            if (this.path.Count == 0)
             {
                 return DefaultFolder;
             }
 
-            return this.Path.Pop();
+            return this.path.Pop();
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace FTP_ClientGUI
 
             var result = new List<ItemInfo>();
 
-            if (this.Path.Count != 0)
+            if (this.path.Count != 0)
             {
                 result.Add(new ItemInfo() { Name = "...", IsDirectory = true});
             }

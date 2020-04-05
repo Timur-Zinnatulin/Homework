@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// Converter which substracts 2

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Threading.Tasks;
 
-using FTP_ClientGUI.FileExplorer;
+using FtpClientGUI.FileExplorer;
 
 using Ookii.Dialogs.Wpf;
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// Command which handles the download request
@@ -48,7 +48,6 @@ namespace FTP_ClientGUI
         }
 
         private string GetDestinationPath()
-
         {
             var folderChooser = new VistaFolderBrowserDialog();
             folderChooser.ShowNewFolderButton = true;

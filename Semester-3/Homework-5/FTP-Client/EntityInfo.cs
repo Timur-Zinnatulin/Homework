@@ -5,6 +5,9 @@ namespace Client
     /// </summary>
     public class EntityInfo
     {
+        /// <summary>
+        /// Creates a new instance of EntityInfo class
+        /// </summary>
         public EntityInfo(string name, bool isDirectory)
         {
             this.Name = name;

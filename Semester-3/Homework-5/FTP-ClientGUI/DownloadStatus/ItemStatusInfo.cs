@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using System.ComponentModel;
 
-namespace FTP_ClientGUI.DownloadStatus
+namespace FtpClientGUI.DownloadStatus
 {
     /// <summary>
     /// File downloading states
@@ -33,39 +33,20 @@ namespace FTP_ClientGUI.DownloadStatus
 
         /// <summary>
         /// Sets a different background color for an item
-        /// </summary
+        /// </summary>
         public void SetItemStatus(ItemStatus status)
         {
-            switch(status)
+            this.ColorStatus = status switch
             {
-                case ItemStatus.Downloaded:
-                    {
-                        this.ColorStatus = Brushes.Green;
-                        break;
-                    }
-                case ItemStatus.Failed:
-                    {
-                        this.ColorStatus = Brushes.Red;
-                        break;
-                    }
-                case ItemStatus.InProgress:
-                    {
-                        this.ColorStatus = Brushes.Yellow;
-                        break;
-                    }
-                case ItemStatus.Neutral:
-                    {
-                        this.ColorStatus = Brushes.Transparent;
-                        break;
-                    }
-                default:
-                    {
-                        this.ColorStatus = Brushes.PaleTurquoise;
-                        break;
-                    }
-            }
-            this.PropertyChanged?.Invoke(this,
-                new PropertyChangedEventArgs(null));
+                ItemStatus.Downloaded => Brushes.Green,
+                ItemStatus.Failed => Brushes.Red,
+                ItemStatus.InProgress => Brushes.Yellow,
+                ItemStatus.Neutral => Brushes.Transparent,
+                _ => Brushes.PaleTurquoise,
+            };
+            this.PropertyChanged?.Invoke
+                (this, new PropertyChangedEventArgs("ColorStatus"));
         }
+
     }
 }

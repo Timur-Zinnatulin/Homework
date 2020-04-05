@@ -2,7 +2,7 @@
 using System.Windows.Input;
 
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// Command which opens given folder on the server
@@ -39,8 +39,6 @@ namespace FTP_ClientGUI
             {
                 var requestedSubfolder = this.viewModel.SelectedForHandling[0].Name;
                 this.model.GoToSubfolder(requestedSubfolder);
-
-                this.viewModel.UpdateControlsState("Content");
             }
         }
     }

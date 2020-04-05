@@ -142,6 +142,21 @@ namespace Client
 
             Console.WriteLine("Directory info received.");
 
+            var result = new List<EntityInfo>();
+            for (int i = 0; i < fileCount; ++i)
+            { 
+                var fileName = dirContents[(i * 2) + 1].Replace('/', ' ');
+                var isDirString = dirContents[(i * 2) + 2];
+
+                if (!bool.TryParse(isDirString, out bool isDir))
+                {
+                    this.Disconnect();
+                    return null;
+                }
+
+                result.Add(new EntityInfo(fileName, isDir));
+            }
+            /*
             var tasks = new List<Task<EntityInfo>>();
             var tokenSource = new CancellationTokenSource();
             CancellationToken ct = tokenSource.Token;
@@ -177,7 +192,7 @@ namespace Client
 
             var infos = await Task.WhenAll(tasks).ConfigureAwait(false);
             var result = infos.OfType<EntityInfo>().ToList();
-
+            */
             this.Disconnect();
             return result;
         }
@@ -248,7 +263,8 @@ namespace Client
                     this.inputStream.ReadLine();
                 }
                 catch (IOException)
-                    {}
+                {
+                }
 
                 this.Disconnect();
                 return false;

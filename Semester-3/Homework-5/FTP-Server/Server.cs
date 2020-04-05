@@ -99,52 +99,51 @@ namespace Server
         /// </summary>
         private async void SupplyClient(object clientObject)
         {
-            var client = (TcpClient)clientObject;
-
-            IPAddress clientIP;
-            try
+            using (var client = (TcpClient)clientObject)
             {
-                clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                var inputStream = new StreamReader(client.GetStream());
-                var outputStream = new StreamWriter(client.GetStream());
-
-                var commandType = new char[1];
-                await inputStream.ReadAsync(commandType, 0, 1);
-
-                if (commandType[0] == '1' || commandType[0] == '2')
+                IPAddress clientIP;
+                try
                 {
-                    var path = await inputStream.ReadLineAsync();
+                    clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                    var inputStream = new StreamReader(client.GetStream());
+                    var outputStream = new StreamWriter(client.GetStream());
 
-                    switch (commandType[0])
+                    var commandType = new char[1];
+                    await inputStream.ReadAsync(commandType, 0, 1);
+
+                    if (commandType[0] == '1' || commandType[0] == '2')
                     {
-                        case '1':
-                        {
-                            Console.WriteLine($"Client {clientIP} requested directory contents.");
-                            this.WriteDirPath(path, outputStream);
-                            break;
-                        }
+                        var path = await inputStream.ReadLineAsync();
 
-                        case '2':
+                        switch (commandType[0])
                         {
-                            Console.WriteLine($"Client {clientIP} requested file.");
-                            this.WriteFileBytes(path, outputStream);
-                            break;
+                            case '1':
+                                {
+                                    Console.WriteLine($"Client {clientIP} requested directory contents.");
+                                    this.WriteDirPath(path, outputStream);
+                                    break;
+                                }
+
+                            case '2':
+                                {
+                                    Console.WriteLine($"Client {clientIP} requested file.");
+                                    this.WriteFileBytes(path, outputStream);
+                                    break;
+                                }
                         }
                     }
                 }
-            }
 
-            catch (IOException)
-            {
-                this.HandleClientDisconnected();
+                catch (IOException)
+                {
+                    this.HandleClientDisconnected();
+                    Interlocked.Decrement(ref this.currentConnections);
+                    return;
+                }
                 Interlocked.Decrement(ref this.currentConnections);
-                return;
+
+                Console.WriteLine($"Client {clientIP} disconnected.");
             }
-
-            client.Close();
-            Interlocked.Decrement(ref this.currentConnections);
-
-            Console.WriteLine($"Client {clientIP} disconnected.");
         }
         
         /// <summary>

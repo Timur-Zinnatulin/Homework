@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace FTP_ClientGUI.FileExplorer
+namespace FtpClientGUI.FileExplorer
 {
     /// <summary>
     /// Логика взаимодействия для FileExplorer.xaml

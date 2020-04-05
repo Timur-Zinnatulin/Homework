@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -22,6 +22,7 @@ namespace FTP_ClientGUI
             if (viewModel.OpenFolder.CanExecute(null))
             {
                 viewModel.OpenFolder.Execute(null);
+                viewModel.UpdateControlsState();
             }
         }
     }

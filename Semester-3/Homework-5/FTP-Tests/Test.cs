@@ -100,14 +100,13 @@ namespace Test
         [Test]
         public async Task ClientDisconnectDuringHandlingIsFineTest()
         {
-            var client = new TcpClient(hostname, port);
+            using (var client = new TcpClient(hostname, port))
+            {
+                var writer = new StreamWriter(client.GetStream());
+                var reader = new StreamReader(client.GetStream());
 
-            var writer = new StreamWriter(client.GetStream());
-            var reader = new StreamReader(client.GetStream());
-
-            await writer.WriteLineAsync("1 WHATEVERPATH");
-
-            client.Close();
+                await writer.WriteLineAsync("1 WHATEVERPATH");
+            }
         }
 
         [Test]
@@ -116,14 +115,16 @@ namespace Test
             var filePath = Path.GetFileName(Path.GetTempFileName());
             var savePath = Path.GetTempFileName();
 
-            var client = new FtpClient(hostname, port);
-            var answer = await client.ReceiveFileData(filePath, savePath);
-            Assert.IsTrue(answer);
+            using (var client = new FtpClient(hostname, port))
+            {
+                var answer = await client.ReceiveFileData(filePath, savePath);
+                Assert.IsTrue(answer);
 
-            var testFileContent = await new StreamReader(File.OpenRead(Path.GetTempPath() + filePath)).ReadToEndAsync();
-            var receivedFileContent = await new StreamReader(File.OpenRead(savePath)).ReadToEndAsync();
+                var testFileContent = await new StreamReader(File.OpenRead(Path.GetTempPath() + filePath)).ReadToEndAsync();
+                var receivedFileContent = await new StreamReader(File.OpenRead(savePath)).ReadToEndAsync();
 
-            Assert.AreEqual(testFileContent, receivedFileContent);
+                Assert.AreEqual(testFileContent, receivedFileContent);
+            }
         }
 
         [Test]
@@ -133,24 +134,26 @@ namespace Test
             var fullpath = Path.Combine(Path.GetTempPath() + path);
             var actualFileList = this.CreateDirectory(fullpath);
 
-            var client = new FtpClient(hostname, port);
-            var files = await client.ReceiveDirContents(path);
+            using (var client = new FtpClient(hostname, port))
+            {
+                var files = await client.ReceiveDirContents(path);
 
-            Comparison<EntityInfo> comparison = 
-                (item1, item2) =>
-                {
-                    if (item1.IsDirectory == item2.IsDirectory)
+                Comparison<EntityInfo> comparison =
+                    (item1, item2) =>
                     {
-                        return String.Compare(
-                                item1.Name, item2.Name, StringComparison.Ordinal);
-                    }
-                    else
-                    {
-                        return (item1.IsDirectory ? -1 : 1);
-                    }
-                };
+                        if (item1.IsDirectory == item2.IsDirectory)
+                        {
+                            return String.Compare(
+                                    item1.Name, item2.Name, StringComparison.Ordinal);
+                        }
+                        else
+                        {
+                            return (item1.IsDirectory ? -1 : 1);
+                        }
+                    };
 
-            Assert.That(files, Is.EquivalentTo(actualFileList.Result).Using(comparison));
+                Assert.That(files, Is.EquivalentTo(actualFileList.Result).Using(comparison));
+            }
         }
     }
 }

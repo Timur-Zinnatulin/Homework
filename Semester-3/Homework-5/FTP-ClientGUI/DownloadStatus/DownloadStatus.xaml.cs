@@ -4,18 +4,13 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 
 
-namespace FTP_ClientGUI.DownloadStatus
+namespace FtpClientGUI.DownloadStatus
 {
     /// <summary>
     /// Логика взаимодействия для DownloadStatus.xaml
     /// </summary>
-    public partial class DownloadStatusWindow : Window, INotifyPropertyChanged
+    public partial class DownloadStatusWindow : Window
     {
-        /// <summary>
-        /// IsPropertyChanged Handler
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
         /// <summary>
         /// Initializes DownloadStatus
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FTP_ClientGUI.FileExplorer
+namespace FtpClientGUI.FileExplorer
 {
     /// <summary>
     /// EventArgs for requested item

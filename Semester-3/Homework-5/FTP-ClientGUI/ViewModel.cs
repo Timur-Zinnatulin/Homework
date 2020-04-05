@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Threading.Tasks;
 
-using FTP_ClientGUI.FileExplorer;
+using FtpClientGUI.FileExplorer;
 
-namespace FTP_ClientGUI
+namespace FtpClientGUI
 {
     /// <summary>
     /// SimpleFTP MVVM ViewModel
@@ -68,7 +68,7 @@ namespace FTP_ClientGUI
         /// <summary>
         /// Updates the state of controls
         /// </summary>
-        public void UpdateControlsState(string changedProperty)
+        public void UpdateControlsState()
         {
             this.PropertyChanged?.Invoke(this,
                 new PropertyChangedEventArgs(null));

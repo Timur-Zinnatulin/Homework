@@ -3,7 +3,7 @@ module Task1.Tests
 open NUnit.Framework
 open Task1
 
-let tests =
+let tests () =
     [
         -153, [11; -153; -150; 88]
         0, [16; 81; 293; 0; 134]
@@ -11,7 +11,7 @@ let tests =
         1, [2; 4; 1]
         10, [10; 15]
         7, [7]
-    ] |> List.map (fun (m, l) -> TestCaseData(m, l))
+    ] |> Seq.map (fun (list, min) -> TestCaseData(list, min))
 
 [<TestCaseSource("tests")>]
 [<Test>]

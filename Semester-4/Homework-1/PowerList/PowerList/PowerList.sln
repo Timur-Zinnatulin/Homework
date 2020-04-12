@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PowerList", "PowerList.fsproj", "{B6732C26-72DA-4A8C-9625-9DA44507DD9E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PowerList.Tests", "..\PowerList.Tests\PowerList.Tests.fsproj", "{36D45667-5CA0-4C7F-9532-38EBEE40B993}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6732C26-72DA-4A8C-9625-9DA44507DD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6732C26-72DA-4A8C-9625-9DA44507DD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6732C26-72DA-4A8C-9625-9DA44507DD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6732C26-72DA-4A8C-9625-9DA44507DD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D45667-5CA0-4C7F-9532-38EBEE40B993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D45667-5CA0-4C7F-9532-38EBEE40B993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D45667-5CA0-4C7F-9532-38EBEE40B993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D45667-5CA0-4C7F-9532-38EBEE40B993}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19873E5F-B130-4CC3-A45D-214C3E7F349F}
+	EndGlobalSection
+EndGlobal

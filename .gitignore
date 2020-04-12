@@ -5,6 +5,7 @@ VK-Client
 **/bin
 **/obj
 **/.vs
+**/.user
 .directory
 FIrstProjectInKubuntu
 Philosophers

@@ -11,4 +11,10 @@ let powerList a b =
     if (a < 0 || b < 0) then
         None
     else
-        Some(List.map (fun x -> powerOfTwo x) <| [a..a + b])
+        let rec makeList newList acc list =
+            match list with
+            | [] -> newList
+            | head :: tail -> 
+                makeList (acc :: newList) (acc * 2) tail
+
+        Some([a..a + b] |> makeList [] (powerOfTwo a) |> List.rev)

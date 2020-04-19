@@ -1,7 +1,17 @@
-image: ubuntu
+image: Visual Studio 2019
 
-build:
-  project: Semester-3/Homework-1/LazyCalculation.sln
+environment:
+  matrix:
+  - solution_name: Semester-4/Homework-2/EvensInList/EvensInList/EvensInList.sln
+  - solution_name: Semester-4/Homework-2/TreeMap/TreeMap/TreeMap.sln
+  - solution_name: Semester-4/Homework-2/TreeCalculate/TreeCalculate/TreeCalculate.sln
+  - solution_name: Semester-4/Homework-2/PrimeSequence/PrimeSequence/PrimeSequence.sln
+
+before_build:
+  - dotnet restore %solution_name%
+
+build_script:
+  - dotnet build %solution_name%
 
 test_script:
-  - dotnet test Semester-3/Homework-1/LazyCalculation.sln
+  - dotnet test %solution_name%

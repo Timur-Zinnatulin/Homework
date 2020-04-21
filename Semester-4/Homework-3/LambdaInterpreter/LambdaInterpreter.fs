@@ -19,7 +19,7 @@ let betaReduction (expression: LambdaTerm) =
         match expression with
         | Variable x -> Set.empty.Add(x)
         | Application (left, right) -> (getFreeVariables left) |> Set.union (getFreeVariables right)
-        | LambdaAbstraction (x, e) -> (getFreeVariables expression) |> Set.remove x
+        | LambdaAbstraction (x, e) -> (getFreeVariables e) |> Set.remove x
 
     //Set of variable names
     let varNames = Set.ofSeq['a'..'z']

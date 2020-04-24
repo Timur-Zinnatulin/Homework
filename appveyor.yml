@@ -1,7 +1,18 @@
-image: ubuntu
+image: Visual Studio 2019
 
-build:
-  project: Semester-3/Homework-1/LazyCalculation.sln
+environment:
+  matrix:
+  - solution_name: Semester-4/Homework-1/Factorial/Factorial/Factorial.sln
+  - solution_name: Semester-4/Homework-1/Fibonacci/Fibonacci/Fibonacci.sln
+  - solution_name: Semester-4/Homework-1/FirstInList/FirstInList/FirstInList.sln
+  - solution_name: Semester-4/Homework-1/ListReverse/ListReverse/ListReverse.sln
+  - solution_name: Semester-4/Homework-1/PowerList/PowerList/PowerList.sln
+
+before_build:
+  - dotnet restore %solution_name%
+
+build_script:
+  - dotnet build %solution_name%
 
 test_script:
-  - dotnet test Semester-3/Homework-1/LazyCalculation.sln
+  - dotnet test %solution_name%

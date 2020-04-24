@@ -2,18 +2,9 @@ module Task2.Tests
 
 open NUnit.Framework
 open Task2
+open FsUnit
 
-[<TestCase(1, "*")>]
-[<TestCase(2, "**\n\
-               **")>]
-[<TestCase(3, "***\n\
-               * *\n\
-               ***")>]
-[<TestCase(5, "*****\n\
-               *   *\n\
-               *   *\n\
-               *   *\n\
-               *****")>]
+//Tests that the answer is correct
 [<Test>]
-let squareTest size square =
-    Assert.AreEqual(square, createSquare size)
+let answerIsCorrectTest () =
+    findMaxPalindrome() |> should equal 906609

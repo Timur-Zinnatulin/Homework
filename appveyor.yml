@@ -4,6 +4,7 @@ environment:
   matrix:
   - solution_name: Semester-4/Test/Task1/Task1/Task1.sln
   - solution_name: Semester-4/Test/Task2/Task2/Task2.sln
+  - solution_name: Semester-4/Test/Task3/Task3/Task3.sln
 
 before_build:
   - dotnet restore %solution_name%

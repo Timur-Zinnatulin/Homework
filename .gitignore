@@ -2,8 +2,10 @@
 **/StackCalculator.Test/obj
 **/.vscode
 VK-Client
-Semester-3/**/bin
-Semester-3/**/obj
+**/bin
+**/obj
+**/.vs
+*.user
 .directory
 FIrstProjectInKubuntu
 Philosophers

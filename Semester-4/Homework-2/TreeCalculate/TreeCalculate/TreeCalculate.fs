@@ -2,15 +2,15 @@
 
 open System
 
-//Expression tree type
-type expressionTree =
+/// Expression tree type
+type ExpressionTree =
     | Number of int
-    | Addition of expressionTree * expressionTree
-    | Subtraction of expressionTree * expressionTree
-    | Multiplication of expressionTree * expressionTree
-    | Division of expressionTree * expressionTree
+    | Addition of ExpressionTree * ExpressionTree
+    | Subtraction of ExpressionTree * ExpressionTree
+    | Multiplication of ExpressionTree * ExpressionTree
+    | Division of ExpressionTree * ExpressionTree
 
-//Calculates the expression
+/// Calculates the expression
 let rec calculate tree =
     match tree with
     | Number number -> number

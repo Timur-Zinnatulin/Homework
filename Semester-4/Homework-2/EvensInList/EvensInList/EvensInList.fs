@@ -13,11 +13,3 @@ let evensFilter list =
 /// Counts the amount of even numbers in list using List.fold
 let evensFold list =
     list |> List.fold (fun acc x -> acc + ((x + 1) % 2 |> abs)) 0
-
-let l = [-2; 0; -1; -2; 0]
-
-let a =
-    printfn "Map %A" <| evensMap l
-    printfn "Filter %A" <| evensFilter l
-    printfn "Fold %A" <| evensFold l
-a

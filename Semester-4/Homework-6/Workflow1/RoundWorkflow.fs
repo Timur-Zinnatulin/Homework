@@ -1,4 +1,4 @@
-﻿module Workflow1
+﻿module Workflows
 
 open System
 

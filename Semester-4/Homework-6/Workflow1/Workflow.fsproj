@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Program.fs" />
+    <Compile Include="StringNumberWorkflow.fs" />
+    <Compile Include="RoundWorkflow.fs" />
   </ItemGroup>
 
 </Project>

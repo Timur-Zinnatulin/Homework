@@ -1,10 +1,23 @@
 image: Visual Studio 2019
 
-before_build:
-  - dotnet restore Semester-3/Homework-5/SimpleFTP.sln
+environment:
+  matrix:
+  - solution_name: Semester-4/Homework-1/Factorial/Factorial/Factorial.sln
+  - solution_name: Semester-4/Homework-1/Fibonacci/Fibonacci/Fibonacci.sln
+  - solution_name: Semester-4/Homework-1/FirstInList/FirstInList/FirstInList.sln
+  - solution_name: Semester-4/Homework-1/ListReverse/ListReverse/ListReverse.sln
+  - solution_name: Semester-4/Homework-1/PowerList/PowerList/PowerList.sln
+  - solution_name: Semester-4/Homework-2/EvensInList/EvensInList/EvensInList.sln
+  - solution_name: Semester-4/Homework-2/TreeMap/TreeMap/TreeMap.sln
+  - solution_name: Semester-4/Homework-2/TreeCalculate/TreeCalculate/TreeCalculate.sln
+  - solution_name: Semester-4/Homework-2/PrimeSequence/PrimeSequence/PrimeSequence.sln
+  - solution_name: Semester-4/Homework-3/LambdaInterpreter/LambdaInterpreter.sln
 
-build:
-  project: Semester-3/Homework-5/SimpleFTP.sln
+before_build:
+  - dotnet restore %solution_name%
+
+build_script:
+  - dotnet build %solution_name%
 
 test_script:
-  - dotnet test Semester-3/Homework-5/SimpleFTP.sln
+  - dotnet test %solution_name%

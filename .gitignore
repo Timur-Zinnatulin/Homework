@@ -1,10 +1,19 @@
 **/hw-3.1.vcxproj.user
 **/StackCalculator.Test/obj
-Semester-3/**/bin
-Semester-3/**/obj
+**/.vscode
+VK-Client
+**/bin
+**/obj
+**/.vs
+*.user
 .directory
 FIrstProjectInKubuntu
 Philosophers
 Third Semester Homework.code-workspace
-VK-Client
-.vscode
+Repos
+**/DesignTimeBuild
+**/v16
+**/.ionide
+*.code-workspace
+*.csproj.user
+*.user

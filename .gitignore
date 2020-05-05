@@ -11,3 +11,9 @@ FIrstProjectInKubuntu
 Philosophers
 Third Semester Homework.code-workspace
 Repos
+**/DesignTimeBuild
+**/v16
+**/.ionide
+*.code-workspace
+*.csproj.user
+*.user

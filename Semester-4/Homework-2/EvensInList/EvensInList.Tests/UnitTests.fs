@@ -21,8 +21,8 @@ let correctAnswerTest list res =
 
 [<Test>]
 let mapAndFilterAreEquivalentTest () =
-    Check.Quick(fun (l: List<int>) -> (evensMap l) = (evensFilter l))
+    Check.QuickThrowOnFailure(fun (l: List<int>) -> (evensMap l) = (evensFilter l))
 
 [<Test>]
 let mapAndFoldAreEquivalentTest () =
-    Check.Quick(fun (l: List<int>) -> (evensMap l) = (evensFold l))
+    Check.QuickThrowOnFailure(fun (l: List<int>) -> (evensMap l) = (evensFold l))

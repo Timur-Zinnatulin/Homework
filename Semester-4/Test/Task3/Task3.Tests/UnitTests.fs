@@ -3,22 +3,18 @@ module Task3.Tests
 open NUnit.Framework
 open Task3
 open FsUnit
-open System.Threading
+open System
+/// I had problems with putting queue initializer into set up
+/// so this is how it will be.
 
 [<Test>]
-let singleEnqAndDeqTest () =
-    let queue = new BlockingQueue<int>()
-    queue.Enqueue(1)
-    queue.Dequeue() |> should equal 1
-
-[<Test>]
-let multipleEnqAndDeqTest () =
-    let queue = new BlockingQueue<int>()
-    queue.Enqueue(1)
-    queue.Enqueue(2)
-    queue.Enqueue(3)
-    queue.Enqueue(4)
-    queue.Enqueue(5)
+let multiplePrioritiesTest () =
+    let queue = new PriorityQueue<int>()
+    queue.Enqueue(3, 3)
+    queue.Enqueue(1, 1)
+    queue.Enqueue(5, 5)
+    queue.Enqueue(4, 4)
+    queue.Enqueue(2, 2)
     queue.Dequeue() |> should equal 1
     queue.Dequeue() |> should equal 2
     queue.Dequeue() |> should equal 3
@@ -26,15 +22,23 @@ let multipleEnqAndDeqTest () =
     queue.Dequeue() |> should equal 5
 
 [<Test>]
-let multiThreadTest () =
-    let queue = BlockingQueue<int>()
-    let threadA = Thread(fun () -> queue.Enqueue 1)
-    let threadB = Thread(fun () -> queue.Enqueue 2)
-    let threadC = Thread(fun () -> queue.Enqueue 3)
-    threadA.Start()
-    threadB.Start()
-    threadC.Start()
-    Thread.Sleep(1000)
-    queue.Dequeue() |> should be instanceOfType<int>
-    queue.Dequeue() |> should be instanceOfType<int>
-    queue.Dequeue() |> should be instanceOfType<int>
+let samePriorityTest () =
+    let queue = new PriorityQueue<int>()
+    queue.Enqueue(1, 3)
+    queue.Enqueue(1, 1)
+    queue.Enqueue(1, 5)
+    queue.Enqueue(1, 4)
+    queue.Enqueue(1, 2)
+    queue.Dequeue() |> should equal 3
+    queue.Dequeue() |> should equal 1
+    queue.Dequeue() |> should equal 5
+    queue.Dequeue() |> should equal 4
+    queue.Dequeue() |> should equal 2
+
+[<Test>]
+let throwsExceptionTest () =
+    let queue = new PriorityQueue<string>()
+    /// queue.Enqueue(1, "ababa")
+    /// queue.Dequeue() |> ignore
+    (fun () -> queue.Dequeue() |> ignore) |> should (throwWithMessage "The queue is empty!") typeof<InvalidOperationException>
+       

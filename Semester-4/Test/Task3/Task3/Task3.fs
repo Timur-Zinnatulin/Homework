@@ -2,21 +2,28 @@
 
 open System
 
-//Blocking queue class
-type BlockingQueue<'a> () =
+/// Priority queue class (not on heap)
+type PriorityQueue<'b> () =
     let mutable items = []
-    let locker = new Object()
 
-    member this.Enqueue item  =
-        lock locker (fun () ->
-            items <- items @ [item] )
-
-    member this.Dequeue () =
-        let rec loop () =
-            match items with
+    /// Enqueue the element into a list
+    member this.Enqueue ((key : int32), (item : 'b)) =
+        let rec enqueueRec queue acc =
+            match queue with
             | head :: tail ->
-                items <- tail
-                head
+                if key < fst head then
+                    List.rev ((key, item) :: acc) @ queue
+                else 
+                    enqueueRec tail ((fst head, snd head) :: acc)
             | [] ->
-                loop()
-        lock locker (loop)
+                List.rev ((key, item) :: acc)
+
+        items <- enqueueRec items []
+
+    /// Dequeue the top priority element from a queue
+    member this.Dequeue () =
+        match items with
+        | head :: tail ->
+            items <- tail
+            snd head
+        | [] -> invalidOp "The queue is empty!"

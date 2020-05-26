@@ -1,8 +1,8 @@
-﻿module Workflows
+﻿module RoundWorkflow
 
 open System
 
-//Workflow for calculation with given accuracy
+/// Workflow for calculation with given accuracy
 type CalculationWorkflow(accuracy : int) =
     let calcAccuracy = accuracy
     member this.Bind(x : double, f : double -> double) =

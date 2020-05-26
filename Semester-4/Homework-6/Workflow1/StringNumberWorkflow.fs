@@ -1,12 +1,19 @@
-﻿module Workflows
+﻿module StrToIntWorkflow
 
 open System
 
-//Workflow for calculation with given accuracy
-type CalculationWorkflow(accuracy : int) =
-    let calcAccuracy = accuracy
-    member this.Bind(x : double, f : double -> double) =
-        f (Math.Round (x, accuracy))
+/// Converts string number to double
+let convertToInt (str : string) =
+    match Double.TryParse(str) with
+        | true, value -> Some value
+        | false, _ -> None
 
-    member this.Return(x : double) =
-        Math.Round(x, accuracy)
+/// Workflow for calculating string numbers
+type CalculationWorkflow() =
+    member this.Bind(x : string, f) =
+        let converted = x |> convertToInt
+        match converted with
+            | Some value -> value |> f
+            | None -> None
+    member this.Return(x) =
+        Some x

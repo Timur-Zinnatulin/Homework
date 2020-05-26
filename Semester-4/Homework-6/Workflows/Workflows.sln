@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Workflow", "Workflow.fsproj", "{2CC23280-9630-4B02-BF33-57B81248F27A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Workflow.Tests", "..\Workflow1.Tests\Workflow.Tests.fsproj", "{6D371BB9-C177-4303-B5FA-568AD9879FDE}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Workflow.Tests", "..\Workflows.Tests\Workflow.Tests.fsproj", "{6D371BB9-C177-4303-B5FA-568AD9879FDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

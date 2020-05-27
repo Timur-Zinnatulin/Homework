@@ -1,18 +1,18 @@
 ﻿module BracketSeq
 
 /// List of opening brackets
-let openingBrackets = [ '('; '[' ; '{' ]
+let openingBrackets () = [ '('; '[' ; '{' ]
 
 /// List of closing brackets
-let closingBrackets = [ ')'; ']' ; '}' ]
+let closingBrackets () = [ ')'; ']' ; '}' ]
 
 /// Checks if the bracket is the closing one
 let isClosingBracket bracket =
-    closingBrackets |> List.contains bracket
+    closingBrackets () |> List.contains bracket
 
 /// Checks if the bracket is the closing one
 let isOpeningBracket bracket =
-    openingBrackets |> List.contains bracket
+    openingBrackets () |> List.contains bracket
 
 /// Checks if the symbol is not a bracket
 let isNotBracket bracket =
@@ -33,8 +33,8 @@ let checkSeq (seq : string) =
                 if (opens.IsEmpty) then
                     false
                 else
-                    let index = closingBrackets |> List.findIndex (fun s -> s = bracket)
-                    if (openingBrackets.[index] = opens.Head) then
+                    let index = closingBrackets () |> List.findIndex (fun s -> s = bracket)
+                    if ((openingBrackets ()).[index] = opens.Head) then
                         checkSeqRec tail opens.Tail
                     else
                         false

@@ -8,6 +8,8 @@ environment:
   - solution_name: Semester-4/Homework-1/ListReverse/ListReverse/ListReverse.sln
   - solution_name: Semester-4/Homework-1/PowerList/PowerList/PowerList.sln
   - solution_name: Semester-4/Homework-4/BracketSeq/BracketSeq.sln
+  - solution_name: Semester-4/Homework-4/PointFree/PointFree.sln
+  - solution_name: Semester-4/Homework-4/Phonebook/Phonebook.sln
 
 before_build:
   - dotnet restore %solution_name%

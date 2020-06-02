@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../MyNUnit/MyNUnit.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project1/Project1.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project2/Project2.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project3/Project3.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project4/Project4.csproj" />
+    <ProjectReference Include="../MyTestProjects/Project5/Project5.csproj" />
+  </ItemGroup>
+</Project>

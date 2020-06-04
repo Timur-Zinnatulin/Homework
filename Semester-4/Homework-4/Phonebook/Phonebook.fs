@@ -9,7 +9,7 @@ let serializationFileName = "serialized.data"
 
 /// Reads and inserts new record to the phonebook
 let addRecord name phone records =
-        (name, phone) :: records
+    (name, phone) :: records
 
 /// Finds phone by name in the phonebook
 let findPhoneByName name records = 
@@ -35,21 +35,15 @@ let findNameByPhone phone records =
 
 /// Prints all the records in the phonebook
 let printAllRecords records = 
-    let rec printer records = 
-        if not (List.isEmpty records) then
-            let (name, phone) = List.head records
-            printfn "%s %s" name phone
-            List.tail records |> printer
-
     if List.isEmpty records then
         printfn "No records"
     else
         printfn "Printing all records: "
-        records |> printer 
+        records |> List.iter (fun (name, phone) -> printfn "%s %s" name phone)
 
 /// Imports phonebook from the file
 let importFromFile records =
-    let inStream = new FileStream(serializationFileName, FileMode.Open)
+    use inStream = new FileStream(serializationFileName, FileMode.Open)
     let formatter = new BinaryFormatter()
     let result = unbox<(string * string) list>(formatter.Deserialize(inStream))
     inStream.Close()
@@ -58,7 +52,7 @@ let importFromFile records =
 
 /// Exports phonebook to the file
 let exportToFile records =
-    let outStream = new FileStream(serializationFileName, FileMode.Create)
+    use outStream = new FileStream(serializationFileName, FileMode.Create)
     let formatter = new BinaryFormatter()
     formatter.Serialize(outStream, records)
     outStream.Close()
@@ -76,8 +70,8 @@ let printHelp () =
 /// Main loop of the phonebook keeper
 let rec mainLoop records = 
     printf "Enter command: "
-    let cmd = Console.ReadLine()
-    match cmd with 
+    let cmd () = Console.ReadLine()
+    match cmd () with 
         | "1" -> true
         | "2" -> 
             printf "Enter new record (name phone): "

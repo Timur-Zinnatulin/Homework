@@ -18,6 +18,8 @@ let tests () =
         "aaa()sa[sadsa}",       false
         ")",                    false
         "}]]}",                 false
+        "([)]",                 false
+        "(([)])",               false
     ] |> Seq.map (fun (a, b) -> TestCaseData(a, b))
 
 [<Test>]

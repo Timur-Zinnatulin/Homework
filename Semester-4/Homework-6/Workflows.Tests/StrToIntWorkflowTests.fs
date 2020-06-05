@@ -34,8 +34,8 @@ module StrToIntWorkflowTests =
     let ``Calculator should pass real numbers test`` () =
         let calculator = new CalculationWorkflow()
         let result = calculator {
-            let! a = "123,45"
-            let! b = "1,8"
+            let! a = "123.45"
+            let! b = "1.8"
             return a + b
         }
 

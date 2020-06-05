@@ -1,28 +1,29 @@
-module BracketSeq.Tests
+namespace Bracket
+module BracketTests =
 
-open NUnit.Framework
-open FsUnit
-open BracketSeq
+    open NUnit.Framework
+    open FsUnit
+    open BracketSeq
 
-let tests () = 
-    [
-        System.String.Empty,    true
-        "()",                   true
-        "[]",                   true
-        "{}",                   true
-        "()[]",                 true
-        "([})",                 false
-        "({[]})",               true
-        "aba()ca(ba)",          true
-        "([]){[{{}}]()}",       true
-        "aaa()sa[sadsa}",       false
-        ")",                    false
-        "}]]}",                 false
-        "([)]",                 false
-        "(([)])",               false
-    ] |> Seq.map (fun (a, b) -> TestCaseData(a, b))
+    let tests () = 
+        [
+            System.String.Empty,    true
+            "()",                   true
+            "[]",                   true
+            "{}",                   true
+            "()[]",                 true
+            "({[]})",               true
+            "aba()ca(ba)",          true
+            "([]){[{{}}]()}",       true
+            "([})",                 false
+            "aaa()sa[sadsa}",       false
+            ")",                    false
+            "}]]}",                 false
+            "([)]",                 false
+            "(([)])",               false
+        ] |> List.map (fun (a, b) -> TestCaseData(a, b))
 
-[<Test>]
-[<TestCaseSource("tests")>]
-let ``Checker passes the tests`` test expected =
-    test |> checkSeq |> should equal expected
+    [<Test>]
+    [<TestCaseSource("tests")>]
+    let ``Checker passes the tests`` test expected =
+        checkSeq (test) |> should equal expected

@@ -1,40 +1,34 @@
-﻿module BracketSeq
+﻿namespace Bracket
 
-/// List of opening brackets
-let openingBrackets () = ['('; '['; '{']
+module BracketSeq =
 
-/// List of closing brackets
-let closingBrackets () = [')'; ']'; '}']
+    let extractBrackets (seq : string) =
+        let allBrackets = [ '('; ')'; '['; ']'; '{'; '}' ]
+        seq |> Seq.filter (fun (c : char) -> (allBrackets |> List.contains c))
 
-/// Mapping of matching brackets to each other
-let bracketMap () = [(')', '('); (']', '['); ('}', '{')] |> Map.ofList
+    /// Predicate that returns true if the bracket sequence is correct
+    let checkSeq (seq : string) =
 
-/// Checks if the bracket is the closing one
-let isClosingBracket bracket =
-    closingBrackets () |> List.contains bracket
+        /// Mapping of matching brackets to each other
+        let bracketMap = [(')', '('); (']', '['); ('}', '{')] |> Map.ofList
 
-/// Checks if the bracket is the closing one
-let isOpeningBracket bracket =
-    openingBrackets () |> List.contains bracket
+        /// Checks if the bracket is the closing one
+        let isClosingBracket bracket =
+            (bracketMap).ContainsKey bracket
 
-let extractBrackets seq =
-    seq |> Seq.filter (fun c -> isOpeningBracket c || isClosingBracket c)
-
-/// Predicate that returns true if the bracket sequence is correct
-let checkSeq seq =
-    let rec checkSeqRec seq opens =
-        match seq with 
-            | (bracket :: tail) when isOpeningBracket bracket -> 
-                checkSeqRec tail (bracket :: opens)
-            | (bracket :: tail) when isClosingBracket bracket ->
-                if (opens.IsEmpty) then
-                    false
-                else
-                    if (bracketMap().[bracket] = opens.Head) then
-                        checkSeqRec tail opens.Tail
-                    else
+        let rec checkSeqRec seq (opens : char list) =
+            match seq with 
+                | (bracket :: tail) when isClosingBracket bracket ->
+                    if (opens.IsEmpty) then
                         false
-            | [] -> opens.IsEmpty
-            | _ -> false
+                    else
+                        if (bracketMap.[bracket] = opens.Head) then
+                            checkSeqRec tail opens.Tail
+                        else
+                            false
+                | (bracket :: tail) -> 
+                    checkSeqRec tail (bracket :: opens)
+                | [] -> opens.IsEmpty
+                | _ -> false
 
-    checkSeqRec (seq |> extractBrackets |> Seq.toList) List.Empty
+        checkSeqRec (seq |> extractBrackets |> List.ofSeq) List.Empty

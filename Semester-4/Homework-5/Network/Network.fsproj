@@ -12,6 +12,7 @@
     <Compile Include="OperationSystem\Windows.fs" />
     <Compile Include="OperationSystem\Linux.fs" />
     <Compile Include="Simulation.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
 
 </Project>

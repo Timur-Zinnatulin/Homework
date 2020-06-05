@@ -5,6 +5,7 @@ type Simulator(
                 computers   : IOperatingSystem array,
                 graph       : int list array,
                 log         : ILog) =
+
     let random = System.Random()
 
     /// Starts the simulation

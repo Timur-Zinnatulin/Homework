@@ -12,6 +12,7 @@ environment:
   - solution_name: Semester-4/Homework-2/TreeCalculate/TreeCalculate/TreeCalculate.sln
   - solution_name: Semester-4/Homework-2/PrimeSequence/PrimeSequence/PrimeSequence.sln
   - solution_name: Semester-4/Homework-3/LambdaInterpreter/LambdaInterpreter.sln
+  - solution_name: Semester-4/Homework-5/Network/Network.sln
 
 before_build:
   - dotnet restore %solution_name%

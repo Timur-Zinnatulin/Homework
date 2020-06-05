@@ -8,11 +8,11 @@ module Main =
     let graph = 
         [|
             [1]
-            [0]
-            [3]
-            [2; 4; 5]
+            [0; 2]
+            [1; 3]
+            [2; 4]
             [3; 5]
-            [3; 4]
+            [4]
         |]
 
     let logger = new ConsoleLog()

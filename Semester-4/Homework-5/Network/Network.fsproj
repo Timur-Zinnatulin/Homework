@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Log\ILog.fs" />
+    <Compile Include="Log\ConsoleLog.fs" />
+    <Compile Include="OperatingSystem\IOperatingSystem.fs" />
+    <Compile Include="Simulation.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+</Project>

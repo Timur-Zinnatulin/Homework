@@ -18,6 +18,7 @@ environment:
   - solution_name: Semester-4/Homework-4/BracketSeq/BracketSeq.sln
   - solution_name: Semester-4/Homework-4/PointFree/PointFree.sln
   - solution_name: Semester-4/Homework-4/Phonebook/Phonebook.sln
+  - solution_name: Semester-4/Homework-5/Network/Network.sln
   - solution_name: Semester-4/Homework-6/Workflows/Workflows.sln
 
 before_build:

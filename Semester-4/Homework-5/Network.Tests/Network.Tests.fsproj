@@ -17,8 +17,6 @@
   <ItemGroup>
     <Compile Include="LogZeroChance.fs" />
     <Compile Include="LogBFS.fs" />
-    <Compile Include="GoodOS.fs" />
-    <Compile Include="BadOS.fs" />
     <Compile Include="UnitTests.fs" />
   </ItemGroup>
 

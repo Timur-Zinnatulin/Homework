@@ -2,5 +2,5 @@
 
 /// Describes the operating system interface
 type IOperatingSystem =
-    abstract member Name : string
+    /// Chance of the computer getting infected
     abstract member InfectionChance : float

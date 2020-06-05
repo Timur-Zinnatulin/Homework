@@ -7,18 +7,11 @@ type ConsoleLog() =
     interface ILog with
         /// Prints current network state
         member this.LogState state =
-            let rec printList number list =
-                match list with
-                | [] -> printf "\n"
-                | head :: tail ->
-                    match head with
-                    | true -> printfn "Computer №%d: Infected" number
-                    | false -> printfn "Computer №%d: Healthy" number
-
-                    printList (number + 1) tail
-
             printfn "Step №%d. " step
-            printList 1 (state |> List.ofArray)
+            state |> Array.iteri (fun i item ->
+                                    match item with
+                                    | true -> printfn "Computer #%d: Infected" i
+                                    | false -> printfn "Computer #%d: Healthy" i)
 
             step <- step + 1
             step

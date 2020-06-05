@@ -8,9 +8,7 @@
   <ItemGroup>
     <Compile Include="Log\ILog.fs" />
     <Compile Include="Log\ConsoleLog.fs" />
-    <Compile Include="OperationSystem\IOperatingSystem.fs" />
-    <Compile Include="OperationSystem\Windows.fs" />
-    <Compile Include="OperationSystem\Linux.fs" />
+    <Compile Include="OperatingSystem\IOperatingSystem.fs" />
     <Compile Include="Simulation.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

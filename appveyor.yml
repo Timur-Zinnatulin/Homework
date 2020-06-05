@@ -2,6 +2,9 @@ image: Visual Studio 2019
 
 environment:
   matrix:
+  - solution_name: Semester-4/Test/Task1/Task1/Task1.sln
+  - solution_name: Semester-4/Test/Task2/Task2/Task2.sln
+  - solution_name: Semester-4/Test/Task3/Task3/Task3.sln
   - solution_name: Semester-4/Homework-1/Factorial/Factorial/Factorial.sln
   - solution_name: Semester-4/Homework-1/Fibonacci/Fibonacci/Fibonacci.sln
   - solution_name: Semester-4/Homework-1/FirstInList/FirstInList/FirstInList.sln

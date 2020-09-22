@@ -11,5 +11,6 @@ def main():
         print("=" * 50)
         pretty_print.print_methods(section)
 
-if __name__ == '__main__':
-    main()
+    print('Конец работы программы. Выход...')
+
+main()

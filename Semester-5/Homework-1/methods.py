@@ -1,4 +1,4 @@
-# Algorithm for separating roots of f(x) = 0 equation
+# Procedure for separating roots of f(x) = 0 equation
 def root_separation(f, N, A, B):
     sections = []
 

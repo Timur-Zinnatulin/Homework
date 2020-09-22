@@ -28,7 +28,7 @@ def print_methods(section):
     print_secant(section)
 
 def print_bisec(section):
-    print('\n Метод бисекции:')
+    print('\nМетод бисекции:')
     (init_approx, x, steps, last_section_length) = methods.bisection_method(
         s.f, section[0], section[1], s.EPSILON)
     print_res(x, steps, last_section_length, init_approx)
@@ -52,14 +52,14 @@ def print_secant(section):
     print_res(x, steps, last_section_length, init_approx, init_approx_second)
 
 def print_res(x, steps, section_len, init_approx, init_approx_sec=None):
-    print('Количество шагов: ', s.STEPS)
+    print('Количество шагов: ', steps)
     
     if (init_approx_sec == None):
-        print('Начальное приближение: ', round(init_approx, 6))
+        print('Начальное приближение: ', round(init_approx, 9))
     else:
-        print('Начальное приближение: x0 = ', round(init_approx, 6),
-                '; x1 = ', round(init_approx_sec, 6))
+        print('Начальное приближение: x0 = ', round(init_approx, 9),
+                '; x1 = ', round(init_approx_sec, 9))
 
-    print('x = ', round(x, 6))
-    print('|f(x) - 0| = ', round(abs(s.f(x)), 6))
-    print('Длина последнего отрезка: ', round(section_len, 6), '\n')
+    print('x = ', round(x, 15))
+    print('|f(x) - 0| = ', round(abs(s.f(x)), 15))
+    print('Длина последнего отрезка: ', round(section_len, 15), '\n')

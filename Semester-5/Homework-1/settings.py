@@ -1,15 +1,15 @@
 import math
 
-EPSILON = 0.00001
-A = -10
-B = 2
+EPSILON = 0.00000001
+A = -2
+B = 1
 
-F_STRING = "x * sin(x) - 1"
+F_STRING = "cos(3x) - x^3"
 
 STEPS = 100000
 
 def f(x):
-    return x * math.sin(x) - 1
+    return math.cos(3 * x) - x ** 3
 
 def df(x):
-    return x * math.cos(x) + math.sin(x)
+    return (-3) * math.sin(3 * x) - 3 * (x ** 2)

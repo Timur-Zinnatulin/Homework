@@ -25,7 +25,7 @@ def handle_client_connection(client_socket, client_address):
 
         try:
             client_header += data.decode("utf-8")
-        except UnicodeDecodeError: #
+        except UnicodeDecodeError:
             break
 
         if len(data) < buffer:
@@ -99,7 +99,7 @@ while True:
 
     # Create new thread for handling client requests
     print("Connection accepted from ", client_address)
- 
+
     thread = Thread(target=handle_client_connection, args=(client_socket, client_address))
     allThreads.add(thread)  # Add thread to the list
     thread.start()

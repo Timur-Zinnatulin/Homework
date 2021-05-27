@@ -17,3 +17,4 @@ Repos
 *.code-workspace
 *.csproj.user
 *.user
+**/__pycache__
